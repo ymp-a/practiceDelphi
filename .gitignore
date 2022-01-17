@@ -1,0 +1,12 @@
+__history/
+__recovery/
+*.identcache
+*.dproj.local
+*.groupproj.local
+*.dsk
+*.~dsk
+*.~bpl
+*.tvsconfig
+*.stat
+*.dcu
+*.exe
