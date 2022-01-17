@@ -10,3 +10,4 @@ __recovery/
 *.stat
 *.dcu
 *.exe
+*.ini
