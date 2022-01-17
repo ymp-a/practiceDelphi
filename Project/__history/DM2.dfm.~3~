@@ -1,0 +1,29 @@
+object DataModule2: TDataModule2
+  OldCreateOrder = False
+  Height = 296
+  Width = 348
+  object FDQueryLogin: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      
+        'SELECT TOP (200) TNTNCD, TNBKCD, TNPASS, TNNAME, TNKGKB, TNSTKB,' +
+        ' TNPWLA, TNCRDT, TNCRTM, TNCRPG, TNCRWS, TNCRUS, TNUPDT, TNUPTM,' +
+        ' TNUPPG, TNUPWS, TNUPUS, TNJTCD'
+      'FROM TNMMSP')
+    Left = 56
+    Top = 48
+  end
+  object FDConnection1: TFDConnection
+    Params.Strings = (
+      'Database=std'
+      'User_Name=sa'
+      'Password=Pass1234'
+      'ODBCAdvanced=MARS_Connection=YES'
+      'Server=TOPC04'
+      'OSAuthent=No'
+      'DriverID=MSSQL')
+    Connected = True
+    Left = 176
+    Top = 48
+  end
+end

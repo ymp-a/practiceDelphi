@@ -1,0 +1,71 @@
+unit DM2;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.UI.Intf,
+  FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Phys, FireDAC.VCLUI.Wait,
+  Data.DB, FireDAC.Comp.Client, FireDAC.Comp.DataSet, FireDAC.Phys.MSSQL,
+  FireDAC.Phys.MSSQLDef;
+
+type
+  TDataModule2 = class(TDataModule)
+    FDQueryLogin: TFDQuery;
+    FDConnection1: TFDConnection;
+    DataSource1: TDataSource;
+    FDQueryLoginTNTNCD: TIntegerField;
+    FDQueryLoginTNBKCD: TIntegerField;
+    FDQueryLoginTNPASS: TVarBytesField;
+    FDQueryLoginTNNAME: TStringField;
+    FDQueryLoginTNKGKB: TStringField;
+    FDQueryLoginTNSTKB: TStringField;
+    FDQueryLoginTNPWLA: TDateField;
+    FDQueryLoginTNCRDT: TDateField;
+    FDQueryLoginTNCRTM: TTimeField;
+    FDQueryLoginTNCRPG: TStringField;
+    FDQueryLoginTNCRWS: TStringField;
+    FDQueryLoginTNCRUS: TStringField;
+    FDQueryLoginTNUPDT: TDateField;
+    FDQueryLoginTNUPTM: TTimeField;
+    FDQueryLoginTNUPPG: TStringField;
+    FDQueryLoginTNUPWS: TStringField;
+    FDQueryLoginTNUPUS: TStringField;
+    FDQueryLoginTNJTCD: TStringField;
+    FDQueryLogin2: TFDQuery;
+    IntegerField1: TIntegerField;
+    IntegerField2: TIntegerField;
+    VarBytesField1: TVarBytesField;
+    StringField1: TStringField;
+    StringField2: TStringField;
+    StringField3: TStringField;
+    DateField1: TDateField;
+    DateField2: TDateField;
+    TimeField1: TTimeField;
+    StringField4: TStringField;
+    StringField5: TStringField;
+    StringField6: TStringField;
+    DateField3: TDateField;
+    TimeField2: TTimeField;
+    StringField7: TStringField;
+    StringField8: TStringField;
+    StringField9: TStringField;
+    StringField10: TStringField;
+    DataSource2: TDataSource;
+  private
+    { Private êÈåæ }
+  public
+    { Public êÈåæ }
+  end;
+
+var
+  DataModule2: TDataModule2;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+{$R *.dfm}
+
+end.

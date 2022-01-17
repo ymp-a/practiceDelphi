@@ -1,0 +1,38 @@
+unit F0002;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls;
+
+type
+  TF0002Frm = class(TForm)
+    Panel1: TPanel;
+    Panel2: TPanel;
+    EdtPass: TEdit;
+    EdtTNCD: TEdit;
+    CheckBox1: TCheckBox;
+    Label5: TLabel;
+    ComboBox1: TComboBox;
+    Label4: TLabel;
+    Label3: TLabel;
+    Label2: TLabel;
+    Label1: TLabel;
+    EdtNAME: TEdit;
+    Button2: TButton;
+    Button3: TButton;
+  private
+    { Private êÈåæ }
+  public
+    { Public êÈåæ }
+  end;
+
+var
+  F0002Frm: TF0002Frm;
+
+implementation
+
+{$R *.dfm}
+
+end.

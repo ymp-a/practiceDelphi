@@ -1,0 +1,24 @@
+unit MN001KDI;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs;
+
+type
+  TMN001KDI = class(TForm)
+  private
+    { Private éŒ¾ }
+  public
+    { Public éŒ¾ }
+  end;
+
+var
+  MN001KDI: TMN001KDI;
+
+implementation
+
+{$R *.dfm}
+
+end.
