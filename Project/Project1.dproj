@@ -226,6 +226,11 @@
             <Form>F0002Frm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="DM3.pas">
+            <Form>DataModule3</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

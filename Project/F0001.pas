@@ -32,7 +32,7 @@ type
     { Public 宣言 }
     var
       TNCD:String;
-      NAME:String;
+      reNAME:String;
   end;
 
 var
@@ -46,59 +46,16 @@ uses Unit1, DM2, F0002;
 
 //検索ボタンの処理
 procedure TF0001Frm.Button1Click(Sender: TObject);
-var
-  andFlg:boolean; //入力フラグを設定
-
 begin
+  //担当者CDと担当者名をDM2へ渡す準備
   TNCD:=EdtTNCD.Text;
+  reNAME:=EdtNAME.Text;
 
+  //DBGrid1の初期化
+  DBGrid1.DataSource.DataSet.Close;
 
-//  DBGrid1.DataSource.DataSet.Close;
-//  DataModule2.OpenTNData(TNCD,NAME);
-//  DBGrid1.DataSource.DataSet.Open;
-  //フラグ初期化
-  andFlg:=false;
-
-  //条件に合わせた結果をGrid表示したい
-  with DataModule2.FDQueryLogin do
-  begin
-    //FDQueryLoginを閉じる
-    Close;
-    //SQL文初期化
-    SQL.Clear;
-    //ここからSQL文↓
-    SQL.Add(' SELECT * FROM TNMMSP  ');
-
-    //担当者CD入力時の処理
-    if EdtTNCD.Text<>'' then
-    begin
-      //TNTNCDに入力した担当者CDを代入する
-      SQL.Add(' WHERE TNTNCD >= :TNCD ');
-      //入力した担当者CDを'TNCD'に代入する
-      ParamByName('TNCD').AsString:=EdtTNCD.Text;
-      //入力時フラグオン
-      andFlg:=true;
-    end;
-
-    //担当者名入力時の処理
-      NAME:=EdtNAME.Text;
-    if NAME<>'' then
-    begin
-      //担当者CD入力有無でANDかWHEREに条件分岐する
-      if andFlg=true then SQL.Add(' AND ') else SQL.Add(' WHERE ');
-      //TNNAME LIKEに%入力名%をSQLStringに反映する
-      SQL.Add(' TNNAME LIKE :NAME ');
-      //部分一致の入力名を'NAME'へ代入する
-      ParamByName('NAME').AsWideString := '%' + EdtNAME.Text + '%';
-      //入力時フラグオン
-      andFlg:=true;
-    end;
-
-    //昇順
-    SQL.Add(' ORDER BY TNTNCD ');
-    //FDQueryLoginを展開する
-    Open;
-  end; //DataModule2.FDQueryLoginここまで
+  //担当者検索を開く
+  DataModule2.OpenTNData(TNCD,reNAME);
 
 end; // 検索ボタンの処理ここまで
 
@@ -114,9 +71,18 @@ begin
 
   //担当者メンテ画面を準備
   frm := TF0002Frm.create(self);
+  //照会画面を非表示にする
+  Self.Hide;
   //画面展開する
   frm.ShowModal;
-//  FreeAndNil(frm); いらない？複数立ち上げる際に必要？
+
+  //F0002インスタンス開放
+  FreeAndNil(frm);
+  //照会画面復活
+  Self.Show;
+  //最新状態を表示する
+  Button1Click(Button1);
+
 end; //変更ボタンの処理ここまで
 
 //終了ボタンの処理

@@ -91,7 +91,7 @@ object F0002Frm: TF0002Frm
       Width = 121
       Height = 21
       DataField = 'TNNAME'
-      DataSource = DataModule2.DataSource2
+      DataSource = DataModule3.DataSource2
       ImeMode = imHira
       TabOrder = 2
       OptLen = 20
@@ -103,7 +103,7 @@ object F0002Frm: TF0002Frm
       Width = 121
       Height = 21
       DataField = 'TNKGKB'
-      DataSource = DataModule2.DataSource2
+      DataSource = DataModule3.DataSource2
       TabOrder = 3
       Visible = False
     end
@@ -113,7 +113,7 @@ object F0002Frm: TF0002Frm
       Width = 43
       Height = 21
       DataField = 'TNTNCD'
-      DataSource = DataModule2.DataSource2
+      DataSource = DataModule3.DataSource2
       Enabled = False
       ImeMode = imClose
       ImeName = 'Microsoft Office IME 2007'
@@ -130,7 +130,7 @@ object F0002Frm: TF0002Frm
       Margins.Top = 2
       Margins.Right = 2
       Margins.Bottom = 2
-      DataSource = DataModule2.DataSource2
+      DataSource = DataModule3.DataSource2
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -158,6 +158,7 @@ object F0002Frm: TF0002Frm
       Height = 25
       Caption = #26356#26032
       TabOrder = 0
+      OnClick = Button2Click
     end
     object Button3: TButton
       Left = 112

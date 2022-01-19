@@ -33,34 +33,8 @@ type
     FDQueryLoginTNUPWS: TStringField;
     FDQueryLoginTNUPUS: TStringField;
     FDQueryLoginTNJTCD: TStringField;
-    FDQueryLogin2: TFDQuery;
-    IntegerField1: TIntegerField;
-    IntegerField2: TIntegerField;
-    VarBytesField1: TVarBytesField;
-    StringField1: TStringField;
-    StringField2: TStringField;
-    StringField3: TStringField;
-    DateField1: TDateField;
-    DateField2: TDateField;
-    TimeField1: TTimeField;
-    StringField4: TStringField;
-    StringField5: TStringField;
-    StringField6: TStringField;
-    DateField3: TDateField;
-    TimeField2: TTimeField;
-    StringField7: TStringField;
-    StringField8: TStringField;
-    StringField9: TStringField;
-    StringField10: TStringField;
-    DataSource2: TDataSource;
-    FDQueryLogin3: TFDQuery;
-    DataSource3: TDataSource;
     ClientDataSet1: TClientDataSet;
-    ClientDataSet2: TClientDataSet;
-    ClientDataSet3: TClientDataSet;
     DataSetProvider1: TDataSetProvider;
-    DataSetProvider2: TDataSetProvider;
-    DataSetProvider3: TDataSetProvider;
     ClientDataSet1TNTNCD: TIntegerField;
     ClientDataSet1TNBKCD: TIntegerField;
     ClientDataSet1TNPASS: TVarBytesField;
@@ -84,7 +58,7 @@ type
   public
     { Public 宣言 }
     //担当者検索
-    procedure OpenTNData(TNCD,NAME: String);
+    procedure OpenTNData(TNCD,reNAME: String);
   end;
 
 var
@@ -98,8 +72,7 @@ uses functions, Utilybs;
 
 {$R *.dfm}
 
-
-procedure TDataModule2.OpenTNData(TNCD,NAME: String);
+procedure TDataModule2.OpenTNData(TNCD,reNAME: String);
 var
   andFlg:boolean; //入力フラグを設定
 
@@ -109,14 +82,13 @@ begin
 
   with ClientDataSet1 do
   begin
-    //データセットを閉じる
-    Active := False;
-    //Close;
+    //ClientDataSet1を初期化
+    ClientDataSet1.Active := False;
 
-    with DataModule2.FDQueryLogin do
+    with FDQueryLogin do
     begin
-      Close;
-      //SQL文開始
+      //FDQueryLogin初期化
+      FDQueryLogin.Close;
       //SQL文初期化
       SQL.Clear;
       //ここからSQL文↓
@@ -126,7 +98,7 @@ begin
       if TNCD<>'' then
       begin
         //TNTNCDに入力した担当者CDを代入する
-        SQL.Add(' WHERE TNTNCD >= :TNCD ');
+        SQL.Add(' WHERE TNTNCD = :TNCD ');
         //入力した担当者CDを'TNCD'に代入する
         ParamByName('TNCD').AsString:=TNCD;
         //入力時フラグオン
@@ -134,38 +106,38 @@ begin
       end;
 
       //担当者名入力時の処理
-      if NAME<>'' then
+      if reNAME<>'' then
       begin
         //担当者CD入力有無でANDかWHEREに条件分岐する
-        if andFlg=true then
-         SQL.Add(' AND ')
-         else SQL.Add(' WHERE ');
+        if andFlg=true then SQL.Add(' AND ')
+                       else SQL.Add(' WHERE ');
 
         //TNNAME LIKEに%入力名%をSQLStringに反映する
         SQL.Add(' TNNAME LIKE :NAME ');
         //部分一致の入力名を'NAME'へ代入する
-        ParamByName('NAME').AsWideString :='%' +NAME+ '%';
+        ParamByName('NAME').AsWideString :='%' +reNAME+ '%';
         //入力時フラグオン
         andFlg:=true;
       end;
 
       //昇順
-//      SQL.Add(' ORDER BY TNTNCD ');
-      Open;
+      SQL.Add(' ORDER BY TNTNCD ');
+      //SQL文実行
+      FDQueryLogin.Open;
     end;
 
+    //ClientDataSet1を開く
+    ClientDataSet1.Active := True;
 
-    //データセットを開く
-    Active := True;
-    Open;
     //対象データが存在しない場合、データセットを閉じて終了
     if Eof and Bof then
     begin
-    Active := False;
-    raise Exception.Create('対象データが存在しません');
-    end;
-  end;
+      Active := False;
+      raise Exception.Create('対象データが存在しません');
+    end;//例外処理ここまで
 
-end;
+  end;//ClientDataSet1ここまで
+
+end;//OpenTNDataここまで
 
 end.
