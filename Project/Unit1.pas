@@ -94,9 +94,9 @@ begin
         //例外エラーメッセージダイアログを表示する
         MessageDlg(E.Message, mtError, [mbOK], 0);
         abort;
-      end;  //Exceptここまで
+      end;//Exceptここまで
 
-    end;  //tryExceptここまで
+    end;//tryExceptここまで
 
   finally
     dmUtilYbs.Free;    //エラー時・パスワードチェックで引っかかった時にFree／正常時はPGM終了後にFree。

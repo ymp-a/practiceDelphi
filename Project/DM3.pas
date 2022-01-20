@@ -53,14 +53,13 @@ type
     ClientDataSet2TNJTCD: TStringField;
     FDQryGene: TFDQuery;
     DataSource3: TDataSource;
-//    procedure ClientDataSet2BeforeOpen(DataSet: TDataSet);
   private
     { Private 宣言 }
   public
     { Public 宣言 }
     procedure DataOpen;                              //データオープン
-    function GetDecPass: string;
-    procedure SetEncPass(eTNCD,ePASS:String);                            //パスワードの保存
+    function GetDecPass: string;                     //復号用
+    procedure SetEncPass(eTNCD,ePASS:String);        //パスワードの保存
   end;
 
 var
@@ -74,6 +73,7 @@ uses functions, Utilybs, DM2, F0001;
 
 {$R *.dfm}
 
+//復号用関数
 function TDataModule3.GetDecPass: string;
 begin
   result:='';
@@ -98,6 +98,7 @@ begin
   end;
 end;
 
+//暗号化用
 procedure TDataModule3.SetEncPass(eTNCD,ePASS:String);
 begin
   //得意先があったら部課変更不可
@@ -114,6 +115,7 @@ begin
   end;
 end;
 
+//データオープン
 procedure TDataModule3.DataOpen;
 begin
   //編集用に新しいクライアントデータセットを開く
@@ -128,7 +130,8 @@ begin
         Close;
         //SQL文初期化
         SQL.Clear;
-        //SQL文開始↓（DEGrid1選択中の内容をFDQueryLogin2で再現+パスワードも復号しておく）
+        //SQL文開始↓
+        //（DEGrid1選択中の内容をFDQueryLogin2で再現 + パスワードも復号しておいたが活用できていない）
         SQL.Add(' select * , CAST(DECRYPTBYPASSPHRASE('''+DECKEY+''',TNPASS) AS varchar(10)) AS PASS');
         SQL.Add(' from TNMMSP where TNTNCD = :TNTNCD ');
         //DBGrid1で選択中の担当者CDを代入する

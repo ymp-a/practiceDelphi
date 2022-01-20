@@ -32,10 +32,12 @@ procedure TMNK001Frm.Button1Click(Sender: TObject);
 var
   frm:TForm;
 begin
-    //担当者照会画面を代入
-    frm := TF0001Frm.Create(Application);
-    //画面展開
-    frm.ShowModal;
+  //担当者照会画面を代入
+  frm := TF0001Frm.Create(Application);
+  //画面展開
+  frm.ShowModal;
+  //F0001インスタンス開放
+  FreeAndNil(frm);
 end;
 
 end.

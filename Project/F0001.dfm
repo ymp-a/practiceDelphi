@@ -81,6 +81,101 @@ object F0001Frm: TF0001Frm
       TitleFont.Height = -11
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'TNTNCD'
+          Title.Caption = #25285#24403#32773'CD'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'TNBKCD'
+          Visible = False
+        end
+        item
+          Expanded = False
+          FieldName = 'TNPASS'
+          Visible = False
+        end
+        item
+          Expanded = False
+          FieldName = 'TNNAME'
+          Title.Caption = #25285#24403#32773#21517
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'TNKGKB'
+          Title.Caption = #27177#38480
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'TNSTKB'
+          Visible = False
+        end
+        item
+          Expanded = False
+          FieldName = 'TNPWLA'
+          Visible = False
+        end
+        item
+          Expanded = False
+          FieldName = 'TNCRDT'
+          Visible = False
+        end
+        item
+          Expanded = False
+          FieldName = 'TNCRTM'
+          Visible = False
+        end
+        item
+          Expanded = False
+          FieldName = 'TNCRPG'
+          Visible = False
+        end
+        item
+          Expanded = False
+          FieldName = 'TNCRWS'
+          Visible = False
+        end
+        item
+          Expanded = False
+          FieldName = 'TNCRUS'
+          Visible = False
+        end
+        item
+          Expanded = False
+          FieldName = 'TNUPDT'
+          Visible = False
+        end
+        item
+          Expanded = False
+          FieldName = 'TNUPTM'
+          Visible = False
+        end
+        item
+          Expanded = False
+          FieldName = 'TNUPPG'
+          Visible = False
+        end
+        item
+          Expanded = False
+          FieldName = 'TNUPWS'
+          Visible = False
+        end
+        item
+          Expanded = False
+          FieldName = 'TNUPUS'
+          Visible = False
+        end
+        item
+          Expanded = False
+          FieldName = 'TNJTCD'
+          Title.Caption = #29366#24907
+          Visible = True
+        end>
     end
   end
   object Panel3: TPanel
