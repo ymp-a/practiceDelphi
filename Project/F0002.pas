@@ -29,17 +29,20 @@ type
     procedure Button3Click(Sender: TObject);
     //画面展開時の処理
     procedure FormShow(Sender: TObject);
+    //更新ボタンの処理
     procedure Button2Click(Sender: TObject);
   private
     { Private 宣言 }
-    function  LogicalChecOk:Boolean;        //論理チェック
-    procedure DbChenge;                     //データベースへの変更（変更モード）
+    //論理チェック
+    function  LogicalChecOk:Boolean;
+    //データベースへの変更（変更モード）
+    procedure DbChenge;
   public
     { Public 宣言 }
   var
-    Mode : String;
-    eTNCD : String;
-    ePASS : String;
+    Mode : String;//モード判別用（未使用）
+    eTNCD : String;//暗号化ロジックに渡す担当者CD
+    ePASS : String;//暗号化ロジックに渡す入力したPASSText
   end;
 
 var
@@ -123,10 +126,10 @@ begin
       end;
     end;
 
-    //パスワードの処理
+    //パスワードの処理（復号後の平文PASSを持ってくる）
     EdtPASS.Text:= DataModule3.GetDecPass;
 
-    //検索非表示
+    //検索非表示（状態がDの時はチェックあり）
     if DataModule3.FDQueryLogin2.FieldByName('TNSTKB').Asstring='D' then
       chkSTKB.Checked:=true
     else
@@ -211,12 +214,14 @@ begin
 
 end;
 
+//データベースへの変更（変更モード）
 procedure TF0002Frm.DbChenge;
 begin
 
 
   with  DataModule3.ClientDataSet2 do
   begin
+    //変更トランザクション開始（必ずコミットかロールバックすること）
     dmUtilYbs.FDConnection1.StartTransaction;
     try
 
@@ -231,14 +236,14 @@ begin
       if chkSTKB.Checked then FieldByName('TNSTKB').Asstring:='D'
                          else FieldByName('TNSTKB').Asstring:='';
 
-      //削除
+      //削除（使用停止区分）？
       FieldByName('TNJTCD').Asstring:='';
 
       //パスワード変更があった場合
       if EdtPASS.Text <> DataModule3.GetDecPass then
         FieldByName('TNPWLA').AsDateTime := Date;    //パスワード最終更新日
 
-      //非表示項目の設定
+      //非表示項目の設定（変更者などのログ記録用）
       FieldByName('TNUPWS').Asstring:=dmUtilYbs.GetComputerNameS;
       FieldByName('TNUPPG').Asstring:=self.Name;
       FieldByName('TNUPDT').AsDateTime:=Date;
@@ -247,24 +252,24 @@ begin
 
       //データベース更新
       DataModule3.ClientDataSet2.Post;
-      if ApplyUpdates(0) >  0 then              //エラーの場合は中断
+      if ApplyUpdates(0) >  0 then             //エラーの場合は中断
       begin
         Abort;
       end;
 
-      eTNCD:=EdtTNCD.Field.AsString;
-      ePASS:=EdtPass.Text;
+      eTNCD:=EdtTNCD.Field.AsString;          //担当者CD
+      ePASS:=EdtPass.Text;                    //入力PASS
 
-      DataModule3.SetEncPass(eTNCD, ePASS);   //パスワードの暗号化登録
+      DataModule3.SetEncPass(eTNCD, ePASS);   //パスワードの暗号化登録へ
 
-      dmUtilYbs.FDConnection1.Commit;
+      dmUtilYbs.FDConnection1.Commit;         //コミット
       //更新確認ダイアログ
       MessageDlg('更新が完了しました（^ω^）',mtInformation, [mbOK], 0);
 
     except
     on e:Exception do
     begin
-      dmUtilYbs.FDConnection1.Rollback;
+      dmUtilYbs.FDConnection1.Rollback;       //エラー時はロールバック
       MessageDlg(E.Message, mtError, [mbOK], 0);
       Abort;
 //           CancelUpdates;

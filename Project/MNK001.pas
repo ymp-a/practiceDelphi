@@ -13,6 +13,7 @@ type
     Button3: TButton;
     Button4: TButton;
     procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     { Private 宣言 }
   public
@@ -26,7 +27,7 @@ implementation
 
 {$R *.dfm}
 
-uses F0001;
+uses F0001, F0002;
 
 procedure TMNK001Frm.Button1Click(Sender: TObject);
 var
@@ -34,6 +35,18 @@ var
 begin
   //担当者照会画面を代入
   frm := TF0001Frm.Create(Application);
+  //画面展開
+  frm.ShowModal;
+  //F0001インスタンス開放
+  FreeAndNil(frm);
+end;
+
+procedure TMNK001Frm.Button2Click(Sender: TObject);
+var
+  frm:TForm;
+begin
+  //担当者メンテ画面を代入
+  frm := TF0002Frm.Create(Application);
   //画面展開
   frm.ShowModal;
   //F0001インスタンス開放
