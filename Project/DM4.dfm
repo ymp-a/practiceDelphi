@@ -19,9 +19,11 @@ object DataModule4: TDataModule4
     end
     object ClientDataSetMTHFLPMHIRDT: TDateField
       FieldName = 'MHIRDT'
+      OnSetText = ClientDataSetTDateFieldSetText
     end
     object ClientDataSetMTHFLPMHKGDT: TDateField
       FieldName = 'MHKGDT'
+      OnSetText = ClientDataSetTDateFieldSetText
     end
     object ClientDataSetMTHFLPMHTKCD: TStringField
       FieldName = 'MHTKCD'
@@ -209,6 +211,10 @@ object DataModule4: TDataModule4
     object ClientDataSetMTMFLPMTJTCD: TStringField
       FieldName = 'MTJTCD'
       Size = 1
+    end
+    object ClientDataSetMTMFLPchedel1: TBooleanField
+      FieldKind = fkInternalCalc
+      FieldName = 'chedel1'
     end
   end
   object DataSrcMTMFLP: TDataSource

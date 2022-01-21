@@ -21,18 +21,21 @@ type
     Label5: TLabel;
     Label6: TLabel;
     Button1: TButton;
-    DBCtrlGrid1: TDBCtrlGrid;
     EdtMHIRDT: TDBEditUNIC;
     EdtMHKGDT: TDBEditUNIC;
     EdtMHTKCD: TDBEditUNIC;
     EdtMHTNCD: TDBEditUNIC;
     EdtMHBIKO: TDBEditUNIC;
+    EdtMHNO: TDBEditUNIC;
+    EdtMHTKNM: TDBEditUNIC;
+    DBCtrlGrid1: TDBCtrlGrid;
     Label7: TLabel;
     Label8: TLabel;
-    数量: TLabel;
-    金額: TLabel;
-    削除: TLabel;
-    備考: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    ChkDel1: TDBCheckBox;
     EdtMTGNO: TDBEditUNIC;
     EdtMTSHCD: TDBEditUNIC;
     EdtMTSHNM: TDBEditUNIC;
@@ -40,12 +43,14 @@ type
     EdtMTSRYO: TDBEditUNIC;
     EdtMTKIN: TDBEditUNIC;
     EdtMTBIKO: TDBEditUNIC;
-    ChkDel1: TDBCheckBox;
-    EdtMHNO: TDBEditUNIC;
-    EdtMHTKNM: TDBEditUNIC;
+    EdtMHGSRO: TDBEditUNIC;
+    EdtMHGKIN: TDBEditUNIC;
+    Label13: TLabel;
+    Label14: TLabel;
     //更新ボタンの処理
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private 宣言 }
     //論理チェック
@@ -106,6 +111,14 @@ begin
   if (Button3.Enabled=false)or(Button3.Visible=false) then abort;
   //画面終了
   Close;
+end;
+
+procedure TF0003Frm.FormShow(Sender: TObject);
+begin
+  DataModule4.ClientDataSetMTHFLP.Close;
+  DataModule4.ClientDataSetMTMFLP.Close;
+  DataModule4.ClientDataSetMTHFLP.Open;
+  DataModule4.ClientDataSetMTMFLP.Open;
 end;
 
 function TF0003Frm.LogicalChecOk: Boolean;

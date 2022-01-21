@@ -1,4 +1,4 @@
-﻿object F0003Frm: TF0003Frm
+object F0003Frm: TF0003Frm
   Left = 0
   Top = 0
   Caption = #35211#31309#20837#21147
@@ -11,6 +11,7 @@
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
@@ -19,7 +20,8 @@
     Width = 615
     Height = 121
     Align = alTop
-    TabOrder = 0
+    TabOrder = 7
+    ExplicitTop = -27
     object Label1: TLabel
       Left = 24
       Top = 29
@@ -69,7 +71,23 @@
     Width = 615
     Height = 367
     Align = alClient
-    TabOrder = 1
+    TabOrder = 8
+    ExplicitLeft = 168
+    ExplicitWidth = 447
+    object Label13: TLabel
+      Left = 234
+      Top = 342
+      Width = 48
+      Height = 13
+      Caption = #21512#35336#25968#37327
+    end
+    object Label14: TLabel
+      Left = 426
+      Top = 342
+      Width = 48
+      Height = 13
+      Caption = #21512#35336#37329#38989
+    end
     object Button1: TButton
       Left = 15
       Top = 6
@@ -79,12 +97,13 @@
       TabOrder = 0
     end
     object DBCtrlGrid1: TDBCtrlGrid
-      Left = 15
-      Top = 32
-      Width = 600
+      Left = 0
+      Top = 37
+      Width = 615
       Height = 289
+      DataSource = DataModule4.DataSrcMTMFLP
       PanelHeight = 96
-      PanelWidth = 583
+      PanelWidth = 598
       TabOrder = 1
       object Label7: TLabel
         Left = 51
@@ -100,28 +119,28 @@
         Height = 13
         Caption = #21336#20385
       end
-      object 数量: TLabel
+      object Label9: TLabel
         Left = 368
         Top = 5
         Width = 24
         Height = 13
         Caption = #25968#37327
       end
-      object 金額: TLabel
+      object Label10: TLabel
         Left = 429
         Top = 5
         Width = 24
         Height = 13
         Caption = #37329#38989
       end
-      object 削除: TLabel
+      object Label11: TLabel
         Left = 511
         Top = 5
         Width = 24
         Height = 13
         Caption = #21066#38500
       end
-      object 備考: TLabel
+      object Label12: TLabel
         Left = 51
         Top = 48
         Width = 24
@@ -133,7 +152,72 @@
         Top = 24
         Width = 24
         Height = 17
+        DataField = 'chedel1'
+        DataSource = DataModule4.DataSrcMTMFLP
+        TabOrder = 6
+      end
+      object EdtMTGNO: TDBEditUNIC
+        Left = 3
+        Top = 20
+        Width = 41
+        Height = 21
+        DataField = 'MTGNO'
+        DataSource = DataModule4.DataSrcMTMFLP
         TabOrder = 0
+      end
+      object EdtMTSHCD: TDBEditUNIC
+        Left = 50
+        Top = 20
+        Width = 55
+        Height = 21
+        DataField = 'MTSHCD'
+        DataSource = DataModule4.DataSrcMTMFLP
+        TabOrder = 1
+      end
+      object EdtMTSHNM: TDBEditUNIC
+        Left = 111
+        Top = 20
+        Width = 180
+        Height = 21
+        DataField = 'MTSHNM'
+        DataSource = DataModule4.DataSrcMTMFLP
+        TabOrder = 2
+      end
+      object EdtMTTNKA: TDBEditUNIC
+        Left = 306
+        Top = 20
+        Width = 55
+        Height = 21
+        DataField = 'MTTNKA'
+        DataSource = DataModule4.DataSrcMTMFLP
+        TabOrder = 3
+      end
+      object EdtMTSRYO: TDBEditUNIC
+        Left = 367
+        Top = 20
+        Width = 55
+        Height = 21
+        DataField = 'MTSRYO'
+        DataSource = DataModule4.DataSrcMTMFLP
+        TabOrder = 4
+      end
+      object EdtMTKIN: TDBEditUNIC
+        Left = 428
+        Top = 20
+        Width = 55
+        Height = 21
+        DataField = 'MTKIN'
+        DataSource = DataModule4.DataSrcMTMFLP
+        TabOrder = 5
+      end
+      object EdtMTBIKO: TDBEditUNIC
+        Left = 51
+        Top = 67
+        Width = 241
+        Height = 21
+        DataField = 'MTBIKO'
+        DataSource = DataModule4.DataSrcMTMFLP
+        TabOrder = 7
       end
     end
   end
@@ -143,7 +227,7 @@
     Width = 615
     Height = 50
     Align = alBottom
-    TabOrder = 2
+    TabOrder = 9
     object Button2: TButton
       Left = 15
       Top = 14
@@ -169,7 +253,7 @@
     Height = 21
     DataField = 'MHNO'
     DataSource = DataModule4.DataSrcMTHFLP
-    TabOrder = 3
+    TabOrder = 0
   end
   object EdtMHIRDT: TDBEditUNIC
     Left = 90
@@ -178,7 +262,7 @@
     Height = 21
     DataField = 'MHIRDT'
     DataSource = DataModule4.DataSrcMTHFLP
-    TabOrder = 4
+    TabOrder = 3
   end
   object EdtMHKGDT: TDBEditUNIC
     Left = 90
@@ -196,7 +280,7 @@
     Height = 21
     DataField = 'MHTKCD'
     DataSource = DataModule4.DataSrcMTHFLP
-    TabOrder = 6
+    TabOrder = 1
   end
   object EdtMHTNCD: TDBEditUNIC
     Left = 336
@@ -205,7 +289,7 @@
     Height = 21
     DataField = 'MHTNCD'
     DataSource = DataModule4.DataSrcMTHFLP
-    TabOrder = 7
+    TabOrder = 4
   end
   object EdtMHBIKO: TDBEditUNIC
     Left = 336
@@ -214,70 +298,7 @@
     Height = 21
     DataField = 'MHBIKO'
     DataSource = DataModule4.DataSrcMTHFLP
-    TabOrder = 8
-  end
-  object EdtMTGNO: TDBEditUNIC
-    Left = 19
-    Top = 177
-    Width = 41
-    Height = 21
-    DataField = 'MTGNO'
-    DataSource = DataModule4.DataSrcMTMFLP
-    TabOrder = 9
-  end
-  object EdtMTSHCD: TDBEditUNIC
-    Left = 66
-    Top = 177
-    Width = 55
-    Height = 21
-    DataField = 'MTSHCD'
-    DataSource = DataModule4.DataSrcMTMFLP
-    TabOrder = 10
-  end
-  object EdtMTSHNM: TDBEditUNIC
-    Left = 127
-    Top = 177
-    Width = 180
-    Height = 21
-    DataField = 'MTSHNM'
-    DataSource = DataModule4.DataSrcMTMFLP
-    TabOrder = 11
-  end
-  object EdtMTTNKA: TDBEditUNIC
-    Left = 322
-    Top = 177
-    Width = 55
-    Height = 21
-    DataField = 'MTTNKA'
-    DataSource = DataModule4.DataSrcMTMFLP
-    TabOrder = 12
-  end
-  object EdtMTSRYO: TDBEditUNIC
-    Left = 383
-    Top = 177
-    Width = 55
-    Height = 21
-    DataField = 'MTSRYO'
-    DataSource = DataModule4.DataSrcMTMFLP
-    TabOrder = 13
-  end
-  object EdtMTKIN: TDBEditUNIC
-    Left = 444
-    Top = 177
-    Width = 55
-    Height = 21
-    DataField = 'MTKIN'
-    DataSource = DataModule4.DataSrcMTMFLP
-    TabOrder = 14
-  end
-  object EdtMTBIKO: TDBEditUNIC
-    Left = 66
-    Top = 215
-    Width = 241
-    Height = 21
-    DataField = 'MTBIKO'
-    DataSource = DataModule4.DataSrcMTMFLP
-    TabOrder = 15
+    TabOrder = 6
   end
   object EdtMHTKNM: TDBEditUNIC
     Left = 397
@@ -286,6 +307,24 @@
     Height = 21
     DataField = 'MHTKNM'
     DataSource = DataModule4.DataSrcMTHFLP
-    TabOrder = 16
+    TabOrder = 2
+  end
+  object EdtMHGSRO: TDBEditUNIC
+    Left = 288
+    Top = 459
+    Width = 121
+    Height = 21
+    DataField = 'MHGSRO'
+    DataSource = DataModule4.DataSrcMTHFLP
+    TabOrder = 10
+  end
+  object EdtMHGKIN: TDBEditUNIC
+    Left = 480
+    Top = 459
+    Width = 121
+    Height = 21
+    DataField = 'MHGKIN'
+    DataSource = DataModule4.DataSrcMTHFLP
+    TabOrder = 11
   end
 end

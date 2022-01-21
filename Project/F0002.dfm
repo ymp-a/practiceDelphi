@@ -61,15 +61,14 @@ object F0002Frm: TF0002Frm
       Top = 62
       Width = 121
       Height = 21
-      PasswordChar = '*'
-      TabOrder = 0
+      TabOrder = 2
     end
     object chkSTKB: TCheckBox
       Left = 88
       Top = 128
       Width = 25
       Height = 17
-      TabOrder = 1
+      TabOrder = 4
     end
     object CmbKGNM: TComboBox
       Left = 88
@@ -78,7 +77,7 @@ object F0002Frm: TF0002Frm
       Height = 21
       ImeMode = imDisable
       ItemIndex = 0
-      TabOrder = 4
+      TabOrder = 3
       Text = #19968#33324
       Items.Strings = (
         #19968#33324
@@ -93,7 +92,7 @@ object F0002Frm: TF0002Frm
       DataField = 'TNNAME'
       DataSource = DataModule3.DataSource2
       ImeMode = imHira
-      TabOrder = 2
+      TabOrder = 1
       OptLen = 20
       OptFldType = O
     end
@@ -104,7 +103,7 @@ object F0002Frm: TF0002Frm
       Height = 21
       DataField = 'TNKGKB'
       DataSource = DataModule3.DataSource2
-      TabOrder = 3
+      TabOrder = 5
       Visible = False
     end
     object EdtTNCD: TDBEditUNIC
@@ -117,7 +116,7 @@ object F0002Frm: TF0002Frm
       Enabled = False
       ImeMode = imClose
       ImeName = 'Microsoft Office IME 2007'
-      TabOrder = 5
+      TabOrder = 0
       OptLen = 4
       OptUpper = True
     end
