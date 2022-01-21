@@ -33,7 +33,9 @@ uses
   MNK001 in 'MNK001.pas' {MNK001Frm},
   F0001 in 'F0001.pas' {F0001Frm},
   F0002 in 'F0002.pas' {F0002Frm},
-  DM3 in 'DM3.pas' {DataModule3: TDataModule};
+  DM3 in 'DM3.pas' {DataModule3: TDataModule},
+  F0003 in 'F0003.pas' {F0003Frm},
+  DM4 in 'DM4.pas' {DataModule4: TDataModule};
 
 {$R *.res}
 
@@ -45,5 +47,7 @@ begin
   Application.CreateForm(TDataModule2, DataModule2);
   Application.CreateForm(TF0002Frm, F0002Frm);
   Application.CreateForm(TDataModule3, DataModule3);
+  Application.CreateForm(TF0003Frm, F0003Frm);
+  Application.CreateForm(TDataModule4, DataModule4);
   Application.Run;
 end.
