@@ -47,6 +47,7 @@ type
     EdtMHGKIN: TDBEditUNIC;
     Label13: TLabel;
     Label14: TLabel;
+    EdtMode: TEdit;
     //更新ボタンの処理
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
@@ -119,6 +120,8 @@ begin
   DataModule4.ClientDataSetMTMFLP.Close;
   DataModule4.ClientDataSetMTHFLP.Open;
   DataModule4.ClientDataSetMTMFLP.Open;
+  if Mode = 'Add' then EdtMode.Text := '追加';
+  if Mode = 'Chg' then EdtMode.Text := '変更';
 end;
 
 function TF0003Frm.LogicalChecOk: Boolean;

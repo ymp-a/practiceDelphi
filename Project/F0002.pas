@@ -25,6 +25,7 @@ type
     CmbKGNM: TComboBox;
     EdtTNCD: TDBEditUNIC;
     EdtPASSw: TDBEditUNIC;
+    EdtMode: TEdit;
     //終了ボタンの処理
     procedure Button3Click(Sender: TObject);
     //画面展開時の処理
@@ -37,10 +38,12 @@ type
     function  LogicalChecOk:Boolean;
     //データベースへの変更（変更モード）
     procedure DbChenge;
+    //モード管理
+//    procedure ShwNextFrm(mode: string);
   public
     { Public 宣言 }
   var
-    Mode : String;//モード判別用（未使用）
+    Mode : String;//モード判別用
     eTNCD : String;//暗号化ロジックに渡す担当者CD
     ePASS : String;//暗号化ロジックに渡す入力したPASSText
   end;
@@ -52,7 +55,7 @@ implementation
 
 {$R *.dfm}
 
-uses F0001, DM2, Utilybs, functions, DM3;
+uses F0001, DM2, Utilybs, functions, DM3, EdtMaster;
 
 {*******************************************************************************
  目的:更新ボタン押下時の処理
@@ -91,13 +94,13 @@ end;
 
 //終了ボタンの処理
 procedure TF0002Frm.Button3Click(Sender: TObject);
-var
-  frm : Tform;
 begin
   //非表示チェック
   if (Button3.Enabled=false)or(Button3.Visible=false) then abort;
+
   //画面終了
   Close;
+
   //担当者マスタで使用したDMの終了
   with DataModule3 do
   begin
@@ -113,6 +116,12 @@ end; //終了ボタンの処理ここまで
 //画面展開時の処理
 procedure TF0002Frm.FormShow(Sender: TObject);
 begin
+    begin
+  if Mode = 'Add' then EdtMode.Text := '追加';
+  if Mode = 'Chg' then EdtMode.Text := '変更';
+  if Mode = 'Dsp' then EdtMode.Text := '照会';
+  end;
+
   try
     DataModule3.DataOpen;
 
@@ -282,7 +291,87 @@ begin
   //Close;
 
 end;
+{
+procedure TF0002Frm.ShwNextFrm(mode: string);
+var
+  frm : Tform;
+  SaveCursor: TCursor;   //現在のマウスポインタ保持用
+  rn,pk:Integer;
+begin
+  with DataModulePASMsp.ClientDataSetTNMMSP do
+  begin
 
+    if (mode<>'Add') and (Active=false) then Exit;
 
+    if (mode='Chg') or (mode='Del') then
+    begin
+      try
+      //排他制御
+        LockRecord('TNMMSP',FieldByName('TNTNCD').AsString,'0','0','0','0',dmUtilYbs.GetComputerNameS,dmUtilYbs.sWrkStn,self.Name,self.Caption );
+      except
+        on e:Exception do
+        //すべての例外
+        begin
+          MessageDlg(E.Message, mtError, [mbOK], 0);
+          abort;
+        end;
+      end;//try
 
+    end;//if
+
+    if Active then  rn:=RecNo;
+
+    //現マウスポインタを退避
+    SaveCursor := Screen.Cursor;
+    //砂時計に変更
+    Screen.Cursor := crHourGlass;
+
+    frm := TM01022Frm.create(self,mode);
+
+    //保存していたマウスポインタに戻す
+    Screen.Cursor := SaveCursor;
+
+    frm.ShowModal;
+    frm.Release;
+
+    //再検索
+    if mode<>'Dsp' then
+    begin    //現マウスポインタを退避
+      SaveCursor := Screen.Cursor;
+      //砂時計に変更
+      Screen.Cursor := crHourGlass;
+
+      if DataModulePASMsp.FDQryTNMMSP.Active then
+        DataModulePASMsp.FDQryTNMMSP.Refresh;
+
+      if Active then
+      begin
+        Refresh;
+        if not IsEmpty then
+        begin
+          if rn<=0 then
+            rn:=1
+          else
+          begin
+            if (PacketRecords<rn)and(RecordCount<rn) then
+            begin
+              pk:=PacketRecords;
+              PacketRecords:=rn-RecordCount;
+              GetNextPacket;
+              PacketRecords:=pk;
+            end;
+            if RecordCount<rn then rn:=RecordCount;
+          end;
+
+          RecNo:=rn;
+        end;
+      end;
+
+      //保存していたマウスポインタに戻す
+      Screen.Cursor := SaveCursor;
+    end;
+
+  end;//with
+end;
+ }
 end.

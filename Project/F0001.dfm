@@ -58,6 +58,22 @@ object F0001Frm: TF0001Frm
       TabOrder = 2
       OnClick = Button1Click
     end
+    object EdtMode: TEdit
+      Left = 0
+      Top = 0
+      Width = 73
+      Height = 24
+      Alignment = taCenter
+      Color = clBtnFace
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = #65325#65331' '#12468#12471#12483#12463
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 3
+      Text = #36861#21152
+    end
   end
   object Panel2: TPanel
     Left = 0

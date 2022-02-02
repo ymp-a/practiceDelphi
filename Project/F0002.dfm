@@ -23,56 +23,56 @@ object F0002Frm: TF0002Frm
     TabOrder = 0
     object Label5: TLabel
       Left = 32
-      Top = 132
+      Top = 164
       Width = 24
       Height = 13
       Caption = #21066#38500
     end
     object Label4: TLabel
       Left = 32
-      Top = 97
+      Top = 129
       Width = 24
       Height = 13
       Caption = #27177#38480
     end
     object Label3: TLabel
       Left = 32
-      Top = 65
+      Top = 97
       Width = 47
       Height = 13
       Caption = #12497#12473#12527#12540#12489
     end
     object Label2: TLabel
       Left = 32
-      Top = 38
+      Top = 70
       Width = 48
       Height = 13
       Caption = #25285#24403#32773#21517
     end
     object Label1: TLabel
       Left = 32
-      Top = 11
+      Top = 43
       Width = 50
       Height = 13
       Caption = #25285#24403#32773'CD'
     end
     object EdtPass: TEdit
       Left = 88
-      Top = 62
+      Top = 94
       Width = 121
       Height = 21
       TabOrder = 2
     end
     object chkSTKB: TCheckBox
       Left = 88
-      Top = 128
+      Top = 160
       Width = 25
       Height = 17
       TabOrder = 4
     end
     object CmbKGNM: TComboBox
       Left = 88
-      Top = 94
+      Top = 126
       Width = 145
       Height = 21
       ImeMode = imDisable
@@ -86,7 +86,7 @@ object F0002Frm: TF0002Frm
     end
     object EdtNAME: TDBEditUNIC
       Left = 88
-      Top = 35
+      Top = 67
       Width = 121
       Height = 21
       DataField = 'TNNAME'
@@ -98,7 +98,7 @@ object F0002Frm: TF0002Frm
     end
     object EdtKGKB: TDBEditUNIC
       Left = 239
-      Top = 94
+      Top = 126
       Width = 121
       Height = 21
       DataField = 'TNKGKB'
@@ -108,7 +108,7 @@ object F0002Frm: TF0002Frm
     end
     object EdtTNCD: TDBEditUNIC
       Left = 88
-      Top = 8
+      Top = 40
       Width = 43
       Height = 21
       DataField = 'TNTNCD'
@@ -122,7 +122,7 @@ object F0002Frm: TF0002Frm
     end
     object EdtPASSw: TDBEditUNIC
       Left = 214
-      Top = 61
+      Top = 93
       Width = 146
       Height = 21
       Margins.Left = 2
@@ -141,6 +141,22 @@ object F0002Frm: TF0002Frm
       TabOrder = 6
       Visible = False
       OptLen = 10
+    end
+    object EdtMode: TEdit
+      Left = 0
+      Top = 0
+      Width = 73
+      Height = 24
+      Alignment = taCenter
+      Color = clBtnFace
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = #65325#65331' '#12468#12471#12483#12463
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 7
+      Text = #36861#21152
     end
   end
   object Panel2: TPanel

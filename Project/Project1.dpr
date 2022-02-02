@@ -45,9 +45,7 @@ begin
   Application.CreateForm(TForm1, Form1);
   Application.CreateForm(TdmUtilYbs, dmUtilYbs);
   Application.CreateForm(TDataModule2, DataModule2);
-  Application.CreateForm(TF0002Frm, F0002Frm);
   Application.CreateForm(TDataModule3, DataModule3);
-  Application.CreateForm(TF0003Frm, F0003Frm);
   Application.CreateForm(TDataModule4, DataModule4);
   Application.Run;
 end.

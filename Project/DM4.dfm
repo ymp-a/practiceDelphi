@@ -183,6 +183,7 @@ object DataModule4: TDataModule4
     end
     object ClientDataSetMTMFLPMTGNO: TIntegerField
       FieldName = 'MTGNO'
+      KeyFields = 'MTGNO'
       Required = True
     end
     object ClientDataSetMTMFLPMTSHCD: TStringField
@@ -195,14 +196,17 @@ object DataModule4: TDataModule4
     end
     object ClientDataSetMTMFLPMTTNKA: TBCDField
       FieldName = 'MTTNKA'
+      EditFormat = '###,###,###'
       Precision = 10
       Size = 2
     end
     object ClientDataSetMTMFLPMTSRYO: TIntegerField
       FieldName = 'MTSRYO'
+      EditFormat = '###,###,###'
     end
     object ClientDataSetMTMFLPMTKIN: TIntegerField
       FieldName = 'MTKIN'
+      EditFormat = '###,###,###'
     end
     object ClientDataSetMTMFLPMTBIKO: TStringField
       FieldName = 'MTBIKO'

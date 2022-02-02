@@ -20,6 +20,7 @@ type
     Panel3: TPanel;
     Button2: TButton;
     Button3: TButton;
+    EdtMode: TEdit;
     //終了ボタン
     procedure Button3Click(Sender: TObject);
     //検索ボタン
@@ -33,6 +34,7 @@ type
     var
       TNCD:String;
       reNAME:String;
+      Mode:String;
   end;
 
 var
@@ -42,11 +44,17 @@ implementation
 
 {$R *.dfm}
 
-uses Unit1, DM2, F0002;
+uses Unit1, DM2, F0002, EdtMaster, MNK001;
 
 //検索ボタンの処理
 procedure TF0001Frm.Button1Click(Sender: TObject);
 begin
+  begin
+  if Mode = 'Add' then EdtMode.Text := '追加';
+  if Mode = 'Chg' then EdtMode.Text := '変更';
+  if Mode = 'Dsp' then EdtMode.Text := '照会';
+  end;
+
   //担当者CDと担当者名をDM2へ渡す準備
   TNCD:=EdtTNCD.Text;
   reNAME:=EdtNAME.Text;
@@ -62,7 +70,7 @@ end; // 検索ボタンの処理ここまで
 //変更ボタンの処理
 procedure TF0001Frm.Button2Click(Sender: TObject);
 var
-  frm : Tform;
+  frm : TF0002Frm;
 begin
   //DBGrid1にデータがない場合中断
   if (Button3.Enabled=false)or(Button3.Visible=false) then abort;
@@ -70,7 +78,8 @@ begin
   if DBGrid1.DataSource.DataSet.IsEmpty then abort;
 
   //担当者メンテ画面を準備
-  frm := TF0002Frm.create(self);
+  frm := TF0002Frm.Create(self);
+  frm.mode := 'Chg';
   //照会画面を非表示にする
   Self.Hide;
   //画面展開する
@@ -82,7 +91,6 @@ begin
   Self.Show;
   //最新状態を表示する
   Button1Click(Button1);
-
 end; //変更ボタンの処理ここまで
 
 //終了ボタンの処理

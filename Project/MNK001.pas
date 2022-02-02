@@ -19,6 +19,8 @@ type
     { Private 宣言 }
   public
     { Public 宣言 }
+  var
+    Mode : String;//モード判別用
   end;
 
 var
@@ -28,14 +30,15 @@ implementation
 
 {$R *.dfm}
 
-uses F0001, F0002, F0003;
+uses F0001, F0002, F0003, EdtMaster;
 
 procedure TMNK001Frm.Button1Click(Sender: TObject);
 var
-  frm:TForm;
+  frm:TF0001Frm;
 begin
   //担当者照会画面を代入
   frm := TF0001Frm.Create(Application);
+  frm.Mode := 'Dsp';
   //画面展開
   frm.ShowModal;
   //F0001インスタンス開放
@@ -44,14 +47,16 @@ end;
 
 procedure TMNK001Frm.Button2Click(Sender: TObject);
 var
-  frm:TForm;
+  frm:TF0002Frm;
 begin
   //担当者メンテ画面を代入
   frm := TF0002Frm.Create(Application);
+  frm.Mode := 'Add';
   //画面展開
   frm.ShowModal;
   //F0001インスタンス開放
   FreeAndNil(frm);
+  frm.Mode := '';
 end;
 
 procedure TMNK001Frm.Button4Click(Sender: TObject);
