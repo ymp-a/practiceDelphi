@@ -11,10 +11,10 @@ uses
 
 type
   TDataModule3 = class(TDataModule)
-    DataSource2: TDataSource;
-    ClientDataSet2: TClientDataSet;
-    DataSetProvider2: TDataSetProvider;
-    FDQueryLogin2: TFDQuery;
+    DataSrcF0002: TDataSource;
+    ClientDataSetF0002: TClientDataSet;
+    DataSetProF0002: TDataSetProvider;
+    FDQryF0002: TFDQuery;
     IntegerField1: TIntegerField;
     IntegerField2: TIntegerField;
     VarBytesField1: TVarBytesField;
@@ -33,33 +33,41 @@ type
     StringField8: TStringField;
     StringField9: TStringField;
     StringField10: TStringField;
-    ClientDataSet2TNTNCD: TIntegerField;
-    ClientDataSet2TNBKCD: TIntegerField;
-    ClientDataSet2TNPASS: TVarBytesField;
-    ClientDataSet2TNNAME: TStringField;
-    ClientDataSet2TNKGKB: TStringField;
-    ClientDataSet2TNSTKB: TStringField;
-    ClientDataSet2TNPWLA: TDateField;
-    ClientDataSet2TNCRDT: TDateField;
-    ClientDataSet2TNCRTM: TTimeField;
-    ClientDataSet2TNCRPG: TStringField;
-    ClientDataSet2TNCRWS: TStringField;
-    ClientDataSet2TNCRUS: TStringField;
-    ClientDataSet2TNUPDT: TDateField;
-    ClientDataSet2TNUPTM: TTimeField;
-    ClientDataSet2TNUPPG: TStringField;
-    ClientDataSet2TNUPWS: TStringField;
-    ClientDataSet2TNUPUS: TStringField;
-    ClientDataSet2TNJTCD: TStringField;
+    ClientDataSetF0002TNTNCD: TIntegerField;
+    ClientDataSetF0002TNBKCD: TIntegerField;
+    ClientDataSetF0002TNPASS: TVarBytesField;
+    ClientDataSetF0002TNNAME: TStringField;
+    ClientDataSetF0002TNKGKB: TStringField;
+    ClientDataSetF0002TNSTKB: TStringField;
+    ClientDataSetF0002TNPWLA: TDateField;
+    ClientDataSetF0002TNCRDT: TDateField;
+    ClientDataSetF0002TNCRTM: TTimeField;
+    ClientDataSetF0002TNCRPG: TStringField;
+    ClientDataSetF0002TNCRWS: TStringField;
+    ClientDataSetF0002TNCRUS: TStringField;
+    ClientDataSetF0002TNUPDT: TDateField;
+    ClientDataSetF0002TNUPTM: TTimeField;
+    ClientDataSetF0002TNUPPG: TStringField;
+    ClientDataSetF0002TNUPWS: TStringField;
+    ClientDataSetF0002TNUPUS: TStringField;
+    ClientDataSetF0002TNJTCD: TStringField;
     FDQryGene: TFDQuery;
     DataSource3: TDataSource;
+    ClientDataSetF0002PASS: TStringField;
+
+  //担当者m
+  type dTNM = Record
+    Exists :Boolean;
+    NAME:WideString;      //担当者
+    BKCD:string;          //部課CD
+    STKB:string;          //使用停止区分
+  end;
+
   private
     { Private 宣言 }
   public
     { Public 宣言 }
-    procedure DataOpen;                              //データオープン
-    function GetDecPass: string;                     //復号用
-    procedure SetEncPass(eTNCD,ePASS:String);        //パスワードの保存
+    function TNMMS(TNCD:string;IncD:boolean=false): dTNM;
   end;
 
 var
@@ -73,87 +81,42 @@ uses functions, Utilybs, DM2, F0001;
 
 {$R *.dfm}
 
-//復号用関数
-function TDataModule3.GetDecPass: string;
-begin
-  result:='';
 
-  //得意先があったら部課変更不可
-  with DataModule3.FDQryGene do
+
+
+{*担当者M*}
+function TDataModule3.TNMMS(TNCD:string;IncD:boolean=false): dTNM;
+begin
+// チェックロジックなど確認用のSQLはtempクエリを利用する。
+  with FDQryGene do
   begin
     Close;
     SQL.Clear;
-    SQL.Add(' SELECT CAST(DECRYPTBYPASSPHRASE('''+DECKEY+''',TNPASS) AS varchar(10)) AS PASS ');
-    SQL.Add('   FROM TNMMSP WHERE TNTNCD = :TNCD ');
-    ParamByName('TNCD').AsString:=DataModule2.ClientDataSet1.FieldByName('TNTNCD').AsString;
+    SQL.Add(' SELECT * FROM TNMMSP ');
+    SQL.Add(' WHERE TNTNCD = :TNTNCD ');
+    if IncD=False then
+      SQL.Add(' AND TNJTCD <> ''D''  ');
+    ParamByName('TNTNCD').AsAnsiString:=TNCD;
     Open;
 
-    if IsEmpty=false then
+    if not eof then
     begin
-      result:=FieldByName('PASS').AsString;
+      Result.Exists:= True;
+      Result.NAME := FieldByName('TNNAME').AsWideString;     //担当者名
+      Result.BKCD := FieldByName('TNBKCD').AsString;       //部課CD
+      Result.STKB := FieldByName('TNSTKB').AsString;       //使用停止区分
+    end else begin
+      Result.Exists:= False;
+      Result.NAME := '';     //担当者名
+      Result.BKCD := '';     //部課CD
+      Result.STKB := '';     //使用停止区分
     end;
+
     Close;
     SQL.Clear;
-
   end;
+
 end;
-
-//暗号化用
-procedure TDataModule3.SetEncPass(eTNCD,ePASS:String);
-begin
-  //得意先があったら部課変更不可
-  with DataModule3.FDQryGene do
-  begin
-    Close;
-    SQL.Clear;
-    SQL.Add(' UPDATE TNMMSP ');
-    SQL.Add('    SET TNPASS = ENCRYPTBYPASSPHRASE('''+DECKEY+''',:PASS) ');
-    SQL.Add('  WHERE TNTNCD = :TNCD ');
-    ParamByName('PASS').AsAnsiString:=ePass;
-    ParamByName('TNCD').AsAnsiString:=eTNCD;
-    ExecSQL;
-  end;
-end;
-
-//データオープン
-procedure TDataModule3.DataOpen;
-begin
-  //編集用に新しいクライアントデータセットを開く
-  with ClientDataSet2 do
-  begin
-    //データセットを閉じる
-    Active := False;
-
-      with FDQueryLogin2 do
-      begin
-        //FDQueryLogin2を初期化
-        Close;
-        //SQL文初期化
-        SQL.Clear;
-        //SQL文開始↓
-        //（DEGrid1選択中の内容をFDQueryLogin2で再現 + パスワードも復号しておいたが活用できていない）
-        SQL.Add(' select * , CAST(DECRYPTBYPASSPHRASE('''+DECKEY+''',TNPASS) AS varchar(10)) AS PASS');
-        SQL.Add(' from TNMMSP where TNTNCD = :TNTNCD ');
-        //DBGrid1で選択中の担当者CDを代入する
-        ParamByName('TNTNCD').AsAnsiString := DataModule2.ClientDataSet1.FieldByName('TNTNCD').AsString;
-        //FDQueryLogin2を展開する
-        Open;
-
-        //FDQueryLogin2にデータがない場合の処理
-        if IsEmpty then
-        begin
-          //例外エラーメッセージを作成
-          raise Exception.Create('既に削除されている');
-        end;
-
-      end; //DataModule3.FDQueryLogin2ここまで
-
-    //データセットを開く
-    Active := True;
-    Edit;  //編集ステータスにしておく
-  end; //ClientDataSet2ここまで
-
-end; //DataOpenここまで
 
 
 end.

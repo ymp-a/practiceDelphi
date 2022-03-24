@@ -72,7 +72,7 @@ object F0001Frm: TF0001Frm
       Font.Style = []
       ParentFont = False
       TabOrder = 3
-      Text = #36861#21152
+      Text = #29031#20250
     end
   end
   object Panel2: TPanel
@@ -88,7 +88,7 @@ object F0001Frm: TF0001Frm
       Width = 738
       Height = 349
       Align = alClient
-      DataSource = DataModule2.DataSource1
+      DataSource = DataModule2.DataSrcTNMMSP
       ImeMode = imClose
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
       TabOrder = 0
@@ -129,7 +129,8 @@ object F0001Frm: TF0001Frm
         item
           Expanded = False
           FieldName = 'TNSTKB'
-          Visible = False
+          Title.Caption = #21306#20998
+          Visible = True
         end
         item
           Expanded = False
@@ -189,8 +190,7 @@ object F0001Frm: TF0001Frm
         item
           Expanded = False
           FieldName = 'TNJTCD'
-          Title.Caption = #29366#24907
-          Visible = True
+          Visible = False
         end>
     end
   end
@@ -202,7 +202,7 @@ object F0001Frm: TF0001Frm
     Align = alBottom
     TabOrder = 2
     object Button2: TButton
-      Left = 7
+      Left = 111
       Top = 14
       Width = 75
       Height = 25
@@ -211,13 +211,31 @@ object F0001Frm: TF0001Frm
       OnClick = Button2Click
     end
     object Button3: TButton
-      Left = 112
+      Left = 328
       Top = 14
       Width = 75
       Height = 25
       Caption = #32066#20102
       TabOrder = 1
       OnClick = Button3Click
+    end
+    object Button4: TButton
+      Left = 15
+      Top = 14
+      Width = 75
+      Height = 25
+      Caption = #36861#21152
+      TabOrder = 2
+      OnClick = Button4Click
+    end
+    object Button5: TButton
+      Left = 223
+      Top = 14
+      Width = 75
+      Height = 25
+      Caption = #21066#38500
+      TabOrder = 3
+      OnClick = Button5Click
     end
   end
 end

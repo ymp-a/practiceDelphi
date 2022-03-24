@@ -11,6 +11,7 @@ object Form1: TForm1
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -36,7 +37,6 @@ object Form1: TForm1
     MaxLength = 10
     NumbersOnly = True
     TabOrder = 0
-    Text = '9999'
   end
   object EdtPsw: TEdit
     Left = 88
@@ -45,7 +45,6 @@ object Form1: TForm1
     Height = 21
     PasswordChar = '*'
     TabOrder = 1
-    Text = 'ybs'
   end
   object Button1: TButton
     Left = 134

@@ -1,6 +1,6 @@
 object DataModule4: TDataModule4
   OldCreateOrder = False
-  Height = 261
+  Height = 344
   Width = 388
   object DataSrcMTHFLP: TDataSource
     DataSet = ClientDataSetMTHFLP
@@ -173,57 +173,225 @@ object DataModule4: TDataModule4
   end
   object ClientDataSetMTMFLP: TClientDataSet
     Aggregates = <>
+    AggregatesActive = True
     Params = <>
     ProviderName = 'DataSetProMTMFLP'
     Left = 213
     Top = 128
     object ClientDataSetMTMFLPMTNO: TIntegerField
       FieldName = 'MTNO'
+      Origin = 'MTNO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
     object ClientDataSetMTMFLPMTGNO: TIntegerField
       FieldName = 'MTGNO'
       KeyFields = 'MTGNO'
+      Origin = 'MTGNO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
     object ClientDataSetMTMFLPMTSHCD: TStringField
       FieldName = 'MTSHCD'
+      Origin = 'MTSHCD'
       Size = 7
     end
     object ClientDataSetMTMFLPMTSHNM: TStringField
       FieldName = 'MTSHNM'
+      Origin = 'MTSHNM'
       Size = 100
     end
     object ClientDataSetMTMFLPMTTNKA: TBCDField
       FieldName = 'MTTNKA'
+      Origin = 'MTTNKA'
+      DisplayFormat = '###,###,###'
       EditFormat = '###,###,###'
       Precision = 10
       Size = 2
     end
     object ClientDataSetMTMFLPMTSRYO: TIntegerField
       FieldName = 'MTSRYO'
+      Origin = 'MTSRYO'
+      DisplayFormat = '###,###,###'
       EditFormat = '###,###,###'
     end
     object ClientDataSetMTMFLPMTKIN: TIntegerField
       FieldName = 'MTKIN'
+      Origin = 'MTKIN'
+      DisplayFormat = '###,###,###'
       EditFormat = '###,###,###'
     end
     object ClientDataSetMTMFLPMTBIKO: TStringField
       FieldName = 'MTBIKO'
+      Origin = 'MTBIKO'
       Size = 100
     end
     object ClientDataSetMTMFLPMTJTCD: TStringField
       FieldName = 'MTJTCD'
+      Origin = 'MTJTCD'
       Size = 1
     end
-    object ClientDataSetMTMFLPchedel1: TBooleanField
+    object ClientDataSetMTMFLPdataJTCD: TBooleanField
       FieldKind = fkInternalCalc
-      FieldName = 'chedel1'
+      FieldName = 'dataJTCD'
+    end
+    object ClientDataSetMTMFLPsumSRYO: TAggregateField
+      FieldName = 'sumSRYO'
+      Active = True
+      DisplayName = ''
+      DisplayFormat = '###,###,###'
+      Expression = 'SUM(MTSRYO)'
+    end
+    object ClientDataSetMTMFLPsumKIN: TAggregateField
+      FieldName = 'sumKIN'
+      Active = True
+      DisplayName = ''
+      DisplayFormat = '###,###,###'
+      Expression = 'SUM(MTKIN)'
     end
   end
   object DataSrcMTMFLP: TDataSource
     DataSet = ClientDataSetMTMFLP
     Left = 304
     Top = 128
+  end
+  object FDQryF0004: TFDQuery
+    Active = True
+    Connection = DataModule2.FDConnection1
+    SQL.Strings = (
+      'select * from mthflp'
+      'left join tnmmsp on tntncd = mhtncd'
+      '')
+    Left = 32
+    Top = 200
+    object IntegerField1: TIntegerField
+      FieldName = 'MHNO'
+      Origin = 'MHNO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object DateField1: TDateField
+      FieldName = 'MHIRDT'
+      Origin = 'MHIRDT'
+    end
+    object DateField2: TDateField
+      FieldName = 'MHKGDT'
+      Origin = 'MHKGDT'
+    end
+    object StringField1: TStringField
+      FieldName = 'MHTKCD'
+      Origin = 'MHTKCD'
+      Size = 5
+    end
+    object StringField2: TStringField
+      FieldName = 'MHTKNM'
+      Origin = 'MHTKNM'
+      Size = 100
+    end
+    object IntegerField2: TIntegerField
+      FieldName = 'MHGSRO'
+      Origin = 'MHGSRO'
+    end
+    object IntegerField3: TIntegerField
+      FieldName = 'MHGKIN'
+      Origin = 'MHGKIN'
+    end
+    object IntegerField4: TIntegerField
+      FieldName = 'MHTNCD'
+      Origin = 'MHTNCD'
+      Required = True
+    end
+    object StringField3: TStringField
+      FieldName = 'MHBIKO'
+      Origin = 'MHBIKO'
+      Size = 100
+    end
+    object StringField4: TStringField
+      FieldName = 'MHJTCD'
+      Origin = 'MHJTCD'
+      Size = 1
+    end
+    object FDQryF0004TNTNCD: TIntegerField
+      FieldName = 'TNTNCD'
+      Origin = 'TNTNCD'
+    end
+    object FDQryF0004TNBKCD: TIntegerField
+      FieldName = 'TNBKCD'
+      Origin = 'TNBKCD'
+    end
+    object FDQryF0004TNPASS: TVarBytesField
+      FieldName = 'TNPASS'
+      Origin = 'TNPASS'
+      Size = 2000
+    end
+    object FDQryF0004TNNAME: TStringField
+      FieldName = 'TNNAME'
+      Origin = 'TNNAME'
+      Size = 16
+    end
+    object FDQryF0004TNKGKB: TStringField
+      FieldName = 'TNKGKB'
+      Origin = 'TNKGKB'
+      Size = 1
+    end
+    object FDQryF0004TNSTKB: TStringField
+      FieldName = 'TNSTKB'
+      Origin = 'TNSTKB'
+      Size = 4
+    end
+    object FDQryF0004TNPWLA: TDateField
+      FieldName = 'TNPWLA'
+      Origin = 'TNPWLA'
+    end
+    object FDQryF0004TNCRDT: TDateField
+      FieldName = 'TNCRDT'
+      Origin = 'TNCRDT'
+    end
+    object FDQryF0004TNCRTM: TTimeField
+      FieldName = 'TNCRTM'
+      Origin = 'TNCRTM'
+    end
+    object FDQryF0004TNCRPG: TStringField
+      FieldName = 'TNCRPG'
+      Origin = 'TNCRPG'
+    end
+    object FDQryF0004TNCRWS: TStringField
+      FieldName = 'TNCRWS'
+      Origin = 'TNCRWS'
+    end
+    object FDQryF0004TNCRUS: TStringField
+      FieldName = 'TNCRUS'
+      Origin = 'TNCRUS'
+    end
+    object FDQryF0004TNUPDT: TDateField
+      FieldName = 'TNUPDT'
+      Origin = 'TNUPDT'
+    end
+    object FDQryF0004TNUPTM: TTimeField
+      FieldName = 'TNUPTM'
+      Origin = 'TNUPTM'
+    end
+    object FDQryF0004TNUPPG: TStringField
+      FieldName = 'TNUPPG'
+      Origin = 'TNUPPG'
+    end
+    object FDQryF0004TNUPWS: TStringField
+      FieldName = 'TNUPWS'
+      Origin = 'TNUPWS'
+    end
+    object FDQryF0004TNUPUS: TStringField
+      FieldName = 'TNUPUS'
+      Origin = 'TNUPUS'
+    end
+    object FDQryF0004TNJTCD: TStringField
+      FieldName = 'TNJTCD'
+      Origin = 'TNJTCD'
+      Size = 1
+    end
+  end
+  object DataSrcF0004: TDataSource
+    DataSet = FDQryF0004
+    Left = 304
+    Top = 200
   end
 end

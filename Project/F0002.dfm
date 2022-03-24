@@ -11,7 +11,6 @@ object F0002Frm: TF0002Frm
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
@@ -56,13 +55,6 @@ object F0002Frm: TF0002Frm
       Height = 13
       Caption = #25285#24403#32773'CD'
     end
-    object EdtPass: TEdit
-      Left = 88
-      Top = 94
-      Width = 121
-      Height = 21
-      TabOrder = 2
-    end
     object chkSTKB: TCheckBox
       Left = 88
       Top = 160
@@ -72,7 +64,7 @@ object F0002Frm: TF0002Frm
     end
     object CmbKGNM: TComboBox
       Left = 88
-      Top = 126
+      Top = 121
       Width = 145
       Height = 21
       ImeMode = imDisable
@@ -84,41 +76,15 @@ object F0002Frm: TF0002Frm
         #26989#21209#31649#29702#32773
         #12471#12473#12486#12512#31649#29702#32773)
     end
-    object EdtNAME: TDBEditUNIC
-      Left = 88
-      Top = 67
-      Width = 121
-      Height = 21
-      DataField = 'TNNAME'
-      DataSource = DataModule3.DataSource2
-      ImeMode = imHira
-      TabOrder = 1
-      OptLen = 20
-      OptFldType = O
-    end
     object EdtKGKB: TDBEditUNIC
       Left = 239
       Top = 126
       Width = 121
       Height = 21
       DataField = 'TNKGKB'
-      DataSource = DataModule3.DataSource2
+      DataSource = DataModule3.DataSrcF0002
       TabOrder = 5
       Visible = False
-    end
-    object EdtTNCD: TDBEditUNIC
-      Left = 88
-      Top = 40
-      Width = 43
-      Height = 21
-      DataField = 'TNTNCD'
-      DataSource = DataModule3.DataSource2
-      Enabled = False
-      ImeMode = imClose
-      ImeName = 'Microsoft Office IME 2007'
-      TabOrder = 0
-      OptLen = 4
-      OptUpper = True
     end
     object EdtPASSw: TDBEditUNIC
       Left = 214
@@ -129,7 +95,8 @@ object F0002Frm: TF0002Frm
       Margins.Top = 2
       Margins.Right = 2
       Margins.Bottom = 2
-      DataSource = DataModule3.DataSource2
+      DataField = 'PASS'
+      DataSource = DataModule3.DataSrcF0002
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -157,6 +124,34 @@ object F0002Frm: TF0002Frm
       ParentFont = False
       TabOrder = 7
       Text = #36861#21152
+    end
+    object EdtPass: TEdit
+      Left = 88
+      Top = 94
+      Width = 121
+      Height = 21
+      TabOrder = 2
+    end
+    object EdtTNCD: TDBEditUNIC
+      Left = 88
+      Top = 40
+      Width = 43
+      Height = 21
+      DataField = 'TNTNCD'
+      DataSource = DataModule3.DataSrcF0002
+      TabOrder = 0
+      OptLen = 4
+    end
+    object EdtNAME: TDBEditUNIC
+      Left = 88
+      Top = 67
+      Width = 121
+      Height = 21
+      DataField = 'TNNAME'
+      DataSource = DataModule3.DataSrcF0002
+      TabOrder = 1
+      OptLen = 20
+      OptFldType = O
     end
   end
   object Panel2: TPanel

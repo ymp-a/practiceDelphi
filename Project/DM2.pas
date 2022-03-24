@@ -8,51 +8,52 @@ uses
   FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.UI.Intf,
   FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Phys, FireDAC.VCLUI.Wait,
   Data.DB, FireDAC.Comp.Client, FireDAC.Comp.DataSet, FireDAC.Phys.MSSQL,
-  FireDAC.Phys.MSSQLDef, Datasnap.Provider, Datasnap.DBClient;
+  FireDAC.Phys.MSSQLDef, Datasnap.Provider, Datasnap.DBClient, FireDAC.Comp.UI;
 
 type
   TDataModule2 = class(TDataModule)
-    FDQueryLogin: TFDQuery;
+    FDQryTNMMSP: TFDQuery;
     FDConnection1: TFDConnection;
-    DataSource1: TDataSource;
-    FDQueryLoginTNTNCD: TIntegerField;
-    FDQueryLoginTNBKCD: TIntegerField;
-    FDQueryLoginTNPASS: TVarBytesField;
-    FDQueryLoginTNNAME: TStringField;
-    FDQueryLoginTNKGKB: TStringField;
-    FDQueryLoginTNSTKB: TStringField;
-    FDQueryLoginTNPWLA: TDateField;
-    FDQueryLoginTNCRDT: TDateField;
-    FDQueryLoginTNCRTM: TTimeField;
-    FDQueryLoginTNCRPG: TStringField;
-    FDQueryLoginTNCRWS: TStringField;
-    FDQueryLoginTNCRUS: TStringField;
-    FDQueryLoginTNUPDT: TDateField;
-    FDQueryLoginTNUPTM: TTimeField;
-    FDQueryLoginTNUPPG: TStringField;
-    FDQueryLoginTNUPWS: TStringField;
-    FDQueryLoginTNUPUS: TStringField;
-    FDQueryLoginTNJTCD: TStringField;
-    ClientDataSet1: TClientDataSet;
-    DataSetProvider1: TDataSetProvider;
-    ClientDataSet1TNTNCD: TIntegerField;
-    ClientDataSet1TNBKCD: TIntegerField;
-    ClientDataSet1TNPASS: TVarBytesField;
-    ClientDataSet1TNNAME: TStringField;
-    ClientDataSet1TNKGKB: TStringField;
-    ClientDataSet1TNSTKB: TStringField;
-    ClientDataSet1TNPWLA: TDateField;
-    ClientDataSet1TNCRDT: TDateField;
-    ClientDataSet1TNCRTM: TTimeField;
-    ClientDataSet1TNCRPG: TStringField;
-    ClientDataSet1TNCRWS: TStringField;
-    ClientDataSet1TNCRUS: TStringField;
-    ClientDataSet1TNUPDT: TDateField;
-    ClientDataSet1TNUPTM: TTimeField;
-    ClientDataSet1TNUPPG: TStringField;
-    ClientDataSet1TNUPWS: TStringField;
-    ClientDataSet1TNUPUS: TStringField;
-    ClientDataSet1TNJTCD: TStringField;
+    DataSrcTNMMSP: TDataSource;
+    FDQryTNMMSPTNTNCD: TIntegerField;
+    FDQryTNMMSPTNBKCD: TIntegerField;
+    FDQryTNMMSPTNPASS: TVarBytesField;
+    FDQryTNMMSPTNNAME: TStringField;
+    FDQryTNMMSPTNKGKB: TStringField;
+    FDQryTNMMSPTNSTKB: TStringField;
+    FDQryTNMMSPTNPWLA: TDateField;
+    FDQryTNMMSPTNCRDT: TDateField;
+    FDQryTNMMSPTNCRTM: TTimeField;
+    FDQryTNMMSPTNCRPG: TStringField;
+    FDQryTNMMSPTNCRWS: TStringField;
+    FDQryTNMMSPTNCRUS: TStringField;
+    FDQryTNMMSPTNUPDT: TDateField;
+    FDQryTNMMSPTNUPTM: TTimeField;
+    FDQryTNMMSPTNUPPG: TStringField;
+    FDQryTNMMSPTNUPWS: TStringField;
+    FDQryTNMMSPTNUPUS: TStringField;
+    FDQryTNMMSPTNJTCD: TStringField;
+    ClientDataSetTNMMSP: TClientDataSet;
+    DataSetProTNMMSP: TDataSetProvider;
+    ClientDataSetTNMMSPTNTNCD: TIntegerField;
+    ClientDataSetTNMMSPTNBKCD: TIntegerField;
+    ClientDataSetTNMMSPTNPASS: TVarBytesField;
+    ClientDataSetTNMMSPTNNAME: TStringField;
+    ClientDataSetTNMMSPTNKGKB: TStringField;
+    ClientDataSetTNMMSPTNSTKB: TStringField;
+    ClientDataSetTNMMSPTNPWLA: TDateField;
+    ClientDataSetTNMMSPTNCRDT: TDateField;
+    ClientDataSetTNMMSPTNCRTM: TTimeField;
+    ClientDataSetTNMMSPTNCRPG: TStringField;
+    ClientDataSetTNMMSPTNCRWS: TStringField;
+    ClientDataSetTNMMSPTNCRUS: TStringField;
+    ClientDataSetTNMMSPTNUPDT: TDateField;
+    ClientDataSetTNMMSPTNUPTM: TTimeField;
+    ClientDataSetTNMMSPTNUPPG: TStringField;
+    ClientDataSetTNMMSPTNUPWS: TStringField;
+    ClientDataSetTNMMSPTNUPUS: TStringField;
+    ClientDataSetTNMMSPTNJTCD: TStringField;
+
   private
     { Private 宣言 }
   public
@@ -68,7 +69,7 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
-uses functions, Utilybs;
+uses functions, Utilybs, F0001;
 
 {$R *.dfm}
 
@@ -80,15 +81,15 @@ begin
   //フラグ初期化
   andFlg:=false;
 
-  with ClientDataSet1 do
+  with ClientDataSetTNMMSP do
   begin
     //ClientDataSet1を初期化
-    ClientDataSet1.Active := False;
+    ClientDataSetTNMMSP.Active := False;
 
-    with FDQueryLogin do
+    with FDQryTNMMSP do
     begin
       //FDQueryLogin初期化
-      FDQueryLogin.Close;
+      FDQryTNMMSP.Close;
       //SQL文初期化
       SQL.Clear;
       //ここからSQL文↓
@@ -123,11 +124,11 @@ begin
       //昇順
       SQL.Add(' ORDER BY TNTNCD ');
       //SQL文実行
-      FDQueryLogin.Open;
+      FDQryTNMMSP.Open;
     end;
 
     //ClientDataSet1を開く
-    ClientDataSet1.Active := True;
+    ClientDataSetTNMMSP.Active := True;
 
     //対象データが存在しない場合、データセットを閉じて終了
     if Eof and Bof then

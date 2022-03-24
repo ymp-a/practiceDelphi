@@ -12,11 +12,13 @@ type
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject); // 担当者照会
+    procedure Button2Click(Sender: TObject); // 担当者メンテ
+    procedure Button3Click(Sender: TObject); // 見積照会
+    procedure Button4Click(Sender: TObject); // 見積入力
   private
     { Private 宣言 }
+
   public
     { Public 宣言 }
   var
@@ -30,7 +32,7 @@ implementation
 
 {$R *.dfm}
 
-uses F0001, F0002, F0003, EdtMaster;
+uses F0001, F0002, F0003, EdtMaster, DM3, FncLock, Utilybs, DM2, F0004;
 
 procedure TMNK001Frm.Button1Click(Sender: TObject);
 var
@@ -46,29 +48,39 @@ begin
 end;
 
 procedure TMNK001Frm.Button2Click(Sender: TObject);
-var
-  frm:TF0002Frm;
 begin
-  //担当者メンテ画面を代入
-  frm := TF0002Frm.Create(Application);
-  frm.Mode := 'Add';
+
+  F0001Frm.ShwNextFrm('Add');
+
+end;
+
+procedure TMNK001Frm.Button3Click(Sender: TObject);
+var frm:TF0004Frm;
+begin
+    //担当者照会画面を代入
+  frm := TF0004Frm.Create(Application);
+  frm.Mode := 'Dsp';
   //画面展開
   frm.ShowModal;
   //F0001インスタンス開放
   FreeAndNil(frm);
-  frm.Mode := '';
 end;
 
 procedure TMNK001Frm.Button4Click(Sender: TObject);
-var
-  frm:TForm;
+//var
+//  frm:TF0003Frm;
 begin
+
+  F0004Frm.ShwNextFrm('Add');
   //見積入力（Add）画面を代入
-  frm := TF0003Frm.Create(Application);
+//  frm := TF0003Frm.Create(Application);
+//  frm.Mode := 'Add';
   //画面展開
-  frm.ShowModal;
+//  frm.ShowModal;
   //F0001インスタンス開放
-  FreeAndNil(frm);
+//  FreeAndNil(frm);
 end;
+
+
 
 end.

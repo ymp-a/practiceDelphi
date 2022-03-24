@@ -38,6 +38,7 @@ object MNK001Frm: TMNK001Frm
     Height = 25
     Caption = #35211#31309#29031#20250
     TabOrder = 2
+    OnClick = Button3Click
   end
   object Button4: TButton
     Left = 48

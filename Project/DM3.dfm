@@ -2,84 +2,107 @@ object DataModule3: TDataModule3
   OldCreateOrder = False
   Height = 309
   Width = 405
-  object DataSource2: TDataSource
-    DataSet = ClientDataSet2
+  object DataSrcF0002: TDataSource
+    DataSet = ClientDataSetF0002
     Left = 304
     Top = 48
   end
-  object ClientDataSet2: TClientDataSet
+  object ClientDataSetF0002: TClientDataSet
     Aggregates = <>
     Params = <>
-    ProviderName = 'DataSetProvider2'
+    ProviderName = 'DataSetProF0002'
     Left = 221
-    Top = 48
-    object ClientDataSet2TNTNCD: TIntegerField
+    Top = 56
+    object ClientDataSetF0002TNTNCD: TIntegerField
       FieldName = 'TNTNCD'
+      Origin = 'TNTNCD'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
-    object ClientDataSet2TNBKCD: TIntegerField
+    object ClientDataSetF0002TNBKCD: TIntegerField
       FieldName = 'TNBKCD'
+      Origin = 'TNBKCD'
     end
-    object ClientDataSet2TNPASS: TVarBytesField
+    object ClientDataSetF0002TNPASS: TVarBytesField
       FieldName = 'TNPASS'
+      Origin = 'TNPASS'
       Size = 2000
     end
-    object ClientDataSet2TNNAME: TStringField
+    object ClientDataSetF0002TNNAME: TStringField
       FieldName = 'TNNAME'
+      Origin = 'TNNAME'
       Size = 16
     end
-    object ClientDataSet2TNKGKB: TStringField
+    object ClientDataSetF0002TNKGKB: TStringField
       FieldName = 'TNKGKB'
+      Origin = 'TNKGKB'
       Size = 1
     end
-    object ClientDataSet2TNSTKB: TStringField
+    object ClientDataSetF0002TNSTKB: TStringField
       FieldName = 'TNSTKB'
+      Origin = 'TNSTKB'
       Size = 4
     end
-    object ClientDataSet2TNPWLA: TDateField
+    object ClientDataSetF0002TNPWLA: TDateField
       FieldName = 'TNPWLA'
+      Origin = 'TNPWLA'
     end
-    object ClientDataSet2TNCRDT: TDateField
+    object ClientDataSetF0002TNCRDT: TDateField
       FieldName = 'TNCRDT'
+      Origin = 'TNCRDT'
     end
-    object ClientDataSet2TNCRTM: TTimeField
+    object ClientDataSetF0002TNCRTM: TTimeField
       FieldName = 'TNCRTM'
+      Origin = 'TNCRTM'
     end
-    object ClientDataSet2TNCRPG: TStringField
+    object ClientDataSetF0002TNCRPG: TStringField
       FieldName = 'TNCRPG'
+      Origin = 'TNCRPG'
     end
-    object ClientDataSet2TNCRWS: TStringField
-      FieldName = 'TNCRWS'
-    end
-    object ClientDataSet2TNCRUS: TStringField
+    object ClientDataSetF0002TNCRUS: TStringField
       FieldName = 'TNCRUS'
+      Origin = 'TNCRUS'
     end
-    object ClientDataSet2TNUPDT: TDateField
+    object ClientDataSetF0002TNCRWS: TStringField
+      FieldName = 'TNCRWS'
+      Origin = 'TNCRWS'
+    end
+    object ClientDataSetF0002TNUPDT: TDateField
       FieldName = 'TNUPDT'
+      Origin = 'TNUPDT'
     end
-    object ClientDataSet2TNUPTM: TTimeField
+    object ClientDataSetF0002TNUPTM: TTimeField
       FieldName = 'TNUPTM'
+      Origin = 'TNUPTM'
     end
-    object ClientDataSet2TNUPPG: TStringField
+    object ClientDataSetF0002TNUPPG: TStringField
       FieldName = 'TNUPPG'
+      Origin = 'TNUPPG'
     end
-    object ClientDataSet2TNUPWS: TStringField
+    object ClientDataSetF0002TNUPWS: TStringField
       FieldName = 'TNUPWS'
+      Origin = 'TNUPWS'
     end
-    object ClientDataSet2TNUPUS: TStringField
+    object ClientDataSetF0002TNUPUS: TStringField
       FieldName = 'TNUPUS'
+      Origin = 'TNUPUS'
     end
-    object ClientDataSet2TNJTCD: TStringField
+    object ClientDataSetF0002TNJTCD: TStringField
       FieldName = 'TNJTCD'
+      Origin = 'TNJTCD'
       Size = 1
     end
+    object ClientDataSetF0002PASS: TStringField
+      FieldKind = fkInternalCalc
+      FieldName = 'PASS'
+    end
   end
-  object DataSetProvider2: TDataSetProvider
-    DataSet = FDQueryLogin2
+  object DataSetProF0002: TDataSetProvider
+    DataSet = FDQryF0002
     Left = 138
     Top = 48
   end
-  object FDQueryLogin2: TFDQuery
+  object FDQryF0002: TFDQuery
     Connection = DataModule2.FDConnection1
     SQL.Strings = (
       'SELECT *'
@@ -91,6 +114,7 @@ object DataModule3: TDataModule3
       Origin = 'TNTNCD'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
+      DisplayFormat = '#'
     end
     object IntegerField2: TIntegerField
       FieldName = 'TNBKCD'

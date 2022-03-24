@@ -20,7 +20,7 @@ object F0003Frm: TF0003Frm
     Width = 615
     Height = 121
     Align = alTop
-    TabOrder = 7
+    TabOrder = 0
     object Label1: TLabel
       Left = 24
       Top = 29
@@ -63,6 +63,13 @@ object F0003Frm: TF0003Frm
       Height = 13
       Caption = #35211#31309#20633#32771
     end
+    object Label15: TLabel
+      Left = 397
+      Top = 54
+      Width = 37
+      Height = 13
+      Caption = 'Label15'
+    end
     object EdtMode: TEdit
       Left = -1
       Top = -1
@@ -79,6 +86,78 @@ object F0003Frm: TF0003Frm
       TabOrder = 0
       Text = #36861#21152
     end
+    object EdtMHTNCD: TDBEditUNIC
+      Left = 336
+      Top = 51
+      Width = 55
+      Height = 21
+      DataField = 'MHTNCD'
+      DataSource = DataModule4.DataSrcMTHFLP
+      TabOrder = 1
+      OnExit = EdtMHTNCDExit
+      OptLen = 6
+    end
+    object EdtMHTKNM: TDBEditUNIC
+      Left = 397
+      Top = 24
+      Width = 180
+      Height = 21
+      DataField = 'MHTKNM'
+      DataSource = DataModule4.DataSrcMTHFLP
+      TabOrder = 2
+      OptLen = 20
+      OptFldType = O
+    end
+    object EdtMHTKCD: TDBEditUNIC
+      Left = 336
+      Top = 24
+      Width = 55
+      Height = 21
+      DataField = 'MHTKCD'
+      DataSource = DataModule4.DataSrcMTHFLP
+      TabOrder = 3
+      OptLen = 6
+    end
+    object EdtMHBIKO: TDBEditUNIC
+      Left = 336
+      Top = 78
+      Width = 241
+      Height = 21
+      DataField = 'MHBIKO'
+      DataSource = DataModule4.DataSrcMTHFLP
+      TabOrder = 4
+      OptLen = 20
+      OptFldType = O
+    end
+    object EdtMHIRDT: TDBEditUNIC
+      Left = 90
+      Top = 51
+      Width = 121
+      Height = 21
+      DataField = 'MHIRDT'
+      DataSource = DataModule4.DataSrcMTHFLP
+      TabOrder = 5
+    end
+    object EdtMHKGDT: TDBEditUNIC
+      Left = 90
+      Top = 78
+      Width = 121
+      Height = 21
+      DataField = 'MHKGDT'
+      DataSource = DataModule4.DataSrcMTHFLP
+      TabOrder = 6
+    end
+    object EdtMHNO: TDBEditUNIC
+      Left = 90
+      Top = 24
+      Width = 121
+      Height = 21
+      DataField = 'MHNO'
+      DataSource = DataModule4.DataSrcMTHFLP
+      TabOrder = 7
+      OptLen = 6
+      OptFldType = S
+    end
   end
   object Panel2: TPanel
     Left = 0
@@ -86,7 +165,9 @@ object F0003Frm: TF0003Frm
     Width = 615
     Height = 367
     Align = alClient
-    TabOrder = 8
+    TabOrder = 1
+    OnEnter = DBCtrlGrid1Enter
+    OnExit = DBCtrlGrid1Exit
     object Label13: TLabel
       Left = 234
       Top = 342
@@ -107,7 +188,8 @@ object F0003Frm: TF0003Frm
       Width = 75
       Height = 25
       Caption = #34892#36861#21152
-      TabOrder = 0
+      TabOrder = 3
+      OnClick = Button1Click
     end
     object DBCtrlGrid1: TDBCtrlGrid
       Left = 0
@@ -117,7 +199,7 @@ object F0003Frm: TF0003Frm
       DataSource = DataModule4.DataSrcMTMFLP
       PanelHeight = 96
       PanelWidth = 598
-      TabOrder = 1
+      TabOrder = 0
       object Label7: TLabel
         Left = 51
         Top = 5
@@ -160,26 +242,23 @@ object F0003Frm: TF0003Frm
         Height = 13
         Caption = #20633#32771
       end
+      object EdtMTGNO: TDBText
+        Left = 7
+        Top = 24
+        Width = 37
+        Height = 17
+        DataField = 'MTGNO'
+        DataSource = DataModule4.DataSrcMTMFLP
+      end
       object ChkDel1: TDBCheckBox
         Left = 511
         Top = 24
         Width = 24
         Height = 17
-        DataField = 'chedel1'
+        TabStop = False
+        DataField = 'dataJTCD'
         DataSource = DataModule4.DataSrcMTMFLP
-        TabOrder = 6
-      end
-      object EdtMTGNO: TDBEditUNIC
-        Left = 3
-        Top = 20
-        Width = 41
-        Height = 21
-        DataField = 'MTGNO'
-        DataSource = DataModule4.DataSrcMTMFLP
-        Enabled = False
-        TabOrder = 0
-        OptLen = 2
-        OptFldType = S
+        TabOrder = 5
       end
       object EdtMTSHCD: TDBEditUNIC
         Left = 50
@@ -188,7 +267,7 @@ object F0003Frm: TF0003Frm
         Height = 21
         DataField = 'MTSHCD'
         DataSource = DataModule4.DataSrcMTMFLP
-        TabOrder = 1
+        TabOrder = 0
         OptLen = 6
       end
       object EdtMTSHNM: TDBEditUNIC
@@ -198,8 +277,9 @@ object F0003Frm: TF0003Frm
         Height = 21
         DataField = 'MTSHNM'
         DataSource = DataModule4.DataSrcMTMFLP
-        TabOrder = 2
+        TabOrder = 1
         OptLen = 20
+        OptFldType = O
       end
       object EdtMTTNKA: TDBEditUNIC
         Left = 306
@@ -208,7 +288,8 @@ object F0003Frm: TF0003Frm
         Height = 21
         DataField = 'MTTNKA'
         DataSource = DataModule4.DataSrcMTMFLP
-        TabOrder = 3
+        TabOrder = 2
+        OnExit = EdtMTTNKAExit
         Alignment = taRightJustify
         OptLen = 9
         OptFldType = S
@@ -221,7 +302,8 @@ object F0003Frm: TF0003Frm
         Height = 21
         DataField = 'MTSRYO'
         DataSource = DataModule4.DataSrcMTMFLP
-        TabOrder = 4
+        TabOrder = 3
+        OnExit = EdtMTSRYOExit
         Alignment = taRightJustify
         OptLen = 7
         OptFldType = S
@@ -233,7 +315,8 @@ object F0003Frm: TF0003Frm
         Height = 21
         DataField = 'MTKIN'
         DataSource = DataModule4.DataSrcMTMFLP
-        TabOrder = 5
+        ReadOnly = True
+        TabOrder = 4
         Alignment = taRightJustify
         OptLen = 9
         OptFldType = S
@@ -246,9 +329,32 @@ object F0003Frm: TF0003Frm
         Height = 21
         DataField = 'MTBIKO'
         DataSource = DataModule4.DataSrcMTMFLP
-        TabOrder = 7
+        TabOrder = 6
         OptLen = 20
+        OptFldType = O
       end
+    end
+    object EdtMHGKIN: TDBEditUNIC
+      Left = 480
+      Top = 338
+      Width = 121
+      Height = 21
+      DataField = 'sumKIN'
+      DataSource = DataModule4.DataSrcMTMFLP
+      ReadOnly = True
+      TabOrder = 2
+      Alignment = taRightJustify
+    end
+    object EdtMHGSRO: TDBEditUNIC
+      Left = 288
+      Top = 340
+      Width = 121
+      Height = 21
+      DataField = 'sumSRYO'
+      DataSource = DataModule4.DataSrcMTMFLP
+      ReadOnly = True
+      TabOrder = 1
+      Alignment = taRightJustify
     end
   end
   object Panel3: TPanel
@@ -257,7 +363,7 @@ object F0003Frm: TF0003Frm
     Width = 615
     Height = 50
     Align = alBottom
-    TabOrder = 9
+    TabOrder = 2
     object Button2: TButton
       Left = 15
       Top = 14
@@ -265,6 +371,7 @@ object F0003Frm: TF0003Frm
       Height = 25
       Caption = #26356#26032
       TabOrder = 0
+      OnClick = Button2Click
     end
     object Button3: TButton
       Left = 120
@@ -275,92 +382,5 @@ object F0003Frm: TF0003Frm
       TabOrder = 1
       OnClick = Button3Click
     end
-  end
-  object EdtMHNO: TDBEditUNIC
-    Left = 90
-    Top = 24
-    Width = 121
-    Height = 21
-    DataField = 'MHNO'
-    DataSource = DataModule4.DataSrcMTHFLP
-    TabOrder = 0
-    OptLen = 6
-    OptFldType = S
-  end
-  object EdtMHIRDT: TDBEditUNIC
-    Left = 90
-    Top = 51
-    Width = 121
-    Height = 21
-    DataField = 'MHIRDT'
-    DataSource = DataModule4.DataSrcMTHFLP
-    TabOrder = 3
-  end
-  object EdtMHKGDT: TDBEditUNIC
-    Left = 90
-    Top = 78
-    Width = 121
-    Height = 21
-    DataField = 'MHKGDT'
-    DataSource = DataModule4.DataSrcMTHFLP
-    TabOrder = 5
-  end
-  object EdtMHTKCD: TDBEditUNIC
-    Left = 336
-    Top = 24
-    Width = 55
-    Height = 21
-    DataField = 'MHTKCD'
-    DataSource = DataModule4.DataSrcMTHFLP
-    TabOrder = 1
-    OptLen = 6
-  end
-  object EdtMHTNCD: TDBEditUNIC
-    Left = 336
-    Top = 51
-    Width = 55
-    Height = 21
-    DataField = 'MHTNCD'
-    DataSource = DataModule4.DataSrcMTHFLP
-    TabOrder = 4
-    OptLen = 6
-  end
-  object EdtMHBIKO: TDBEditUNIC
-    Left = 336
-    Top = 78
-    Width = 241
-    Height = 21
-    DataField = 'MHBIKO'
-    DataSource = DataModule4.DataSrcMTHFLP
-    TabOrder = 6
-    OptLen = 20
-  end
-  object EdtMHTKNM: TDBEditUNIC
-    Left = 397
-    Top = 24
-    Width = 180
-    Height = 21
-    DataField = 'MHTKNM'
-    DataSource = DataModule4.DataSrcMTHFLP
-    TabOrder = 2
-    OptLen = 20
-  end
-  object EdtMHGSRO: TDBEditUNIC
-    Left = 288
-    Top = 459
-    Width = 121
-    Height = 21
-    DataField = 'MHGSRO'
-    DataSource = DataModule4.DataSrcMTHFLP
-    TabOrder = 10
-  end
-  object EdtMHGKIN: TDBEditUNIC
-    Left = 480
-    Top = 459
-    Width = 121
-    Height = 21
-    DataField = 'MHGKIN'
-    DataSource = DataModule4.DataSrcMTHFLP
-    TabOrder = 11
   end
 end

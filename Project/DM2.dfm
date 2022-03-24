@@ -2,7 +2,7 @@ object DataModule2: TDataModule2
   OldCreateOrder = False
   Height = 296
   Width = 463
-  object FDQueryLogin: TFDQuery
+  object FDQryTNMMSP: TFDQuery
     Connection = FDConnection1
     SQL.Strings = (
       'SELECT *'
@@ -10,81 +10,81 @@ object DataModule2: TDataModule2
       '')
     Left = 56
     Top = 56
-    object FDQueryLoginTNTNCD: TIntegerField
+    object FDQryTNMMSPTNTNCD: TIntegerField
       FieldName = 'TNTNCD'
       Origin = 'TNTNCD'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
-    object FDQueryLoginTNBKCD: TIntegerField
+    object FDQryTNMMSPTNBKCD: TIntegerField
       FieldName = 'TNBKCD'
       Origin = 'TNBKCD'
     end
-    object FDQueryLoginTNPASS: TVarBytesField
+    object FDQryTNMMSPTNPASS: TVarBytesField
       FieldName = 'TNPASS'
       Origin = 'TNPASS'
       Size = 2000
     end
-    object FDQueryLoginTNNAME: TStringField
+    object FDQryTNMMSPTNNAME: TStringField
       FieldName = 'TNNAME'
       Origin = 'TNNAME'
       Size = 16
     end
-    object FDQueryLoginTNKGKB: TStringField
+    object FDQryTNMMSPTNKGKB: TStringField
       FieldName = 'TNKGKB'
       Origin = 'TNKGKB'
       Size = 1
     end
-    object FDQueryLoginTNSTKB: TStringField
+    object FDQryTNMMSPTNSTKB: TStringField
       FieldName = 'TNSTKB'
       Origin = 'TNSTKB'
       Size = 4
     end
-    object FDQueryLoginTNPWLA: TDateField
+    object FDQryTNMMSPTNPWLA: TDateField
       FieldName = 'TNPWLA'
       Origin = 'TNPWLA'
     end
-    object FDQueryLoginTNCRDT: TDateField
+    object FDQryTNMMSPTNCRDT: TDateField
       FieldName = 'TNCRDT'
       Origin = 'TNCRDT'
     end
-    object FDQueryLoginTNCRTM: TTimeField
+    object FDQryTNMMSPTNCRTM: TTimeField
       FieldName = 'TNCRTM'
       Origin = 'TNCRTM'
     end
-    object FDQueryLoginTNCRPG: TStringField
+    object FDQryTNMMSPTNCRPG: TStringField
       FieldName = 'TNCRPG'
       Origin = 'TNCRPG'
     end
-    object FDQueryLoginTNCRWS: TStringField
+    object FDQryTNMMSPTNCRWS: TStringField
       FieldName = 'TNCRWS'
       Origin = 'TNCRWS'
     end
-    object FDQueryLoginTNCRUS: TStringField
+    object FDQryTNMMSPTNCRUS: TStringField
       FieldName = 'TNCRUS'
       Origin = 'TNCRUS'
     end
-    object FDQueryLoginTNUPDT: TDateField
+    object FDQryTNMMSPTNUPDT: TDateField
       FieldName = 'TNUPDT'
       Origin = 'TNUPDT'
     end
-    object FDQueryLoginTNUPTM: TTimeField
+    object FDQryTNMMSPTNUPTM: TTimeField
       FieldName = 'TNUPTM'
       Origin = 'TNUPTM'
     end
-    object FDQueryLoginTNUPPG: TStringField
+    object FDQryTNMMSPTNUPPG: TStringField
       FieldName = 'TNUPPG'
       Origin = 'TNUPPG'
     end
-    object FDQueryLoginTNUPWS: TStringField
+    object FDQryTNMMSPTNUPWS: TStringField
       FieldName = 'TNUPWS'
       Origin = 'TNUPWS'
     end
-    object FDQueryLoginTNUPUS: TStringField
+    object FDQryTNMMSPTNUPUS: TStringField
       FieldName = 'TNUPUS'
       Origin = 'TNUPUS'
     end
-    object FDQueryLoginTNJTCD: TStringField
+    object FDQryTNMMSPTNJTCD: TStringField
       FieldName = 'TNJTCD'
       Origin = 'TNJTCD'
       Size = 1
@@ -99,84 +99,83 @@ object DataModule2: TDataModule2
       'Server=TOPC04'
       'OSAuthent=No'
       'DriverID=MSSQL')
-    Connected = True
     Left = 400
     Top = 8
   end
-  object DataSource1: TDataSource
-    DataSet = ClientDataSet1
+  object DataSrcTNMMSP: TDataSource
+    DataSet = ClientDataSetTNMMSP
     Left = 304
     Top = 56
   end
-  object ClientDataSet1: TClientDataSet
+  object ClientDataSetTNMMSP: TClientDataSet
     Aggregates = <>
     Params = <>
-    ProviderName = 'DataSetProvider1'
+    ProviderName = 'DataSetProTNMMSP'
     Left = 221
     Top = 56
-    object ClientDataSet1TNTNCD: TIntegerField
+    object ClientDataSetTNMMSPTNTNCD: TIntegerField
       FieldName = 'TNTNCD'
       Required = True
     end
-    object ClientDataSet1TNBKCD: TIntegerField
+    object ClientDataSetTNMMSPTNBKCD: TIntegerField
       FieldName = 'TNBKCD'
     end
-    object ClientDataSet1TNPASS: TVarBytesField
+    object ClientDataSetTNMMSPTNPASS: TVarBytesField
       FieldName = 'TNPASS'
       Size = 2000
     end
-    object ClientDataSet1TNNAME: TStringField
+    object ClientDataSetTNMMSPTNNAME: TStringField
       FieldName = 'TNNAME'
       Size = 16
     end
-    object ClientDataSet1TNKGKB: TStringField
+    object ClientDataSetTNMMSPTNKGKB: TStringField
       FieldName = 'TNKGKB'
       Size = 1
     end
-    object ClientDataSet1TNSTKB: TStringField
+    object ClientDataSetTNMMSPTNSTKB: TStringField
       FieldName = 'TNSTKB'
       Size = 4
     end
-    object ClientDataSet1TNPWLA: TDateField
+    object ClientDataSetTNMMSPTNPWLA: TDateField
       FieldName = 'TNPWLA'
     end
-    object ClientDataSet1TNCRDT: TDateField
+    object ClientDataSetTNMMSPTNCRDT: TDateField
       FieldName = 'TNCRDT'
     end
-    object ClientDataSet1TNCRTM: TTimeField
+    object ClientDataSetTNMMSPTNCRTM: TTimeField
       FieldName = 'TNCRTM'
     end
-    object ClientDataSet1TNCRPG: TStringField
+    object ClientDataSetTNMMSPTNCRPG: TStringField
       FieldName = 'TNCRPG'
     end
-    object ClientDataSet1TNCRWS: TStringField
+    object ClientDataSetTNMMSPTNCRWS: TStringField
       FieldName = 'TNCRWS'
     end
-    object ClientDataSet1TNCRUS: TStringField
+    object ClientDataSetTNMMSPTNCRUS: TStringField
       FieldName = 'TNCRUS'
     end
-    object ClientDataSet1TNUPDT: TDateField
+    object ClientDataSetTNMMSPTNUPDT: TDateField
       FieldName = 'TNUPDT'
     end
-    object ClientDataSet1TNUPTM: TTimeField
+    object ClientDataSetTNMMSPTNUPTM: TTimeField
       FieldName = 'TNUPTM'
     end
-    object ClientDataSet1TNUPPG: TStringField
+    object ClientDataSetTNMMSPTNUPPG: TStringField
       FieldName = 'TNUPPG'
     end
-    object ClientDataSet1TNUPWS: TStringField
+    object ClientDataSetTNMMSPTNUPWS: TStringField
       FieldName = 'TNUPWS'
     end
-    object ClientDataSet1TNUPUS: TStringField
+    object ClientDataSetTNMMSPTNUPUS: TStringField
       FieldName = 'TNUPUS'
     end
-    object ClientDataSet1TNJTCD: TStringField
+    object ClientDataSetTNMMSPTNJTCD: TStringField
       FieldName = 'TNJTCD'
       Size = 1
     end
   end
-  object DataSetProvider1: TDataSetProvider
-    DataSet = FDQueryLogin
+  object DataSetProTNMMSP: TDataSetProvider
+    DataSet = FDQryTNMMSP
     Left = 138
     Top = 56
   end

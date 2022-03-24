@@ -15,6 +15,7 @@ type
     EdtPsw: TEdit;
     //ログインボタンタップ時の処理
     procedure Button1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private 宣言 }
   public
@@ -30,7 +31,7 @@ implementation
 
 {$R *.dfm}
 
-uses Utilybs, DM2, MNK001, IniFilemnt, functions;
+uses Utilybs, DM2, MNK001, IniFilemnt, functions, System.IniFiles;
 
 //検索ボタンタップ時の処理
 procedure TForm1.Button1Click(Sender: TObject);
@@ -47,7 +48,7 @@ begin
   try
 
     try
-    //データモジュールを作成
+    //dmUtilYbsデータモジュールを作成
       dmUtilYbs:=TdmUtilYbs.Create(self);//サーバー接続オン
 
       if dmUtilYbs.FDConnection1.Connected=true then  //接続中の処理
@@ -72,12 +73,6 @@ begin
           Exit;
         end;
 
-//        if KGKB = 'EXERR' then     //PW期限切れのときピンク処理
-//        begin
-//          EdtPsw.Color := clERR;
-//          EdtPsw.SetFocus;
-//          Exit;
-//        end;
 
         //メニュー表示
         crtMnuFrm;      //継承のため、ファンクション化
@@ -116,5 +111,63 @@ begin
     //画面展開
     frm.ShowModal;
 end; //メニュー表示ここまで
+
+procedure TForm1.FormShow(Sender: TObject);
+const
+  fileNm= 'PASWIN.ini';
+var
+  iniF : TIniFile;
+  Database: string;
+  DriverID: String;
+  Server: String;
+  User_Name: String;
+  Password: String;
+  ODBCAdvanced: String;
+  OSAuthent: String;
+begin
+  try
+
+    try // iniファイルを読込む準備
+      iniF :=  TIniFile.Create(ExtractFilePath(Application.ExeName)+fileNm);
+    except
+      MessageDlg('INIファイルの読み取りでエラーが発生しました。',mtError,[mbOK],0);
+      Exit;
+    end;
+
+    //dmUtilYbsデータモジュールを作成
+    dmUtilYbs:=TdmUtilYbs.Create(self);
+
+    Database:=iniF.ReadString('LOGON','Database','');
+    DriverID:= iniF.ReadString('LOGON','DriverID','');
+    Server:= iniF.ReadString('LOGON','Server','');
+    User_Name:= iniF.ReadString('LOGON','User_Name','');
+    Password:= iniF.ReadString('LOGON','Password','');
+    ODBCAdvanced:=iniF.ReadString('LOGON','ODBCAdvanced','');
+    OSAuthent:=iniF.ReadString('LOGON','OSAuthent','');
+
+    EdtUserId.Text := iniF.ReadString('Remote','UserId','');
+    EdtPsw.Text := iniF.ReadString('Remote','Password','');
+
+    with dmUtilYbs.FDConnection1 do
+    begin
+      close;
+      Params.Clear;
+      Params.Values['DriverID']    := DriverID ;
+      Params.Values['Database']    := Database ;
+      Params.Values['OSAuthent']   := OSAuthent;
+      Params.Values['User_Name']   := User_Name;
+      Params.Values['Password']    := Password ;
+      Params.Values['ODBCAdvanced']:= ODBCAdvanced;
+      Params.Values['Server']      := Server   ;
+
+    end;
+
+
+
+  finally
+    FreeAndNil(iniF);
+  end;
+
+end;
 
 end.

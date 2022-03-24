@@ -35,7 +35,8 @@ uses
   F0002 in 'F0002.pas' {F0002Frm},
   DM3 in 'DM3.pas' {DataModule3: TDataModule},
   F0003 in 'F0003.pas' {F0003Frm},
-  DM4 in 'DM4.pas' {DataModule4: TDataModule};
+  DM4 in 'DM4.pas' {DataModule4: TDataModule},
+  F0004 in 'F0004.pas' {F0004Frm};
 
 {$R *.res}
 
@@ -43,7 +44,6 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TForm1, Form1);
-  Application.CreateForm(TdmUtilYbs, dmUtilYbs);
   Application.CreateForm(TDataModule2, DataModule2);
   Application.CreateForm(TDataModule3, DataModule3);
   Application.CreateForm(TDataModule4, DataModule4);
