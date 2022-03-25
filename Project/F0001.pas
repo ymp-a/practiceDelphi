@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
-  Vcl.StdCtrls, Vcl.ExtCtrls;
+  Vcl.StdCtrls, Vcl.ExtCtrls, System.Actions, Vcl.ActnList;
 
 type
   TF0001Frm = class(TForm)
@@ -23,14 +23,17 @@ type
     EdtMode: TEdit;
     Button4: TButton;
     Button5: TButton;
-    //終了ボタン
-    procedure Button3Click(Sender: TObject);
-    //検索ボタン
-    procedure Button1Click(Sender: TObject);
-    //変更ボタン
-    procedure Button2Click(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
-    procedure Button5Click(Sender: TObject);
+    ActionList1: TActionList;
+    F1: TAction;
+    F2: TAction;
+    F8: TAction;
+    F3: TAction;
+    F9: TAction;
+    procedure Button3Click(Sender: TObject); // 終了ボタン
+    procedure Button1Click(Sender: TObject); // 検索ボタン
+    procedure Button2Click(Sender: TObject); // 変更ボタン
+    procedure Button4Click(Sender: TObject); // 追加ボタン
+    procedure Button5Click(Sender: TObject); // 削除ボタン
   private
     { Private 宣言 }
 
@@ -40,8 +43,7 @@ type
       TNCD:String;
       reNAME:String;
       Mode:String;
-  // モード管理
-    procedure ShwNextFrm(mode: string);
+    procedure ShwNextFrm(mode: string);      // モード管理
   end;
 
 var
@@ -53,7 +55,11 @@ implementation
 
 uses Unit1, DM2, F0002, EdtMaster, MNK001, DM3;
 
-//検索ボタンの処理
+{*******************************************************************************
+ 目的:検索ボタン押下時の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TF0001Frm.Button1Click(Sender: TObject);
 begin
   begin
@@ -62,54 +68,66 @@ begin
   if Mode = 'Dsp' then EdtMode.Text := '照会';
   end;
 
-  //担当者CDと担当者名をDM2へ渡す準備
-  TNCD:=EdtTNCD.Text;
+  TNCD:=EdtTNCD.Text;                  // 担当者CDと担当者名をDM2へ渡す準備
   reNAME:=EdtNAME.Text;
 
-  //DBGrid1の初期化
-  DBGrid1.DataSource.DataSet.Close;
+  DBGrid1.DataSource.DataSet.Close;    // DBGrid1の初期化
 
-  //担当者検索を開く
-  DataModule2.OpenTNData(TNCD,reNAME);
+  DataModule2.OpenTNData(TNCD,reNAME); // 担当者検索を開く
 
 end; // 検索ボタンの処理ここまで
 
 
-//変更ボタンの処理
+{*******************************************************************************
+ 目的:変更ボタン押下時の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TF0001Frm.Button2Click(Sender: TObject);
 var
   frm : TF0002Frm;
 begin
-  //DBGrid1にデータがない場合中断
+  // DBGrid1にデータがない場合中断
   if (Button3.Enabled=false)or(Button3.Visible=false) then abort;
   if DBGrid1.DataSource.DataSet.Active=False then abort;
   if DBGrid1.DataSource.DataSet.IsEmpty then abort;
 
   ShwNextFrm('Chg');
 
-  //照会画面復活
-  Self.Show;
-  //最新状態を表示する
-  Button1Click(Button1);
+  Self.Show;             // 照会画面復活
+  Button1Click(Button1); // DBGrid1の状態を更新
+
 end; //変更ボタンの処理ここまで
 
-//終了ボタンの処理
+{*******************************************************************************
+ 目的:終了ボタン押下時の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TF0001Frm.Button3Click(Sender: TObject);
 begin
-  //非表示チェック
+  // 非表示チェック
   if (Button3.Enabled=false)or(Button3.Visible=false) then abort;
-  //画面終了
-  Close;
+  Close; // 画面終了
+
 end; // 終了処理ここまで
 
 
-// 追加ボタンの処理
+{*******************************************************************************
+ 目的:追加ボタン押下時の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TF0001Frm.Button4Click(Sender: TObject);
 begin
   ShwNextFrm('Add');
 end; // 追加ボタンの処理ここまで
 
-// 削除ボタンの処理
+{*******************************************************************************
+ 目的:削除ボタン押下時の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TF0001Frm.Button5Click(Sender: TObject);
 begin
   if DataModule2.ClientDataSetTNMMSP.Active=false then Exit;
@@ -122,12 +140,18 @@ begin
   end;
 
   ShwNextFrm('Del');
+
 end;
 
+{*******************************************************************************
+ 目的:モード管理の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TF0001Frm.ShwNextFrm(mode: string);
 var
   frm : Tform;
-  SaveCursor: TCursor;   // 現在のマウスポインタ保持用
+  SaveCursor: TCursor; // 現在のマウスポインタ保持用
   rn,pk:Integer;
 begin
   with DataModule2.ClientDataSetTNMMSP do
@@ -149,29 +173,25 @@ begin
         end;
       end;//try
   }
-    end;//if
+    end; // if
 
     if Active then  rn:=RecNo;
 
-    // 現マウスポインタを退避
-    SaveCursor := Screen.Cursor;
-    // 砂時計に変更
-    Screen.Cursor := crHourGlass;
+    SaveCursor := Screen.Cursor;        // 現マウスポインタを退避
+    Screen.Cursor := crHourGlass;       // 砂時計に変更
 
     frm := TF0002Frm.create(self,mode); // 担当者メンテ画面を代入
 
-    // 保存していたマウスポインタに戻す
-    Screen.Cursor := SaveCursor;
+    Screen.Cursor := SaveCursor;        // 保存していたマウスポインタに戻す
 
-    frm.ShowModal; // 画面展開
-    frm.Release;   // F0001インスタンス開放
+    frm.ShowModal;                      // 画面展開
+    frm.Release;                        // F0001インスタンス開放
 
-    //再検索
+    // 再検索
     if mode<>'Dsp' then
-    begin    //現マウスポインタを退避
-      SaveCursor := Screen.Cursor;
-      //砂時計に変更
-      Screen.Cursor := crHourGlass;
+    begin
+      SaveCursor := Screen.Cursor;      // 現マウスポインタを退避
+      Screen.Cursor := crHourGlass;     // 砂時計に変更
 
       if DataModule3.FDQryF0002.Active then
         DataModule3.FDQryF0002.Refresh;
@@ -197,12 +217,15 @@ begin
 
           RecNo:=rn;
         end;
+
       end;
 
-      //保存していたマウスポインタに戻す
-      Screen.Cursor := SaveCursor;
+      Screen.Cursor := SaveCursor;      // 保存していたマウスポインタに戻す
+
     end;
 
-  end;//with
+  end; // with
+
 end;
+
 end.

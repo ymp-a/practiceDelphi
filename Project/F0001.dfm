@@ -54,7 +54,7 @@ object F0001Frm: TF0001Frm
       Top = 19
       Width = 75
       Height = 25
-      Caption = #26908#32034
+      Caption = #26908#32034'(F1)'
       TabOrder = 2
       OnClick = Button1Click
     end
@@ -202,11 +202,11 @@ object F0001Frm: TF0001Frm
     Align = alBottom
     TabOrder = 2
     object Button2: TButton
-      Left = 111
+      Left = 119
       Top = 14
       Width = 75
       Height = 25
-      Caption = #22793#26356
+      Caption = #22793#26356'(F8)'
       TabOrder = 0
       OnClick = Button2Click
     end
@@ -215,7 +215,7 @@ object F0001Frm: TF0001Frm
       Top = 14
       Width = 75
       Height = 25
-      Caption = #32066#20102
+      Caption = #32066#20102'(F9)'
       TabOrder = 1
       OnClick = Button3Click
     end
@@ -224,7 +224,7 @@ object F0001Frm: TF0001Frm
       Top = 14
       Width = 75
       Height = 25
-      Caption = #36861#21152
+      Caption = #36861#21152'(F2)'
       TabOrder = 2
       OnClick = Button4Click
     end
@@ -233,9 +233,38 @@ object F0001Frm: TF0001Frm
       Top = 14
       Width = 75
       Height = 25
-      Caption = #21066#38500
+      Caption = #21066#38500'(F3)'
       TabOrder = 3
       OnClick = Button5Click
+    end
+  end
+  object ActionList1: TActionList
+    Left = 504
+    Top = 32
+    object F1: TAction
+      Caption = #26908#32034'(F1)'
+      ShortCut = 112
+      OnExecute = Button1Click
+    end
+    object F2: TAction
+      Caption = #36861#21152'(F2)'
+      ShortCut = 113
+      OnExecute = Button4Click
+    end
+    object F8: TAction
+      Caption = #22793#26356'(F8)'
+      ShortCut = 119
+      OnExecute = Button2Click
+    end
+    object F3: TAction
+      Caption = #21066#38500'(F3)'
+      ShortCut = 114
+      OnExecute = Button5Click
+    end
+    object F9: TAction
+      Caption = #32066#20102'(F9)'
+      ShortCut = 120
+      OnExecute = Button3Click
     end
   end
 end

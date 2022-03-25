@@ -89,11 +89,10 @@ type
     FDQryF0004TNUPWS: TStringField;
     FDQryF0004TNUPUS: TStringField;
     FDQryF0004TNJTCD: TStringField;
-    //日付省略入力
-    //ClientDataSetの日付フィールドのOnSetTextイベントに追加する
-    procedure ClientDataSetTDateFieldSetText(Sender: TField;
+    // ClientDataSetの日付フィールドのOnSetTextイベントに追加する
+    procedure ClientDataSetTDateFieldSetText(Sender: TField; // 日付入力チェック
       const Text: string);
-    function DateFilldSetText(str:string):string;
+    function DateFilldSetText(str:string):string;            // 日付形式に変換
   private
     { Private 宣言 }
   public
@@ -112,114 +111,101 @@ uses DM2;
 
 {$R *.dfm}
 
+{*******************************************************************************
+ 目的:見積データオープン
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TDataModule4.OpenMHData(MHNO,TODT,FRDT,TKCD,TNCD: String);
 var
-  andFlg:boolean; //入力フラグを設定
-
+  andFlg:boolean; // 入力フラグを設定
 begin
-  //フラグ初期化
-  andFlg:=false;
+  andFlg:=false;  // フラグ初期化
 
   with FDQryF0004 do
   begin
-    //FDQueryLogin初期化
-    FDQryF0004.Close;
-    //SQL文初期化
-    SQL.Clear;
-    //ここからSQL文↓
+
+    FDQryF0004.Close; // FDQueryLogin初期化
+    SQL.Clear;        // SQL文初期化
+    // ここからSQL文↓
     SQL.Add(' SELECT * FROM MTHFLP  ');
     SQL.Add(' LEFT JOIN TNMMSP ON TNTNCD = MHTNCD  ');
-   // SQL.Add(' WHERE MHJTCD <> ''D'' ');
+   // SQL.Add(' WHERE MHJTCD <> ''D'' '); // 'D'も表示したい
 
-    // 見積NO入力時の処理
-    if MHNO<>'' then
+    if MHNO<>'' then                      // 見積NO入力時の処理
     begin
-      //TNTNCDに入力した担当者CDを代入する
-      SQL.Add('AND MHNO = :MHNO ');
-      //入力した担当者CDを'TNCD'に代入する
-      ParamByName('MHNO').AsString:=MHNO;
-      //入力時フラグオン
-      andFlg:=true;
+      SQL.Add('AND MHNO = :MHNO ');       // TNTNCDに入力した担当者CDを代入する
+      ParamByName('MHNO').AsString:=MHNO; // 入力した担当者CDを'TNCD'に代入する
+      andFlg:=true;                       // 入力時フラグオン
     end;
 
-    // 見積依頼日入力時の処理
-    if TODT<>'' then
+    if TODT<>'' then                      // 見積依頼日入力時の処理
     begin
       SQL.Add(' AND MHIRDT = :TODT');
-      //入力した担当者CDを'TNCD'に代入する
-      ParamByName('TODT').AsString:=TODT;
-      //入力時フラグオン
-      andFlg:=true;
+      ParamByName('TODT').AsString:=TODT; // 入力した担当者CDを'TNCD'に代入する
+      andFlg:=true;                       // 入力時フラグオン
     end;
 
-    // 見積期限入力時の処理
-    if TODT<>'' then
+    if TODT<>'' then                      // 見積期限入力時の処理
     begin
       SQL.Add(' AND MHKGDT = :FRDT');
-      //入力した担当者CDを'TNCD'に代入する
-      ParamByName('FRDT').AsString:=FRDT;
-      //入力時フラグオン
-      andFlg:=true;
+      ParamByName('FRDT').AsString:=FRDT; // 入力した担当者CDを'TNCD'に代入する
+      andFlg:=true;                       // 入力時フラグオン
     end;
 
-    // 得意先入力時の処理
-    if TKCD<>'' then
+    if TKCD<>'' then                      // 得意先入力時の処理
     begin
       SQL.Add(' AND MHTKCD = :TKCD');
-      //入力した担当者CDを'TNCD'に代入する
-      ParamByName('TKCD').AsString:=TKCD;
-      //入力時フラグオン
-      andFlg:=true;
+      ParamByName('TKCD').AsString:=TKCD; // 入力した担当者CDを'TNCD'に代入する
+      andFlg:=true;                       // 入力時フラグオン
     end;
 
-    //担当者CD入力時の処理
-    if TNCD<>'' then
+    if TNCD<>'' then                      // 担当者CD入力時の処理
     begin
-      //TNTNCDに入力した担当者CDを代入する
-      SQL.Add(' WHERE TNTNCD = :TNCD ');
-      //入力した担当者CDを'TNCD'に代入する
-      ParamByName('TNCD').AsString:=TNCD;
-      //入力時フラグオン
-      andFlg:=true;
+      SQL.Add(' WHERE TNTNCD = :TNCD ');  // TNTNCDに入力した担当者CDを代入する
+      ParamByName('TNCD').AsString:=TNCD; // 入力した担当者CDを'TNCD'に代入する
+      andFlg:=true;                       // 入力時フラグオン
     end;
 
+    SQL.Add(' ORDER BY MHNO ');           // 昇順
 
-    //昇順
-    SQL.Add(' ORDER BY MHNO ');
-    //SQL文実行
-    FDQryF0004.Open;
+    FDQryF0004.Open;                      // SQL文実行
   end;
 
 
-  //対象データが存在しない場合、データセットを閉じて終了
+  // 対象データが存在しない場合、データセットを閉じて終了
   if FDQryF0004.IsEmpty then
   begin
     FDQryF0004.Close;
     raise Exception.Create('対象データが存在しません');
-  end;//例外処理ここまで
+  end;
 
+end; // OpenTNDataここまで
 
-end;//OpenTNDataここまで
-
+{*******************************************************************************
+ 目的: 日付チェック
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TDataModule4.ClientDataSetTDateFieldSetText(Sender: TField;
   const Text: string);
 begin
   try
     Sender.AsString:=text;
-  except                        //日付の形式でなければエラー
-  on e:Exception do             //↓
-    begin                         //変換
+  except                        // 日付の形式以外の場合
+  on e:Exception do             // ↓ 例外処理
+    begin                       // 変換関数
       Sender.AsString:=DateFilldSetText(text);
     end;
   end;
 end;
 
-function TDataModule4.DateFilldSetText(str:string):string;
 {*******************************************************************************
  目的: ClientDataSetの日付型のセットテキスト
  引数: 省略年月日(入力値)
  戻値: 正式年月日(スラッシュ有)
 *******************************************************************************}
+function TDataModule4.DateFilldSetText(str:string):string;
 var
   inDT:integer;
   YYYY,YY,MM :integer;
@@ -230,12 +216,12 @@ begin
   str:=AnsiReplaceStr(str,'/','');
 
   if (str<>'')
-   and (StrToIntDef(str,-1)>0) then     //数値以外入力されていたら無視
+   and (StrToIntDef(str,-1)>0) then // 数値以外入力されていたら無視
   begin
 
     inDT:=StrToIntDef(str,-1);
 
-    //入力支援機能（年入力の省略）
+    // 入力支援機能（年入力の省略）
     YYYY:= strtoint(FormatDateTime('YYYY',date));
     YY  := strtoint(FormatDateTime('YY',date));
     MM  := strtoint(FormatDateTime('MM',date));

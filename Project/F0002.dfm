@@ -166,7 +166,7 @@ object F0002Frm: TF0002Frm
       Top = 14
       Width = 75
       Height = 25
-      Caption = #26356#26032
+      Caption = #26356#26032'(F6)'
       TabOrder = 0
       OnClick = Button2Click
     end
@@ -175,9 +175,23 @@ object F0002Frm: TF0002Frm
       Top = 14
       Width = 75
       Height = 25
-      Caption = #32066#20102
+      Caption = #32066#20102'(F9)'
       TabOrder = 1
       OnClick = Button3Click
+    end
+  end
+  object ActionList1: TActionList
+    Left = 322
+    Top = 24
+    object F9: TAction
+      Caption = #32066#20102'(F9)'
+      ShortCut = 120
+      OnExecute = Button3Click
+    end
+    object F6: TAction
+      Caption = #34920#31034'(F6)'
+      ShortCut = 117
+      OnExecute = Button2Click
     end
   end
 end

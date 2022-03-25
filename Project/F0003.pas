@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.DBCtrls, Vcl.Mask,  DBClient,
-  DBEditUNIC, Vcl.DBCGrids, Vcl.ExtCtrls, Data.DB;
+  DBEditUNIC, Vcl.DBCGrids, Vcl.ExtCtrls, Data.DB, System.Actions, Vcl.ActnList;
 
 type
   TF0003Frm = class(TForm)
@@ -49,6 +49,9 @@ type
     EdtMode: TEdit;
     EdtMTGNO: TDBText;
     Label15: TLabel;
+    ActionList1: TActionList;
+    F9: TAction;
+    F6: TAction;
 
     procedure Button2Click(Sender: TObject);     // 更新ボタン処理
     procedure Button3Click(Sender: TObject);     // 終了ボタン処理
@@ -61,8 +64,8 @@ type
     procedure DBCtrlGrid1Enter(Sender: TObject); // DBCtrlGrid1にカーソルinの処理
   private
     { Private 宣言 }
-    // 行№
-    gnocount:integer;
+
+    gnocount:integer;                            // 行№
 
     procedure dspHeader;                         // 表示-ヘッダー項目設定
     procedure dspDetail;                         // 表示-明細項目設定
@@ -152,10 +155,10 @@ begin
 
 end;
 
-procedure TF0003Frm.EdtMHTNCDExit(Sender: TObject);
 {===============================================================================
 担当者CDExit時のイベント 入力したTNCDが存在したら担当名を表示する。
 ===============================================================================}
+procedure TF0003Frm.EdtMHTNCDExit(Sender: TObject);
 var
   qry: TFDQuery;
 begin
@@ -178,20 +181,20 @@ begin
 
 end;
 
-procedure TF0003Frm.EdtMTTNKAExit(Sender: TObject);
 {===============================================================================
 単価Exit時のイベント
 ===============================================================================}
+procedure TF0003Frm.EdtMTTNKAExit(Sender: TObject);
 begin
   DBCtrlGrid1.DataSource.DataSet.Edit;
   EdtMTKIN.Field.AsInteger:=EdtMTTNKA.Field.AsInteger*EdtMTSRYO.Field.AsInteger;
 
 end;
 
-procedure TF0003Frm.EdtMTSRYOExit(Sender: TObject);
 {===============================================================================
 単価Exit時のイベント
 ===============================================================================}
+procedure TF0003Frm.EdtMTSRYOExit(Sender: TObject);
 begin
   DBCtrlGrid1.DataSource.DataSet.Edit;
   EdtMTKIN.Field.AsInteger:=EdtMTTNKA.Field.AsInteger*EdtMTSRYO.Field.AsInteger;
@@ -253,22 +256,27 @@ begin
   dspHeader;                         // 表示-ヘッダー項目設定
   dspDetail;                         // 表示-明細項目設定
 
-  ChgReadOnly(EdtMHNO,true);         // TNCDを読込専用にするかの判別処理
-  ChgReadOnly(EdtMHIRDT,true);
-  ChgReadOnly(EdtMHKGDT,true);
-  ChgReadOnly(EdtMHTKCD,true);
-  ChgReadOnly(EdtMHTKNM,true);
-  ChgReadOnly(EdtMHTNCD,true);
-  ChgReadOnly(EdtMHBIKO,true);
-  ChgReadOnly(EdtMTSHCD,true);
-  ChgReadOnly(EdtMTSHNM,true);
-  ChgReadOnly(EdtMTTNKA,true);
-  ChgReadOnly(EdtMTSRYO,true);
-  ChgReadOnly(EdtMTKIN,true);
-  ChgReadOnly(EdtMTBIKO,true);
-  ChkDel1.Enabled:=false;
-  ChgReadOnly(EdtMHGSRO,true);
-  ChgReadOnly(EdtMHGKIN,true);
+//  ChgReadOnly(EdtMHNO,true);         // TNCDを読込専用にするかの判別処理
+//  ChgReadOnly(EdtMHIRDT,true);       // ChgReadOnlyメソッドでReadOnly:=False;
+//  ChgReadOnly(EdtMHKGDT,true);       // Color:=clWindow;
+//  ChgReadOnly(EdtMHTKCD,true);       // TabStop:=True;を行っている
+//  ChgReadOnly(EdtMHTKNM,true);
+//  ChgReadOnly(EdtMHTNCD,true);
+//  ChgReadOnly(EdtMHBIKO,true);
+//  ChgReadOnly(EdtMTSHCD,true);
+//  ChgReadOnly(EdtMTSHNM,true);
+//  ChgReadOnly(EdtMTTNKA,true);
+//  ChgReadOnly(EdtMTSRYO,true);
+//  ChgReadOnly(EdtMTKIN,true);
+//  ChgReadOnly(EdtMTBIKO,true);
+//  ChkDel1.Enabled:=false;
+//  ChgReadOnly(EdtMHGSRO,true);
+//  ChgReadOnly(EdtMHGKIN,true);
+
+    panel1.Enabled:=false;                 // 紙商ではにパネル単位でEnabledfalseしている
+    panel2.Enabled:=false;                 // シンプルでかんたん
+    F0002Frm.FldChange(Panel1);            // 入力フォームの色を一括変更している
+    F0002Frm.FldChange(Panel2);
 
 end;
 
@@ -309,20 +317,24 @@ begin
 //  ChgReadOnly(EdtMHGSRO,true);
 //  ChgReadOnly(EdtMHGKIN,true);
 
-//    x1:= ComponentCount;                   // 上のコメントアウトをひとまとめたものが以下
-//    for I := 0 to x1-1 do                  // コンポーネントの数繰り返す処理
-//    begin
-//      compo := Components[I];              // コンポーネントのindex[0]から格納する
-//      if compo is TDBEditUnic then             // コンポーネントがTEditUnicのとき
-//        TDBEdit(compo).ReadOnly:=true;     // ReadOnlyをオンにする
-//      if compo is TDBCheckBox then         // コンポーネントがTDBCheckBoxのとき
-//        TDBCheckBox(compo).ReadOnly:=true; // ReadOnlyをオンにする
-//    end;                                   // Enabledfalseにするには不向きなロジック
+    x1:= ComponentCount;                   // 上のコメントアウトをひとまとめたものが以下
+    for I := 0 to x1-1 do                  // コンポーネントの数繰り返す処理
+    begin
+      compo := Components[I];              // コンポーネントのindex[0]から格納する
+      if compo is TDBEditUnic then         // コンポーネントがTEditUnicのとき
+//        TDBEdit(compo).ReadOnly:=true;     // ReadOnlyをオンにする、フォームの色は変わらない
+         ChgReadOnly(compo,true);          // ChgReadOnlyメソッドを利用してもOK
+      if compo is TDBCheckBox then         // コンポーネントがTDBCheckBoxのとき
+        TDBCheckBox(compo).ReadOnly:=true; // ReadOnlyをオンにする
+    end;                                   // Enabledfalseにするには不向きなロジック
 
-    panel1.Enabled:=false;                 // 紙商ではにパネル単位でEnabledfalseしている
-    panel2.Enabled:=false;                 // シンプルでかんたん
-    F0002Frm.FldChange(Panel1);            // 入力フォームの色を一括変更している
-    F0002Frm.FldChange(Panel2);
+    ActionList1[1].Enabled:=false;         // ファンクションキー更新（F6）の無効
+                                           // ActionListインデックスはリスト並び順通り
+
+//    panel1.Enabled:=false;                 // 紙商ではにパネル単位でEnabledfalseしている
+//    panel2.Enabled:=false;                 // シンプルでかんたん
+//    F0002Frm.FldChange(Panel1);            // 入力フォームの色を一括変更している
+//    F0002Frm.FldChange(Panel2);
 end;
 
 {*******************************************************************************
@@ -338,10 +350,19 @@ begin
   end;
 end;
 
+{*******************************************************************************
+ 目的:更新ボタン押下時の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TF0003Frm.Button2Click(Sender: TObject);
 begin
-  Button2.Enabled:=false;//処理中はボタンロック
-  Button3.Enabled:=false;//終了ボタンもロック
+  // 表示モードのとき処理を行わない
+  if Mode = 'Dsp' then abort;
+//  if Mode = 'Dsp' then Exit;
+
+  Button2.Enabled:=false;   //処理中はボタンロック
+  Button3.Enabled:=false;   //終了ボタンもロック
   try
     //LgcChkMsg:=true;
     if LogicalChecOk then
@@ -351,7 +372,7 @@ begin
 //      ALLEditNumChk;
         //更新処理
       //LgcChkMsg:=false;
-      if LogicalChecOk then    // 再度確認(在庫等の関係上)
+      if LogicalChecOk then // 再度確認(在庫等の関係上)
       begin
         if (Mode = 'Add')or(Mode = 'Cpy') then
           DbAdd
@@ -362,19 +383,24 @@ begin
       end;
     end;
   finally
-    Button2.Enabled:=true;// 終了ボタンもロック
-    Button3.Enabled:=true;// ボタンロック解除
+    Button2.Enabled:=true;  // 終了ボタンもロック
+    Button3.Enabled:=true;  // ボタンロック解除
   end;
 end;
 
+{*******************************************************************************
+ 目的:終了ボタン押下時の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TF0003Frm.Button3Click(Sender: TObject);
 begin
   // 非表示チェック
   if (Button3.Enabled=false)or(Button3.Visible=false) then abort;
-  // 画面終了
-  Close;
-  // 使用したCDSとQryを終了
-  with DataModule4 do
+
+  Close;              // 画面終了
+
+  with DataModule4 do // 使用したCDSとQryを終了
   begin
     ClientDataSetMTHFLP.Close;
     ClientDataSetMTMFLP.Close;
@@ -383,17 +409,17 @@ begin
   end;
 end;
 
-procedure TF0003Frm.AfterInsert(DataSet: TDataSet);
 {===============================================================================
 ClientDataSetのイベントに設定するイベント
 ===============================================================================}
+procedure TF0003Frm.AfterInsert(DataSet: TDataSet);
 begin
   if DataSet.FieldByName('mtgno').AsInteger=0 then    // 行数0のとき
   begin
     Dataset.Edit;                                     // 編集モード開始
     inc(gnocount);                                    // gncount += 1と同義、インクリメントメソッド
     DataSet.FieldByName('mtgno').AsInteger:=gnocount; // 行数を設定する
-    Dataset.FieldByName('mtno').AsInteger:= DataModule4.FDQryMTHFLP.FieldByName('mhno').AsInteger; // （フィールド値ないって怒られるから）
+    Dataset.FieldByName('mtno').AsInteger:= DataModule4.FDQryMTHFLP.FieldByName('mhno').AsInteger; // （AfterScrollでフィールド値ないって怒られるから追記）
   end;
 
   Dataset.FieldByName('dataJTCD').AsBoolean:=false;   // data状態CDをfalse初期化
@@ -401,10 +427,10 @@ begin
 
 end;
 
-procedure TF0003Frm.AfterOpen(DataSet: TDataSet);
 {===============================================================================
 ClientDataSetのイベントに設定するイベント
 ===============================================================================}
+procedure TF0003Frm.AfterOpen(DataSet: TDataSet);
 begin
   DataSet.Last;                                       // レコード最後尾参照
   if dataset.FieldByName('mtgno').AsInteger<=0 then   // 行数が0以下のとき
@@ -417,16 +443,19 @@ begin
 
 end;
 
-procedure TF0003Frm.AfterScroll(DataSet: TDataSet);
 {===============================================================================
 ClientDataSetのイベントに設定するイベント
 ===============================================================================}
+procedure TF0003Frm.AfterScroll(DataSet: TDataSet);
 begin
   Dataset.Edit; // DataSet編集モード if FRecordCount = 0 のとき AfterInsertへ移行する
-  Dataset.Post; // ここでフィールドMTNOの値が必要ですエラー
+  Dataset.Post; // ここでフィールドMTNOの値が必要ですエラーがでた
   Dataset.Edit;
 end;
 
+{===============================================================================
+画面展開後に設定するイベント
+===============================================================================}
 procedure TF0003Frm.FormShow(Sender: TObject);
 var
   cds1: TClientDataSet;
@@ -440,15 +469,15 @@ begin
   DataModule4.ClientDataSetMTMFLP.AfterInsert:=AfterInsert;
   DataModule4.ClientDataSetMTMFLP.AfterScroll:=AfterScroll;
 
-  dspHeader;
-  dspDetail;
+  dspHeader;                                                // 表示-ヘッダー項目設定
+  dspDetail;                                                // 表示-明細項目設定
   cds1 := DataModule4.ClientDataSetMTHFLP;
   cds2 := DataModule4.ClientDataSetMTMFLP;
-  cds1.Open;
-  cds2.Open;
+  cds1.Open;                                                // CDSMTHFLPオープン
+  cds2.Open;                                                // CDSMTMFLPオープン
 
-  cds1.Edit;
-  cds2.Edit;
+  cds1.Edit;                                                // 編集モード
+  cds2.Edit;                                                // 編集モード
 
 {
   //新規
@@ -508,29 +537,25 @@ begin
  }
 
   //DBCheckboxの設定
-  cds2.DisableControls; // 画面ちらつき防止
-  cds2.First;           // 最初のレコードに移動
+  cds2.DisableControls;               // 画面ちらつき防止
+  cds2.First;                         // 最初のレコードに移動
   for I := 0 to cds2.RecordCount-1 do // cds2全レコードの'D'チェック
-  begin                               // 'D'のレコードには?オン
+  begin                               // 'D'のヘッダーレコードにはdataJTCDオン
     if cds2.FieldByName('MTJTCD').AsString='D' then
       cds2.FieldByName('dataJTCD').AsBoolean:=true
     else  cds2.FieldByName('dataJTCD').AsBoolean:=false ;
 
-    cds2.Next;          // レコードを一つ進める
+    cds2.Next;                        // レコードを一つ進める
   end;
-  cds2.First;           // 最初のレコードに移動
-  cds2.EnableControls;  // active画面遷移再開する
-
-
-
-
+  cds2.First;                         // 最初のレコードに移動
+  cds2.EnableControls;                // active画面遷移再開する
 
 end;
 
-procedure TF0003Frm.dspDetail;
 {===============================================================================
 表示-明細項目設定
 ===============================================================================}
+procedure TF0003Frm.dspDetail;
 var
   qry: TFDQuery;
 begin
@@ -555,10 +580,10 @@ begin
 
 end;
 
-procedure TF0003Frm.dspHeader;
 {===============================================================================
 表示-ヘッダー項目設定
 ===============================================================================}
+procedure TF0003Frm.dspHeader;
 var
   qry: TFDQuery;
 begin
@@ -586,17 +611,17 @@ begin
 
 end;
 
-procedure TF0003Frm.hset();
 {===============================================================================
 更新時ヘッダー設定
 ===============================================================================}
+procedure TF0003Frm.hset();
 var
   cds1: TClientDataSet;
 begin
   cds1 := DataModule4.ClientDataSetMTHFLP;
   cds1.Edit;
   //削除モードのみDで更新
-  //※変更Mで削除データを見る事を想定していません
+  //※変更Mで削除データを見る事を想定
   //※今の処理では変更Mで削除データ生き返るよ
   if Mode = 'Del' then
     cds1.FieldByName('MHJTCD').AsString:='D'
@@ -608,10 +633,10 @@ begin
 
 end;
 
-procedure TF0003Frm.mset();
 {===============================================================================
 更新時明細設定
 ===============================================================================}
+procedure TF0003Frm.mset();
 var
   cds1: TClientDataSet;
   cds2: TClientDataSet;
@@ -639,6 +664,9 @@ begin
   cds2.Post;
 end;
 
+{===============================================================================
+論理チェック　引数：なし、戻り値：Bool
+===============================================================================}
 function TF0003Frm.LogicalChecOk: Boolean;
 begin
 
@@ -674,9 +702,9 @@ begin
   ChkBlank(EdtMHNO,'見積№');
 
   //追加モードの場合見積№重複チェックを行う。
-{  if (mode='Add') then
+  if (mode='Add') then
   begin
-    if TNMMS(EdtTNCD.Field.AsString,true).Exists=true then
+    if DataModule3.TNMMS(EdtMHTNCD.Field.AsString,true).Exists=true then
     begin
       MessageDlg('見積№が重複しています。', mtError, [mbOk], 0);
       EdtMHNO.SetFocus;
@@ -684,7 +712,7 @@ begin
       Exit;
     end;
   end;
-}
+
   ChkBlank(EdtMHIRDT,'見積依頼日');
 
   ChkBlank(EdtMHKGDT,'見積期限');
@@ -699,23 +727,27 @@ begin
 
 end;
 
-procedure TF0003Frm.DBCtrlGrid1Enter(Sender: TObject);
 {===============================================================================
 DBCtrlGridイベント
 ===============================================================================}
+procedure TF0003Frm.DBCtrlGrid1Enter(Sender: TObject);
 begin
-  DataModule4.ClientDataSetMTMFLP.Edit;
+  DataModule4.ClientDataSetMTMFLP.Edit;   // DBCtrlGridにカーソルinでCDS MTMFLP編集モード
 end;
 
-procedure TF0003Frm.DBCtrlGrid1Exit(Sender: TObject);
 {===============================================================================
 DBCtrlGridイベント
 ===============================================================================}
+procedure TF0003Frm.DBCtrlGrid1Exit(Sender: TObject);
 begin
   if DataModule4.ClientDataSetMTMFLP.State=dsEdit then
-    DataModule4.ClientDataSetMTMFLP.Post;
+    DataModule4.ClientDataSetMTMFLP.Post; // DBCtrlGridにカーソルinでCDS MTMFLP確定させる
 end;
 
+
+{===============================================================================
+データベースへの変更（追加モード）
+===============================================================================}
 procedure TF0003Frm.DbAdd;
 var
   cds1: TClientDataSet;
@@ -726,17 +758,14 @@ begin
   cds1 := DataModule4.ClientDataSetMTHFLP;
   cds2 := DataModule4.ClientDataSetMTMFLP;
 
-  //ヘッダー項目セット
-  hset;
-  //明細項目セット
-  mset;
+  hset;                   // ヘッダー項目セット
+  mset;                   // 明細項目セット
 
   try
-    con.StartTransaction; //変更トランザクション開始（必ずコミットかロールバックすること）
+    con.StartTransaction; // 変更トランザクション開始（必ずコミットかロールバックすること）
 
-    cds1.ApplyUpdates(0);
-    cds2.ApplyUpdates(0);
-
+    cds1.ApplyUpdates(0); // データ更新
+    cds2.ApplyUpdates(0); // 下記の方法でも処理は一緒？
 
     //データベース更新
 //    if ApplyUpdates(0) >  0 then             //エラーの場合は中断
@@ -744,16 +773,13 @@ begin
 //      Abort;
 //    end;
 
-
-
-    con.Commit;         //コミット
-    //更新確認ダイアログ
-    MessageDlg('新規登録が完了しました（・ω・）',mtInformation, [mbOK], 0);
+    con.Commit;           //コミット
+    MessageDlg('新規登録が完了しました（・ω・）',mtInformation, [mbOK], 0); //更新確認ダイアログ
 
     except
-    on e:Exception do
+    on e:Exception do     // 例外処理
     begin
-      con.Rollback;       //エラー時はロールバック
+      con.Rollback;       // エラー時はロールバック
       MessageDlg(E.Message, mtError, [mbOK], 0);
       Abort;
     end;
@@ -762,7 +788,9 @@ begin
 
 end;
 
-//データベースへの変更（変更モード）
+{===============================================================================
+データベースへの変更（変更モード）
+===============================================================================}
 procedure TF0003Frm.DbChenge;
 var
   cds1: TClientDataSet;
@@ -773,49 +801,47 @@ begin
   cds1 := DataModule4.ClientDataSetMTHFLP;
   cds2 := DataModule4.ClientDataSetMTMFLP;
 
-  //ヘッダー項目セット
-  hset;
-  //明細項目セット
-  mset;
-
+  hset;                   // ヘッダー項目セット
+  mset;                   // 明細項目セット
 
   try
-    con.StartTransaction; //変更トランザクション開始（必ずコミットかロールバックすること）
+    con.StartTransaction; // 変更トランザクション開始（必ずコミットかロールバックすること）
 
 //    cds1.ApplyUpdates(0);
 //    cds2.ApplyUpdates(0);
 
     //データベース更新
-
-    if cds1.ApplyUpdates(0) >  0 then             //エラーの場合は中断
+    if cds1.ApplyUpdates(0) >  0 then
     begin
-      Abort;
+      Abort;              // エラーの場合は中断
     end;
 
-    if cds2.ApplyUpdates(0) >  0 then             //エラーの場合は中断
+    if cds2.ApplyUpdates(0) >  0 then
     begin
-      Abort;
+      Abort;              // エラーの場合は中断
     end;
 
-    con.Commit;         //コミット
-    //更新確認ダイアログ
-    MessageDlg('変更が完了しました（^ω^）',mtInformation, [mbOK], 0);
+    con.Commit;           // コミット
+    MessageDlg('変更が完了しました（^ω^）',mtInformation, [mbOK], 0); //更新確認ダイアログ
 
     except
-    on e:Exception do
+    on e:Exception do     // 例外処理
     begin
-      con.Rollback;       //エラー時はロールバック
+      con.Rollback;       // エラー時はロールバック
       MessageDlg(E.Message, mtError, [mbOK], 0);
       Abort;
     end;
 
   end;
 
-  Close;
+  Close;                  // 画面終了
 
 end;
 
-// データベースへの変更（削除モード）
+
+{===============================================================================
+データベースへの変更（削除モード）
+===============================================================================}
 procedure TF0003Frm.DbDelete;
 var
   cds1: TClientDataSet;
@@ -826,42 +852,38 @@ begin
   cds1 := DataModule4.ClientDataSetMTHFLP;
   cds2 := DataModule4.ClientDataSetMTMFLP;
 
-  //ヘッダー項目セット
-  hset;
-  //明細項目セット
-  mset;
-
+  hset;                   // ヘッダー項目セット
+  mset;                   // 明細項目セット
 
   try
-    con.StartTransaction; //変更トランザクション開始（必ずコミットかロールバックすること）
+    con.StartTransaction; // 変更トランザクション開始（必ずコミットかロールバックすること）
     //削除
 
     //データベース更新
     if cds1.ApplyUpdates(0) >  0 then              //エラーの場合は中断
     begin
-      Abort;
+      Abort;              // エラーの場合は中断
     end;
 
-    if cds2.ApplyUpdates(0) >  0 then              //エラーの場合は中断
+    if cds2.ApplyUpdates(0) >  0 then
     begin
-      Abort;
+      Abort;              // エラーの場合は中断
     end;
 
     con.Commit;           // コミット
-          //更新確認ダイアログ
-    MessageDlg('削除が完了しました（●o●）',mtInformation, [mbOK], 0);
+    MessageDlg('削除が完了しました（●o●）',mtInformation, [mbOK], 0); //更新確認ダイアログ
 
     except
-    on e:Exception do
+    on e:Exception do     // 例外処理
     begin
-      con.Rollback;
+      con.Rollback;       // ロールバック
       MessageDlg(E.Message, mtError, [mbOK], 0);
       Abort;
     end;
 
   end;
 
-  Close;
+  Close;                  // 画面終了
 
 end;
 

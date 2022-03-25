@@ -58,8 +58,7 @@ type
     { Private 宣言 }
   public
     { Public 宣言 }
-    //担当者検索
-    procedure OpenTNData(TNCD,reNAME: String);
+    procedure OpenTNData(TNCD,reNAME: String); // 担当者マスタデータオープン
   end;
 
 var
@@ -73,72 +72,63 @@ uses functions, Utilybs, F0001;
 
 {$R *.dfm}
 
+{*******************************************************************************
+ 目的:担当者マスタにデータオープン
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TDataModule2.OpenTNData(TNCD,reNAME: String);
 var
-  andFlg:boolean; //入力フラグを設定
+  andFlg:boolean; // 入力フラグを設定
 
 begin
-  //フラグ初期化
-  andFlg:=false;
+
+  andFlg:=false;  // フラグ初期化
 
   with ClientDataSetTNMMSP do
   begin
-    //ClientDataSet1を初期化
-    ClientDataSetTNMMSP.Active := False;
+    ClientDataSetTNMMSP.Active := False; // CDSを初期化
 
     with FDQryTNMMSP do
     begin
-      //FDQueryLogin初期化
-      FDQryTNMMSP.Close;
-      //SQL文初期化
-      SQL.Clear;
-      //ここからSQL文↓
+      FDQryTNMMSP.Close; // FDQueryLogin初期化
+      SQL.Clear;         // SQL文初期化
+      // ここからSQL文↓
       SQL.Add(' SELECT * FROM TNMMSP  ');
 
-      //担当者CD入力時の処理
-      if TNCD<>'' then
+      if TNCD<>'' then                      // 担当者CD入力時の処理
       begin
-        //TNTNCDに入力した担当者CDを代入する
-        SQL.Add(' WHERE TNTNCD = :TNCD ');
-        //入力した担当者CDを'TNCD'に代入する
-        ParamByName('TNCD').AsString:=TNCD;
-        //入力時フラグオン
-        andFlg:=true;
+        SQL.Add(' WHERE TNTNCD = :TNCD ');  // TNTNCDに入力した担当者CDを代入する
+        ParamByName('TNCD').AsString:=TNCD; // 入力した担当者CDを'TNCD'に代入する
+        andFlg:=true;                       // 入力時フラグオン
       end;
 
-      //担当者名入力時の処理
-      if reNAME<>'' then
+      if reNAME<>'' then                    // 担当者名入力時の処理
       begin
-        //担当者CD入力有無でANDかWHEREに条件分岐する
-        if andFlg=true then SQL.Add(' AND ')
+
+        if andFlg=true then SQL.Add(' AND ')                 // 担当者CD入力有無でANDかWHEREに条件分岐する
                        else SQL.Add(' WHERE ');
-
-        //TNNAME LIKEに%入力名%をSQLStringに反映する
-        SQL.Add(' TNNAME LIKE :NAME ');
-        //部分一致の入力名を'NAME'へ代入する
-        ParamByName('NAME').AsWideString :='%' +reNAME+ '%';
-        //入力時フラグオン
-        andFlg:=true;
+        SQL.Add(' TNNAME LIKE :NAME ');                      // TNNAME LIKEに%入力名%をSQLStringに反映する
+        ParamByName('NAME').AsWideString :='%' +reNAME+ '%'; // 部分一致の入力名を'NAME'へ代入する
+        andFlg:=true;                                        // 入力時フラグオン
       end;
 
-      //昇順
-      SQL.Add(' ORDER BY TNTNCD ');
-      //SQL文実行
-      FDQryTNMMSP.Open;
+      SQL.Add(' ORDER BY TNTNCD ');     // 昇順
+
+      FDQryTNMMSP.Open;                 // SQL文実行
     end;
 
-    //ClientDataSet1を開く
-    ClientDataSetTNMMSP.Active := True;
+    ClientDataSetTNMMSP.Active := True; // CDSを開く
 
-    //対象データが存在しない場合、データセットを閉じて終了
-    if Eof and Bof then
+
+    if Eof and Bof then // 対象データが存在しない場合、データセットを閉じて終了
     begin
       Active := False;
       raise Exception.Create('対象データが存在しません');
-    end;//例外処理ここまで
+    end;
 
-  end;//ClientDataSet1ここまで
+  end;// CDSここまで
 
-end;//OpenTNDataここまで
+end;// OpenTNDataここまで
 
 end.

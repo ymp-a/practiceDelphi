@@ -256,7 +256,6 @@ object DataModule4: TDataModule4
     Top = 128
   end
   object FDQryF0004: TFDQuery
-    Active = True
     Connection = DataModule2.FDConnection1
     SQL.Strings = (
       'select * from mthflp'

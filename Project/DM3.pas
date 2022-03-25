@@ -67,7 +67,7 @@ type
     { Private 宣言 }
   public
     { Public 宣言 }
-    function TNMMS(TNCD:string;IncD:boolean=false): dTNM;
+    function TNMMS(TNCD:string;IncD:boolean=false): dTNM; // 担当者マスタチェック
   end;
 
 var
@@ -82,13 +82,15 @@ uses functions, Utilybs, DM2, F0001;
 {$R *.dfm}
 
 
-
-
-{*担当者M*}
+{*******************************************************************************
+ 目的:担当者マスタにデータがあるかチェックする
+ 引数:
+ 戻値:
+*******************************************************************************}
 function TDataModule3.TNMMS(TNCD:string;IncD:boolean=false): dTNM;
 begin
-// チェックロジックなど確認用のSQLはtempクエリを利用する。
-  with FDQryGene do
+
+  with FDQryGene do // チェックロジックなど確認用のSQLはtempクエリを利用する
   begin
     Close;
     SQL.Clear;
@@ -102,14 +104,14 @@ begin
     if not eof then
     begin
       Result.Exists:= True;
-      Result.NAME := FieldByName('TNNAME').AsWideString;     //担当者名
-      Result.BKCD := FieldByName('TNBKCD').AsString;       //部課CD
-      Result.STKB := FieldByName('TNSTKB').AsString;       //使用停止区分
+      Result.NAME := FieldByName('TNNAME').AsWideString; // 担当者名
+      Result.BKCD := FieldByName('TNBKCD').AsString;     // 部課CD
+      Result.STKB := FieldByName('TNSTKB').AsString;     // 使用停止区分
     end else begin
       Result.Exists:= False;
-      Result.NAME := '';     //担当者名
-      Result.BKCD := '';     //部課CD
-      Result.STKB := '';     //使用停止区分
+      Result.NAME := '';     // 担当者名
+      Result.BKCD := '';     // 部課CD
+      Result.STKB := '';     // 使用停止区分
     end;
 
     Close;

@@ -22,7 +22,7 @@ type
   public
     { Public 宣言 }
   var
-    Mode : String;//モード判別用
+    Mode : String;                           // モード判別用
   end;
 
 var
@@ -34,53 +34,53 @@ implementation
 
 uses F0001, F0002, F0003, EdtMaster, DM3, FncLock, Utilybs, DM2, F0004;
 
+{*******************************************************************************
+ 目的:担当者照会ボタン押下時の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TMNK001Frm.Button1Click(Sender: TObject);
 var
   frm:TF0001Frm;
 begin
-  //担当者照会画面を代入
-  frm := TF0001Frm.Create(Application);
-  frm.Mode := 'Dsp';
-  //画面展開
-  frm.ShowModal;
-  //F0001インスタンス開放
-  FreeAndNil(frm);
+  frm := TF0001Frm.Create(Application); // 担当者照会画面を代入
+  frm.Mode := 'Dsp';                    // Dspモードセット
+  frm.ShowModal;                        // 画面展開
+  FreeAndNil(frm);                      // F0001インスタンス開放
 end;
 
+{*******************************************************************************
+ 目的:担当者メンテボタン押下時の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TMNK001Frm.Button2Click(Sender: TObject);
 begin
-
   F0001Frm.ShwNextFrm('Add');
-
 end;
 
+{*******************************************************************************
+ 目的:見積照会ボタン押下時の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TMNK001Frm.Button3Click(Sender: TObject);
 var frm:TF0004Frm;
 begin
-    //担当者照会画面を代入
-  frm := TF0004Frm.Create(Application);
-  frm.Mode := 'Dsp';
-  //画面展開
-  frm.ShowModal;
-  //F0001インスタンス開放
-  FreeAndNil(frm);
+  frm := TF0004Frm.Create(Application); // 担当者照会画面を代入
+  frm.Mode := 'Dsp';                    // Dspモードセット
+  frm.ShowModal;                        // 画面展開
+  FreeAndNil(frm);                      // F0004インスタンス開放
 end;
 
+{*******************************************************************************
+ 目的:見積入力ボタン押下時の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TMNK001Frm.Button4Click(Sender: TObject);
-//var
-//  frm:TF0003Frm;
 begin
-
   F0004Frm.ShwNextFrm('Add');
-  //見積入力（Add）画面を代入
-//  frm := TF0003Frm.Create(Application);
-//  frm.Mode := 'Add';
-  //画面展開
-//  frm.ShowModal;
-  //F0001インスタンス開放
-//  FreeAndNil(frm);
 end;
-
-
 
 end.

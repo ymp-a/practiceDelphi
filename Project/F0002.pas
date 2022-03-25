@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Mask, DBClient,
-  Vcl.DBCtrls, DBEditUNIC, MaskEditDate;
+  Vcl.DBCtrls, DBEditUNIC, MaskEditDate, System.Actions, Vcl.ActnList;
 
 type
   TF0002Frm = class(TForm)
@@ -25,8 +25,13 @@ type
     EdtMode: TEdit;
     EdtPass: TEdit;
     EdtTNCD: TDBEditUNIC;
-    EdtNAME: TDBEditUNIC; // <-TDBEditを利用するとchecklogicの際にブランク検出される。理由はCDSオープン時にPass消えてしまうため。
-                          // 入力フォーム上は文字列があるように見えるが内部的にブランク扱い？
+    EdtNAME: TDBEditUNIC;
+    ActionList1: TActionList;
+    F9: TAction;
+    F6: TAction;
+    // 　　　↑↑TDBEditを利用するとchecklogicの際にブランク検出される。
+    // 理由はCDSオープン時にPass消えてしまうため。
+    // 入力フォーム上は文字列があるように見えるが内部的にブランク扱い？
 
     procedure Button3Click(Sender: TObject);        // 終了ボタンの処理
     procedure Button2Click(Sender: TObject);        // 更新ボタンの処理
@@ -38,7 +43,7 @@ type
     procedure InzAddMode;virtual;                   // 初期設定（追加モード）
     procedure InzChgMode;virtual;                   // 初期設定（変更モード）
 //    procedure InzCpyMode;virtual;                 // 初期設定（Copyモード）
-    procedure InzDelMode;virtual;                 // 初期設定（削除モード）
+    procedure InzDelMode;virtual;                   // 初期設定（削除モード）
 //    procedure InzDspMode;virtual;                 // 初期設定（表示モード）
 
     procedure DbChenge;                             // データベースへの変更（変更モード）
@@ -122,8 +127,8 @@ end;
 procedure TF0002Frm.Button2Click(Sender: TObject);
 begin
   //追加モード
-  Button2.Enabled:=false;//処理中はボタンロック
-  Button3.Enabled:=false;//終了ボタンもロック
+  Button2.Enabled:=false;   //処理中はボタンロック
+  Button3.Enabled:=false;   //終了ボタンもロック
   try
 //    LgcChkMsg:=true;
     if LogicalChecOk then
@@ -133,7 +138,7 @@ begin
 //      ALLEditNumChk;
         //更新処理
       //LgcChkMsg:=false;
-      if LogicalChecOk then    //再度確認(在庫等の関係上)
+      if LogicalChecOk then //再度確認(在庫等の関係上)
       begin
         if (Mode = 'Add')or(Mode = 'Cpy') then
           DbAdd
@@ -144,24 +149,27 @@ begin
       end;
     end;
   finally
-    Button3.Enabled:=true;//終了ボタンもロック
-    Button2.Enabled:=true;//ボタンロック解除
+    Button3.Enabled:=true;  //終了ボタンもロック
+    Button2.Enabled:=true;  //ボタンロック解除
   end;
 end;
 
-//終了ボタンの処理
+{*******************************************************************************
+ 目的:終了ボタン押下時の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TF0002Frm.Button3Click(Sender: TObject);
 var
   i:integer;
 begin
-  //非表示チェック
+  // 非表示チェック
   if (Button3.Enabled=false)or(Button3.Visible=false) then
    abort;
 
-  //画面終了
-  Close;
+  Close; // 画面終了
 
-  //BKList廃棄
+  // BKList廃棄
  { for i:=0 to 99 do
   begin
     BKList[i]:=nil;
@@ -170,25 +178,25 @@ begin
 }
 //  Application.Title:=bkTitle;
 
-  //担当者マスタで使用したDMの終了
-  with DataModule3 do
+  with DataModule3 do // 担当者マスタで使用したDMの終了
   begin
     FDQryGene.Close;
     FDQryF0002.Close;
     ClientDataSetF0002.Close;
   end;
 
-
 end; //終了ボタンの処理ここまで
 
-
+{===============================================================================
+論理チェック　引数：なし、戻り値：Bool
+===============================================================================}
 function TF0002Frm.LogicalChecOk: Boolean;
 begin
 
   Result :=False;
 
   if mode='Add' then
-    EdtTNCD.Color := clWindow;
+    EdtTNCD.Color := clWindow; // 担当者CDフォームに白を代入する
 
   if mode='Del' then
   begin
@@ -249,66 +257,63 @@ begin
 
 end;
 
-//データベースへの変更（変更モード）
+{===============================================================================
+データベースへの変更（変更モード）
+===============================================================================}
 procedure TF0002Frm.DbChenge;
 begin
 
-
-  with  DataModule3.ClientDataSetF0002 do
+  with  DataModule3.ClientDataSetF0002 do                    // 紙商LiteVerの変更モード
   begin
-    //変更トランザクション開始（必ずコミットかロールバックすること）
+    // 変更トランザクション開始（必ずコミットかロールバックすること）
     dmUtilYbs.FDConnection1.StartTransaction;
     try
 
-      //権限
+      // 権限
       case CmbKGNM.ItemIndex of
-        0:FieldByName('TNKGKB').Asstring:='1'; //一般
-        1:FieldByName('TNKGKB').Asstring:='2'; //業務管理者
-        2:FieldByName('TNKGKB').Asstring:='5'; //システム管理者
+        0:FieldByName('TNKGKB').Asstring:='1';               // 一般
+        1:FieldByName('TNKGKB').Asstring:='2';               // 業務管理者
+        2:FieldByName('TNKGKB').Asstring:='5';               // システム管理者
       end;
 
-      //使用停止
+      // 使用停止
       if chkSTKB.Checked then FieldByName('TNSTKB').Asstring:='D'
                          else FieldByName('TNSTKB').Asstring:='';
 
-      //削除（使用停止区分）？
+      // 削除（使用停止区分）？
       FieldByName('TNJTCD').Asstring:='';
 
-      //パスワード変更があった場合
+      // パスワード変更があった場合
       if EdtPASS.Text <> GetDecPass then
-        FieldByName('TNPWLA').AsDateTime := Date;    //パスワード最終更新日
+        FieldByName('TNPWLA').AsDateTime := Date;            // パスワード最終更新日
 
-      //非表示項目の設定（変更者などのログ記録用）
+      // 非表示項目の設定（変更者などのログ記録用）
       FieldByName('TNUPWS').Asstring:=dmUtilYbs.GetComputerNameS;
       FieldByName('TNUPPG').Asstring:=self.Name;
       FieldByName('TNUPDT').AsDateTime:=Date;
       FieldByName('TNUPTM').AsDateTime:=Time;
-      FieldByName('TNUPUS').AsString := dmUtilYbs.sUserName;               //作成ユーザー
+      FieldByName('TNUPUS').AsString := dmUtilYbs.sUserName; // 作成ユーザー
 
-      //データベース更新
+      // データベース更新
       Post;
-      if ApplyUpdates(0) >  0 then             //エラーの場合は中断
+      if ApplyUpdates(0) >  0 then                           // エラーの場合は中断
       begin
         Abort;
       end;
 
-//      eTNCD:=EdtTNCD.Text;          //担当者CD
-//      ePASS:=EdtPass.Text;                    //入力PASS
+      SetEncPass;                                            // パスワードの暗号化登録へ
 
-      SetEncPass;   //パスワードの暗号化登録へ
-
-      dmUtilYbs.FDConnection1.Commit;         //コミット
+      dmUtilYbs.FDConnection1.Commit;                        // コミット
       //更新確認ダイアログ
       MessageDlg('更新が完了しました（^ω^）',mtInformation, [mbOK], 0);
 
-    except
-    on e:Exception do
-    begin
-      dmUtilYbs.FDConnection1.Rollback;       //エラー時はロールバック
-      MessageDlg(E.Message, mtError, [mbOK], 0);
-      Abort;
-//           CancelUpdates;
-    end;
+      except                                                 // 例外処理
+      on e:Exception do
+      begin
+        dmUtilYbs.FDConnection1.Rollback;                    //エラー時はロールバック
+        MessageDlg(E.Message, mtError, [mbOK], 0);
+        Abort;
+      end;
 
     end;
 
@@ -318,68 +323,69 @@ begin
 
 end;
 
-// データベースへの変更（追加モード）
+
+{===============================================================================
+データベースへの変更（追加モード）
+===============================================================================}
 procedure TF0002Frm.DbAdd;
 begin
 
   with  DataModule3.ClientDataSetF0002 do
   begin
-//  Append;
-    //変更トランザクション開始（必ずコミットかロールバックすること）
+    // 変更トランザクション開始（必ずコミットかロールバックすること）
     dmUtilYbs.FDConnection1.StartTransaction;
     try
-      //権限
+      // 権限
       case CmbKGNM.ItemIndex of
-        0:FieldByName('TNKGKB').Asstring:='1'; //一般
-        1:FieldByName('TNKGKB').Asstring:='2'; //業務管理者
-        2:FieldByName('TNKGKB').Asstring:='5'; //システム管理者
+        0:FieldByName('TNKGKB').Asstring:='1';               // 一般
+        1:FieldByName('TNKGKB').Asstring:='2';               // 業務管理者
+        2:FieldByName('TNKGKB').Asstring:='5';               // システム管理者
       end;
 
-      //使用停止
+      // 使用停止
       if chkSTKB.Checked then FieldByName('TNSTKB').Asstring:='D'
                          else FieldByName('TNSTKB').Asstring:='';
 
-      //削除（使用停止区分）？
+      // 削除（使用停止区分）？
       FieldByName('TNJTCD').Asstring:='';
 
-      //パスワード最終更新日
+      // パスワード最終更新日
       FieldByName('TNPWLA').AsDateTime := Date;
 
-      //非表示項目の設定（変更者などのログ記録用）
+      // 非表示項目の設定（変更者などのログ記録用）
       FieldByName('TNCRWS').Asstring:=dmUtilYbs.GetComputerNameS;
       FieldByName('TNCRPG').Asstring:=self.Name;
       FieldByName('TNCRDT').AsDateTime:=Date;
       FieldByName('TNCRTM').AsDateTime:=Time;
-      FieldByName('TNCRUS').AsString := dmUtilYbs.sUserName;               //作成ユーザー
+      FieldByName('TNCRUS').AsString := dmUtilYbs.sUserName; // 作成ユーザー
 
 
-      //データベース更新   まだだめ
-       Post;        // CDSの編集内容を確定する
-      if ApplyUpdates(0) >  0 then             //エラーの場合は中断
+      // データベース更新
+       Post;                                                 // CDSの編集内容を確定する
+      if ApplyUpdates(0) >  0 then                           // エラーの場合は中断
       begin
         Abort;
       end;
 
-      SetEncPass;   //パスワードの暗号化登録へ
+      SetEncPass;                                            // パスワードの暗号化登録へ
 
-      dmUtilYbs.FDConnection1.Commit;         //コミット
-      //更新確認ダイアログ
+      dmUtilYbs.FDConnection1.Commit;                        // コミット
+      // 更新確認ダイアログ
       MessageDlg('新規登録が完了しました（・ω・）',mtInformation, [mbOK], 0);
 
     except
     on e:Exception do
     begin
-      dmUtilYbs.FDConnection1.Rollback;       //エラー時はロールバック
+      dmUtilYbs.FDConnection1.Rollback;                      // エラー時はロールバック
       MessageDlg(E.Message, mtError, [mbOK], 0);
       Abort;
-//           CancelUpdates;
     end;
 
     end;
 
-    InzAddMode; // 連続で追加更新できるようにリセット
+    InzAddMode;                                              // 連続で追加更新できるようにリセット
 
-    EdtPASS.Text:='';
+    EdtPASS.Text:='';                                        // Pass入力フォームを初期化
     CmbKGNM.ItemIndex:=0;
 
     EdtTNCD.SetFocus;
@@ -389,43 +395,46 @@ begin
 
 end;
 
-// データベースへの変更（削除モード）
+
+{===============================================================================
+データベースへの変更（削除モード）
+===============================================================================}
 procedure TF0002Frm.DbDelete;
 begin
   inherited;
 
   with  DataModule3.ClientDataSetF0002 do
   begin
-    dmUtilYbs.FDConnection1.StartTransaction;
+    dmUtilYbs.FDConnection1.StartTransaction;                // トランザクション処理開始
     try
-      //削除
+      // 削除
       FieldByName('TNSTKB').Asstring:='D';
 
-      //非表示項目の設定
+      // 非表示項目の設定
       FieldByName('TNUPWS').Asstring:=dmUtilYbs.GetComputerNameS;
       FieldByName('TNUPPG').Asstring:=self.Name;
       FieldByName('TNUPDT').AsDateTime:=Date;
       FieldByName('TNUPTM').AsDateTime:=Time;
-      FieldByName('TNUPUS').AsString := dmUtilYbs.sUserName;               //作成ユーザー
+      FieldByName('TNUPUS').AsString := dmUtilYbs.sUserName; // 作成ユーザー
 
-      //データベース更新
+      // データベース更新
       Post;
-      if ApplyUpdates(0) >  0 then              //エラーの場合は中断
+      if ApplyUpdates(0) >  0 then                           // エラーの場合は中断
       begin
         Abort;
       end;
 
-      dmUtilYbs.FDConnection1.Commit;           // コミット
-            //更新確認ダイアログ
+      dmUtilYbs.FDConnection1.Commit;                        // コミット
+      // 更新確認ダイアログ
       MessageDlg('削除が完了しました（●o●）',mtInformation, [mbOK], 0);
-    except
-    on e:Exception do
-    begin
-      dmUtilYbs.FDConnection1.Rollback;
-      MessageDlg(E.Message, mtError, [mbOK], 0);
-      Abort;
-//           CancelUpdates;
-    end;
+
+      except                                                 // 例外処理
+      on e:Exception do
+      begin
+        dmUtilYbs.FDConnection1.Rollback;                    // ロールバック
+        MessageDlg(E.Message, mtError, [mbOK], 0);
+        Abort;
+      end;
 
     end;
 
@@ -436,12 +445,12 @@ begin
 end;
 
 
-//==============================================================================
-// DBEditBox ComboBox値連携処理
-//==============================================================================
+{===============================================================================
+DBEditBox ComboBox値連携処理
+===============================================================================}
 
-//コンボボックス値保管リスト作成
-//見つかったTComboBoxのタグにワークのStringList指標をセットし関連付け
+// コンボボックス値保管リスト作成
+// 見つかったTComboBoxのタグにワークのStringList指標をセットし関連付け
 procedure TF0002Frm.CreateBKList;
 var
 //  str,nam:string;
@@ -452,7 +461,7 @@ begin
   begin
     if Self.Components[i] is TComboBox then
     begin
-      TComboBox(Self.Components[i]).Tag:=tg;//コンボボックスのTagプロパティでBKListと関連付け
+      TComboBox(Self.Components[i]).Tag:=tg; // コンボボックスのTagプロパティでBKListと関連付け
       BKList[tg]:=nil;
       BKList[tg]:=TStringList.Create;
       BKList[tg].Clear;
@@ -462,12 +471,14 @@ begin
 end;
 
 
-//復号用関数
+
+{===============================================================================
+パスワード復号用
+===============================================================================}
 function TF0002Frm.GetDecPass: string;
 begin
   result:='';
 
-  //得意先があったら部課変更不可
   with DataModule3.FDQryGene do
   begin
     Close;
@@ -485,14 +496,14 @@ begin
     SQL.Clear;
 
   end;
+
 end;
 
-
-
-//暗号化用
+{===============================================================================
+パスワード暗号化用
+===============================================================================}
 procedure TF0002Frm.SetEncPass;
 begin
-  //得意先があったら部課変更不可
   with DataModule3.FDQryGene do
   begin
     Close;
@@ -504,6 +515,7 @@ begin
     ParamByName('TNCD').AsAnsiString:=EdtTNCD.Text;
     ExecSQL;
   end;
+
 end;
 
 {*******************************************************************************
@@ -514,16 +526,15 @@ end;
 procedure TF0002Frm.InzAddMode;
 begin
   EdtMode.Text := '追加';
-//  PageTopFrm1.EdtMode.Text := '追加';
 
- //排他制御
- //     追加モードでロックファイルのレコードを１件作成する。
- //     繰り返し入力などがあるので作成は１回のみ
+ // 排他制御
+ // 追加モードでロックファイルのレコードを１件作成する。
+ // 繰り返し入力などがあるので作成は１回のみ
 
   if bFiest then
   begin
     bFiest:=False;
-     //排他制御用のFormを開いた日時取得
+    // 排他制御用のFormを開いた日時取得
     sOpenDATE:=dmUtilYbs.GetStmDate;
     SOpenTime:=dmUtilYbs.GetStmTime;
 {    try
@@ -543,18 +554,18 @@ begin
 
   with DataModule3 do
   begin
-  //編集用に1レコード追加している
-    ClientDataSetF0002.Close;                      // CDS終了
-    FDQryF0002.Close;                       // Qry終了
-    FDQryF0002.SQL.Clear;                   // SQL初期化
+    // 編集用に1レコード追加している
+    ClientDataSetF0002.Close;              // CDS終了
+    FDQryF0002.Close;                      // Qry終了
+    FDQryF0002.SQL.Clear;                  // SQL初期化
     FDQryF0002.SQL.add(' SELECT TOP 1 * ');
-    FDQryF0002.SQL.add(' FROM TNMMSP ');    // 先頭の1レコード分抽出
+    FDQryF0002.SQL.add(' FROM TNMMSP ');   // 先頭の1レコードを抽出
 
-    ClientDataSetF0002.Open;                       // CDS展開
-    ClientDataSetF0002.EmptyDataSet;               // CDSで抽出レコードを空にする
-    ClientDataSetF0002.Append;                     // 追加モード
+    ClientDataSetF0002.Open;               // CDS開始
+    ClientDataSetF0002.EmptyDataSet;       // CDS抽出レコードを空にする
+    ClientDataSetF0002.Append;             // CDS追加モード
     try
-      InitDataSet(ClientDataSetF0002);             // detasetの初期化、0やNULLなど適切な空の表記にしている。
+      InitDataSet(ClientDataSetF0002);     // detasetの初期化、0やNULLなど適切な空の表記にしている
     except
     end;
   end;
@@ -569,10 +580,11 @@ end;
 procedure TF0002Frm.InzChgMode;
 begin
   EdtMode.Text := '変更';
-  // 照会データを元に1レコードSQL出力する
-  DataOpen;
-  // TNCDを読込専用にするかの判別処理
-  ChgReadOnly(EdtTNCD,true);
+
+  DataOpen;                  // 照会データを元に1レコードSQL出力する
+
+  ChgReadOnly(EdtTNCD,true); // TNCDを読込専用にするかの判別処理
+
 end;
 
 {*******************************************************************************
@@ -583,70 +595,63 @@ end;
 procedure TF0002Frm.InzDelMode;
 begin
   EdtMode.Text := '削除';
-  // 照会データを元に1レコードSQL出力する
-  DataOpen;
-  // パネル1の範囲を入力不可にする
-  Panel1.Enabled := False;
 
-  //一括でEdit,MemoのColorをBtnFaceに変更。入力コンポーネントの色を灰色にする。
-  FldChange(Panel1);
+  DataOpen;                // 照会データを元に1レコードSQL出力する
+
+  Panel1.Enabled := False; // パネル1の範囲を入力不可にする
+
+  FldChange(Panel1);       //一括でEdit,MemoのColorをBtnFaceに変更。入力コンポーネントの色を灰色にする。
 
 end;
 
 
-//データオープン
+{===============================================================================
+データオープン
+===============================================================================}
 procedure TF0002Frm.DataOpen;
 begin
-  //編集用に新しいクライアントデータセットを開く
+  // 編集用に新しいクライアントデータセットを開く
   with DataModule3 do
   begin
     try
-      //データセットを閉じる
-      ClientDataSetF0002.Active := False;
-
-      FDQryF0002.close;
-      //SQL文初期化
-      FDQryF0002.SQL.Clear;
-      //SQL文開始↓
-      //（DEGrid1選択中の内容をFDQueryLogin2で再現 + パスワードも復号しておいたが活用できていない）
+      ClientDataSetF0002.Active := False; // CDSを閉じる
+      FDQryF0002.close;                   // SQL文初期化
+      FDQryF0002.SQL.Clear;               // SQL初期化
+      // SQL文開始↓
       FDQryF0002.SQL.Add(' select * , CAST(DECRYPTBYPASSPHRASE('''+DECKEY+''',TNPASS) AS varchar(10)) AS PASS');
       FDQryF0002.SQL.Add(' from TNMMSP where TNTNCD = :TNTNCD ');
-      //DBGrid1で選択中の担当者CDを代入する
+      // DBGrid1で選択中の担当者CDを代入する
       FDQryF0002.ParamByName('TNTNCD').AsAnsiString := DataModule2.ClientDataSetTNMMSP.FieldByName('TNTNCD').AsString;
-      //FDQueryLogin2を展開する
-      FDQryF0002.Open;
-//      ClientDataSet2.Open;
-      //FDQueryLogin2にデータがない場合の処理
-      if FDQryF0002.IsEmpty then
-      begin
-        //例外エラーメッセージを作成
+
+      FDQryF0002.Open;                    // FDQueryLogin2を展開する
+
+      if FDQryF0002.IsEmpty then          // FDQueryLogin2にデータがない場合の処理
+      begin                               // 例外エラーメッセージを作成
         raise Exception.Create('既に削除されている');
       end;
 
-    ClientDataSetF0002.Active := True; //データセットを開く
-    ClientDataSetF0002.Edit;           //編集ステータスにしておく
+    ClientDataSetF0002.Active := True;    // CDSを開く
+    ClientDataSetF0002.Edit;              // CDS編集モード
 
-      //権限
+      // 権限
       if StrToIntDef(EdtKGKB.TEXT,-1)-1>=0 then
       begin
         case StrToIntDef(EdtKGKB.TEXT,0) of
-          1: CmbKGNM.ItemIndex:=0;   //一般
-          2: CmbKGNM.ItemIndex:=1;   //業務管理者
-          5: CmbKGNM.ItemIndex:=2;   //システム管理者
+          1: CmbKGNM.ItemIndex:=0;        // 一般
+          2: CmbKGNM.ItemIndex:=1;        // 業務管理者
+          5: CmbKGNM.ItemIndex:=2;        // システム管理者
         end;
       end;
 
-      //パスワードの処理（復号後の平文PASSを持ってくる）
-      EdtPASS.Text:= GetDecPass;
+      EdtPASS.Text:= GetDecPass;          // パスワードの処理（復号後の平文PASSを持ってくる）
 
-      //検索非表示（状態がDの時はチェックあり）
+      // 検索非表示（状態がDの時はチェックあり）
       if DataModule3.ClientDataSetF0002.FieldByName('TNSTKB').Asstring='D' then
         chkSTKB.Checked:=true
       else
         chkSTKB.Checked:=false;
 
-      //すべての例外
-      except on e:Exception do
+      except on e:Exception do            // 例外処理
       begin
         MessageDlg(E.Message, mtError, [mbOK], 0);
         self.close;
@@ -655,9 +660,9 @@ begin
 
     end; // tryここまで
 
-  end; //ClientDataSet2ここまで
+  end; // withここまで
 
-end; //DataOpenここまで
+end; // DataOpenここまで
 
 {*******************************************************************************
  目的: 一括でEditコントロール属性を変更する。
@@ -703,11 +708,12 @@ begin
       begin
         TRadioButton(Controls[i]).Color := cl;
       end;
-      //再回帰を行う。
+      // 再回帰を行う。
       CC := WC.Controls[i];
       if CC is TWinControl then FldChange(TWinControl(CC));
 
     end;
+
   end;
 
 end;

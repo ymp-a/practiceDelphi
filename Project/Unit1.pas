@@ -13,15 +13,13 @@ type
     Button1: TButton;
     EdtUserId: TEdit;
     EdtPsw: TEdit;
-    //ログインボタンタップ時の処理
-    procedure Button1Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject); // ログインボタンの処理
     procedure FormShow(Sender: TObject);
   private
     { Private 宣言 }
   public
     { Public 宣言 }
-    //メニュー表示
-    procedure crtMnuFrm();virtual;
+    procedure crtMnuFrm();virtual;           // メニュー表示
   end;
 
 var
@@ -33,85 +31,89 @@ implementation
 
 uses Utilybs, DM2, MNK001, IniFilemnt, functions, System.IniFiles;
 
-//検索ボタンタップ時の処理
+{*******************************************************************************
+ 目的:検索ボタン押下時の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TForm1.Button1Click(Sender: TObject);
 var
-  KGKB:String;//権限区分
+  KGKB:String;                 // 権限区分
   frm:TForm;
 //  PDevMode   : ^TDevMode;
 begin
-  //ユーザーID入力欄背景色を初期化
-  EdtUserId.Color := clWindow;
-  //PW背景色を初期化
-  EdtPsw.Color := clWindow;
+  EdtUserId.Color := clWindow; // ユーザーID入力欄背景色を初期化
+  EdtPsw.Color := clWindow;    // PW背景色を初期化
 
   try
 
     try
-    //dmUtilYbsデータモジュールを作成
-      dmUtilYbs:=TdmUtilYbs.Create(self);//サーバー接続オン
+    // dmUtilYbsデータモジュールを作成
+      dmUtilYbs:=TdmUtilYbs.Create(self); // サーバー接続オン
 
-      if dmUtilYbs.FDConnection1.Connected=true then  //接続中の処理
+      if dmUtilYbs.FDConnection1.Connected=true then  // 接続中の処理
       begin
-
-        //パスワードチェック＆権限区分取得
+        // パスワードチェック＆権限区分取得
         KGKB:=dmUtilYbs.PassMstChk(EdtUserId.Text,EdtPsw.Text);
-        //ユーザーIDが異なるときの処理
-        if KGKB = 'USERR' then
+
+        if KGKB = 'USERR' then      // ユーザーIDが異なるとき
         begin
-          //ユーザーIDの入力欄をピンクにする
-          EdtUserId.Color := clERR;
+          EdtUserId.Color := clERR; // ユーザーIDの入力欄をピンクにする
           EdtUserId.SetFocus;
           Exit;
         end else
-        //PWが異なるときの処理
-        if KGKB = 'PAERR' then
+
+        if KGKB = 'PAERR' then      // PWが異なるとき
         begin
-          //PW欄をピンクにする
-          EdtPsw.Color := clERR;
+          EdtPsw.Color := clERR;    // PW欄をピンクにする
           EdtPsw.SetFocus;
           Exit;
         end;
 
+        crtMnuFrm;                  // メニュー表示
 
-        //メニュー表示
-        crtMnuFrm;      //継承のため、ファンクション化
 
-        //プログラムを終了したらサーバー切断して閉じる
-        dmUtilYbs.FDConnection1.Connected:=false;
+        dmUtilYbs.FDConnection1.Connected:=false; // サーバー切断して閉じる
         close;
 
-      end; //接続時の処理ここまで
+      end; // 接続時の処理ここまで
 
-      //サーバ接続時の例外処理
-      Except on e:Exception do
+
+      Except on e:Exception do // サーバ接続時の例外処理
       begin
-        //例外エラーメッセージダイアログを表示する
+        // 例外エラーメッセージダイアログを表示
         MessageDlg(E.Message, mtError, [mbOK], 0);
         abort;
-      end;//Exceptここまで
+      end; // Exceptここまで
 
-    end;//tryExceptここまで
+    end; // tryExceptここまで
 
   finally
-    dmUtilYbs.Free;    //エラー時・パスワードチェックで引っかかった時にFree／正常時はPGM終了後にFree。
-  end; //tryfinallyここまで
+    dmUtilYbs.Free; // エラー時・パスワードチェックで引っかかった時にFree／正常時はPGM終了後にFree。
+  end; // tryfinallyここまで
 
-end; //検索ボタンタップ時の処理ここまで
+end; // 検索ボタンタップ時の処理ここまで
 
-//メニュー表示
+{*******************************************************************************
+ 目的:メニュー表示
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TForm1.crtMnuFrm;
 var
   frm:TForm;
 begin
-    //メニュー画面を準備
-    frm := TMNK001Frm.Create(Application);
-    //ログイン画面を非表示にする
-    Self.Hide;
-    //画面展開
-    frm.ShowModal;
-end; //メニュー表示ここまで
+    frm := TMNK001Frm.Create(Application); // メニュー画面を準備
+    Self.Hide;                             // ログイン画面を非表示にする
+    frm.ShowModal;                         // 画面展開
 
+end; // メニュー表示ここまで
+
+{*******************************************************************************
+ 目的:ログイン画面展開時の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TForm1.FormShow(Sender: TObject);
 const
   fileNm= 'PASWIN.ini';
@@ -134,7 +136,7 @@ begin
       Exit;
     end;
 
-    //dmUtilYbsデータモジュールを作成
+    // dmUtilYbsデータモジュールを作成
     dmUtilYbs:=TdmUtilYbs.Create(self);
 
     Database:=iniF.ReadString('LOGON','Database','');
@@ -161,8 +163,6 @@ begin
       Params.Values['Server']      := Server   ;
 
     end;
-
-
 
   finally
     FreeAndNil(iniF);

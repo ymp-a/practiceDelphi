@@ -75,7 +75,7 @@ object F0004Frm: TF0004Frm
       Top = 19
       Width = 75
       Height = 25
-      Caption = #26908#32034
+      Caption = #26908#32034'(F1)'
       TabOrder = 5
       OnClick = Button1Click
     end
@@ -201,6 +201,7 @@ object F0004Frm: TF0004Frm
           Expanded = False
           FieldName = 'MHJTCD'
           Title.Caption = #29366#24907
+          Width = 64
           Visible = True
         end>
     end
@@ -216,7 +217,7 @@ object F0004Frm: TF0004Frm
         Top = 14
         Width = 75
         Height = 25
-        Caption = #22793#26356
+        Caption = #22793#26356'(F8)'
         TabOrder = 1
         OnClick = Button2Click
       end
@@ -225,7 +226,7 @@ object F0004Frm: TF0004Frm
         Top = 14
         Width = 75
         Height = 25
-        Caption = #32066#20102
+        Caption = #32066#20102'(F9)'
         TabOrder = 3
         OnClick = Button3Click
       end
@@ -234,7 +235,7 @@ object F0004Frm: TF0004Frm
         Top = 14
         Width = 75
         Height = 25
-        Caption = #36861#21152
+        Caption = #36861#21152'(F2)'
         TabOrder = 0
         OnClick = Button4Click
       end
@@ -243,7 +244,7 @@ object F0004Frm: TF0004Frm
         Top = 14
         Width = 75
         Height = 25
-        Caption = #21066#38500
+        Caption = #21066#38500'(F3)'
         TabOrder = 2
         OnClick = Button5Click
       end
@@ -252,10 +253,44 @@ object F0004Frm: TF0004Frm
         Top = 14
         Width = 75
         Height = 25
-        Caption = #29031#20250
+        Caption = #34920#31034'(F6)'
         TabOrder = 4
         OnClick = Button6Click
       end
+    end
+  end
+  object ActionList1: TActionList
+    Left = 584
+    Top = 24
+    object F1: TAction
+      Caption = #26908#32034'(F1)'
+      ShortCut = 112
+      OnExecute = Button1Click
+    end
+    object F2: TAction
+      Caption = #36861#21152'(F2)'
+      ShortCut = 113
+      OnExecute = Button4Click
+    end
+    object F8: TAction
+      Caption = #22793#26356'(F8)'
+      ShortCut = 119
+      OnExecute = Button2Click
+    end
+    object F3: TAction
+      Caption = #21066#38500'(F3)'
+      ShortCut = 114
+      OnExecute = Button5Click
+    end
+    object F9: TAction
+      Caption = #32066#20102'(F9)'
+      ShortCut = 120
+      OnExecute = Button3Click
+    end
+    object F6: TAction
+      Caption = #34920#31034'(F6)'
+      ShortCut = 117
+      OnExecute = Button6Click
     end
   end
 end

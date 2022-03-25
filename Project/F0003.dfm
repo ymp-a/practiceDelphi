@@ -75,6 +75,7 @@ object F0003Frm: TF0003Frm
       Top = -1
       Width = 73
       Height = 24
+      TabStop = False
       Alignment = taCenter
       Color = clBtnFace
       Font.Charset = DEFAULT_CHARSET
@@ -83,7 +84,7 @@ object F0003Frm: TF0003Frm
       Font.Name = #65325#65331' '#12468#12471#12483#12463
       Font.Style = []
       ParentFont = False
-      TabOrder = 0
+      TabOrder = 1
       Text = #36861#21152
     end
     object EdtMHTNCD: TDBEditUNIC
@@ -93,7 +94,7 @@ object F0003Frm: TF0003Frm
       Height = 21
       DataField = 'MHTNCD'
       DataSource = DataModule4.DataSrcMTHFLP
-      TabOrder = 1
+      TabOrder = 6
       OnExit = EdtMHTNCDExit
       OptLen = 6
     end
@@ -104,7 +105,7 @@ object F0003Frm: TF0003Frm
       Height = 21
       DataField = 'MHTKNM'
       DataSource = DataModule4.DataSrcMTHFLP
-      TabOrder = 2
+      TabOrder = 5
       OptLen = 20
       OptFldType = O
     end
@@ -115,7 +116,7 @@ object F0003Frm: TF0003Frm
       Height = 21
       DataField = 'MHTKCD'
       DataSource = DataModule4.DataSrcMTHFLP
-      TabOrder = 3
+      TabOrder = 4
       OptLen = 6
     end
     object EdtMHBIKO: TDBEditUNIC
@@ -125,7 +126,7 @@ object F0003Frm: TF0003Frm
       Height = 21
       DataField = 'MHBIKO'
       DataSource = DataModule4.DataSrcMTHFLP
-      TabOrder = 4
+      TabOrder = 7
       OptLen = 20
       OptFldType = O
     end
@@ -136,7 +137,7 @@ object F0003Frm: TF0003Frm
       Height = 21
       DataField = 'MHIRDT'
       DataSource = DataModule4.DataSrcMTHFLP
-      TabOrder = 5
+      TabOrder = 2
     end
     object EdtMHKGDT: TDBEditUNIC
       Left = 90
@@ -145,7 +146,7 @@ object F0003Frm: TF0003Frm
       Height = 21
       DataField = 'MHKGDT'
       DataSource = DataModule4.DataSrcMTHFLP
-      TabOrder = 6
+      TabOrder = 3
     end
     object EdtMHNO: TDBEditUNIC
       Left = 90
@@ -154,7 +155,7 @@ object F0003Frm: TF0003Frm
       Height = 21
       DataField = 'MHNO'
       DataSource = DataModule4.DataSrcMTHFLP
-      TabOrder = 7
+      TabOrder = 0
       OptLen = 6
       OptFldType = S
     end
@@ -255,7 +256,6 @@ object F0003Frm: TF0003Frm
         Top = 24
         Width = 24
         Height = 17
-        TabStop = False
         DataField = 'dataJTCD'
         DataSource = DataModule4.DataSrcMTMFLP
         TabOrder = 5
@@ -282,7 +282,7 @@ object F0003Frm: TF0003Frm
         OptFldType = O
       end
       object EdtMTTNKA: TDBEditUNIC
-        Left = 306
+        Left = 307
         Top = 20
         Width = 55
         Height = 21
@@ -369,7 +369,7 @@ object F0003Frm: TF0003Frm
       Top = 14
       Width = 75
       Height = 25
-      Caption = #26356#26032
+      Caption = #26356#26032'(F6)'
       TabOrder = 0
       OnClick = Button2Click
     end
@@ -378,9 +378,23 @@ object F0003Frm: TF0003Frm
       Top = 14
       Width = 75
       Height = 25
-      Caption = #32066#20102
+      Caption = #32066#20102'(F9)'
       TabOrder = 1
       OnClick = Button3Click
+    end
+  end
+  object ActionList1: TActionList
+    Left = 578
+    Top = 8
+    object F9: TAction
+      Caption = #32066#20102'(F9)'
+      ShortCut = 120
+      OnExecute = Button3Click
+    end
+    object F6: TAction
+      Caption = #34920#31034'(F6)'
+      ShortCut = 117
+      OnExecute = Button2Click
     end
   end
 end
