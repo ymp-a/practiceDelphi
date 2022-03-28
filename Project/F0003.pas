@@ -62,6 +62,7 @@ type
     procedure EdtMTSRYOExit(Sender: TObject);    // 単価×数量処理
     procedure DBCtrlGrid1Exit(Sender: TObject);  // DBCtrlGrid1からカーソルout処理
     procedure DBCtrlGrid1Enter(Sender: TObject); // DBCtrlGrid1にカーソルinの処理
+    procedure F6Execute(Sender: TObject);        // F6無効処理
   private
     { Private 宣言 }
 
@@ -87,7 +88,7 @@ type
 
     procedure DbAdd;                             // データベースへの変更（追加モード）
     procedure DbChenge;                          // データベースへの変更（変更モード）
-    procedure DbDelete;                          // データベースへの変更（削除モード
+    procedure DbDelete;                          // データベースへの変更（削除モード)
 
   protected
     BKList:array[0..99] of TStringList;          // コンボ値保管リスト
@@ -328,7 +329,7 @@ begin
         TDBCheckBox(compo).ReadOnly:=true; // ReadOnlyをオンにする
     end;                                   // Enabledfalseにするには不向きなロジック
 
-    ActionList1[1].Enabled:=false;         // ファンクションキー更新（F6）の無効
+//    ActionList1[1].Enabled:=false;         // ファンクションキー更新（F6）の無効
                                            // ActionListインデックスはリスト並び順通り
 
 //    panel1.Enabled:=false;                 // 紙商ではにパネル単位でEnabledfalseしている
@@ -358,7 +359,7 @@ end;
 procedure TF0003Frm.Button2Click(Sender: TObject);
 begin
   // 表示モードのとき処理を行わない
-  if Mode = 'Dsp' then abort;
+//  if Mode = 'Dsp' then abort;
 //  if Mode = 'Dsp' then Exit;
 
   Button2.Enabled:=false;   //処理中はボタンロック
@@ -887,5 +888,17 @@ begin
 
 end;
 
+//ショートカット F6
+procedure TF0003Frm.F6Execute(Sender: TObject);
+begin
+
+  if Button2.Enabled = false  then exit;//ボタン押せない時は処理しない
+
+  Button2.SetFocus;
+
+  if Button2.Focused = true then
+     Button2Click(Sender);
+
+end;
 
 end.

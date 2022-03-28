@@ -389,8 +389,20 @@ object DataModule4: TDataModule4
     end
   end
   object DataSrcF0004: TDataSource
-    DataSet = FDQryF0004
+    DataSet = ClientDataSetF0004
     Left = 304
+    Top = 200
+  end
+  object DataSetProF0004: TDataSetProvider
+    DataSet = FDQryF0004
+    Left = 112
+    Top = 200
+  end
+  object ClientDataSetF0004: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'DataSetProF0004'
+    Left = 208
     Top = 200
   end
 end

@@ -394,7 +394,7 @@ object F0003Frm: TF0003Frm
     object F6: TAction
       Caption = #34920#31034'(F6)'
       ShortCut = 117
-      OnExecute = Button2Click
+      OnExecute = F6Execute
     end
   end
 end

@@ -34,6 +34,8 @@ type
     procedure Button2Click(Sender: TObject); // 変更ボタン
     procedure Button4Click(Sender: TObject); // 追加ボタン
     procedure Button5Click(Sender: TObject); // 削除ボタン
+    procedure DBGrid1TitleClick(Column: TColumn); // グリッドソート
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private 宣言 }
 
@@ -53,7 +55,7 @@ implementation
 
 {$R *.dfm}
 
-uses Unit1, DM2, F0002, EdtMaster, MNK001, DM3;
+uses Unit1, DM2, F0002, EdtMaster, MNK001, DM3, Datasnap.DBClient;
 
 {*******************************************************************************
  目的:検索ボタン押下時の処理
@@ -225,6 +227,141 @@ begin
     end;
 
   end; // with
+
+end;
+
+{*******************************************************************************
+ 目的: グリッドソート実装
+ 引数:
+ 戻値:
+ IndexDefsの定義はDatasnap.DBClient。
+ 並び順変更後はCDS開放前に項目名とindexを初期化すること。FormCloseの最初。
+*******************************************************************************}
+procedure TF0001Frm.DBGrid1TitleClick(Column: TColumn);
+var
+ sFieldNM :String; //退避フィールド名
+begin
+  inherited;
+
+with DBGrid1 do
+  begin
+    // 明細非表示時は処理無効
+    if DataSource.DataSet.Active = False then Exit;
+
+    // カラムのフィールド名を退避
+    sFieldNM := Column.FieldName;
+
+    with (DataSource.DataSet as TClientDataSet) do
+    begin
+      // インデックスフィールド作成
+      if IndexDefs.Count = 0 then
+        IndexDefs.Add('aIndex', '', []);
+
+
+
+      //----------------------------//
+      // 明細の表題／並び替えの制御 //
+      //----------------------------//
+      if AnsiPos('▲', Column.Title.Caption) <> 0 then
+      begin
+        // ----- 降順へ -----
+        // 表題設定
+        Column.Title.Caption := StringReplace(Column.Title.Caption, '▲', '', [rfReplaceAll]);
+        Column.Title.Caption := Column.Title.Caption + '▼';
+
+        // 降順フィールドの設定
+        if IndexDefs[0].DescFields = '' then
+          IndexDefs[0].DescFields := sFieldNM
+        else
+          IndexDefs[0].DescFields := IndexDefs[0].DescFields + ';' + sFieldNM;
+
+        // インデックスフィールドのオプション初期化
+        IndexDefs[0].Options := [];
+      end
+      else if AnsiPos('▼', Column.Title.Caption) <> 0 then
+      begin
+        // ----- 設定解除 -----
+        // 表題設定
+        Column.Title.Caption := StringReplace(Column.Title.Caption, '▼', '', [rfReplaceAll]);
+        // 並び順の設定解除（降順フィールド）
+        if AnsiPos(sFieldNM + ';', IndexDefs[0].DescFields) <> 0 then
+          sFieldNM := sFieldNM + ';'
+        else if AnsiPos(';' + sFieldNM, IndexDefs[0].DescFields) <> 0 then
+          sFieldNM := ';' + sFieldNM;
+
+        IndexDefs[0].DescFields := StringReplace(IndexDefs[0].DescFields, sFieldNM, '', [rfReplaceAll]);
+        // カラムのフィールド名を再取得
+        sFieldNM := Column.FieldName;
+
+        // 並び順の設定解除（昇順フィールド）
+        if AnsiPos(sFieldNM + ';', IndexDefs[0].Fields) <> 0 then
+          sFieldNM := sFieldNM + ';'
+        else if AnsiPos(';' + sFieldNM, IndexDefs[0].Fields) <> 0 then
+          sFieldNM := ';' + sFieldNM;
+
+        IndexDefs[0].Fields := StringReplace(IndexDefs[0].Fields, sFieldNM, '',[rfReplaceAll]);
+        // 並び替え完全解除の場合インデックス名クリア
+        if IndexDefs[0].Fields = '' then
+          IndexName := '';
+
+        // インデックスフィールドのオプション初期化
+        IndexDefs[0].Options := [];
+      end
+      else
+      begin
+        // ----- 昇順へ -----
+        // 表題設定
+        Column.Title.Caption := Column.Title.Caption + '▲';
+
+        // 昇順フィールドの設定
+        if IndexDefs[0].Fields = '' then
+          IndexDefs[0].Fields := sFieldNM
+        else
+          IndexDefs[0].Fields := IndexDefs[0].Fields + ';' + sFieldNM;
+
+        // インデックスフィールドのオプション初期化
+        IndexDefs[0].Options := [];
+        // インデックス名設定
+        if IndexName = '' then IndexName := 'aIndex';
+      end;
+
+      //データを開いたままソートを適用させるためIndexを削除して再設定
+      DeleteIndex('aIndex');
+      IndexName := 'aIndex';
+      First;
+    end;
+  end;
+end;
+
+procedure TF0001Frm.FormClose(Sender: TObject; var Action: TCloseAction);
+var
+  frm:TForm;
+  i: Integer;
+begin
+  // 明細非表示時は処理無効
+    if DBgrid1.DataSource.DataSet.Active = False then Exit;
+  // 項目名の初期化
+    for i:=0 to (DBGrid1.Columns.Count)-1 do
+    begin
+      if AnsiPos('▲', DBGrid1.Columns[i].Title.Caption) <> 0 then
+        DBGrid1.Columns[i].Title.Caption := StringReplace( DBGrid1.Columns[i].Title.Caption, '▲', '', [rfReplaceAll]);
+      if AnsiPos('▼', DBGrid1.Columns[i].Title.Caption) <> 0 then
+        DBGrid1.Columns[i].Title.Caption := StringReplace( DBGrid1.Columns[i].Title.Caption, '▼', '', [rfReplaceAll]);
+    end;
+  // indexの初期化
+    with (DBgrid1.DataSource.DataSet as TClientDataSet) do
+    begin
+    if  IndexName = 'aIndex' then
+     DeleteIndex('aIndex');
+    end;
+
+  inherited;
+
+  with DataModule2 do
+  begin
+    FDQryTNMMSP.Close;
+    ClientDataSetTNMMSP.Close;
+  end;
 
 end;
 

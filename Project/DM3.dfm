@@ -12,7 +12,7 @@ object DataModule3: TDataModule3
     Params = <>
     ProviderName = 'DataSetProF0002'
     Left = 221
-    Top = 56
+    Top = 48
     object ClientDataSetF0002TNTNCD: TIntegerField
       FieldName = 'TNTNCD'
       Origin = 'TNTNCD'

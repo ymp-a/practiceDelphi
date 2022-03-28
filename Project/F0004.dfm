@@ -11,6 +11,7 @@ object F0004Frm: TF0004Frm
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnClose = FormClose
   OnShow = Button1Click
   PixelsPerInch = 96
   TextHeight = 13
@@ -139,6 +140,7 @@ object F0004Frm: TF0004Frm
       TitleFont.Height = -11
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
+      OnTitleClick = DBGrid1TitleClick
       Columns = <
         item
           Expanded = False
@@ -201,7 +203,6 @@ object F0004Frm: TF0004Frm
           Expanded = False
           FieldName = 'MHJTCD'
           Title.Caption = #29366#24907
-          Width = 64
           Visible = True
         end>
     end
