@@ -1,7 +1,7 @@
 object DataModule4: TDataModule4
   OldCreateOrder = False
-  Height = 344
-  Width = 388
+  Height = 556
+  Width = 525
   object DataSrcMTHFLP: TDataSource
     DataSet = ClientDataSetMTHFLP
     Left = 304
@@ -259,8 +259,7 @@ object DataModule4: TDataModule4
     Connection = DataModule2.FDConnection1
     SQL.Strings = (
       'select * from mthflp'
-      'left join tnmmsp on tntncd = mhtncd'
-      '')
+      'left join tnmmsp on tntncd = mhtncd')
     Left = 32
     Top = 200
     object IntegerField1: TIntegerField
@@ -290,10 +289,12 @@ object DataModule4: TDataModule4
     object IntegerField2: TIntegerField
       FieldName = 'MHGSRO'
       Origin = 'MHGSRO'
+      DisplayFormat = '###,###,###'
     end
     object IntegerField3: TIntegerField
       FieldName = 'MHGKIN'
       Origin = 'MHGKIN'
+      DisplayFormat = '###,###,###'
     end
     object IntegerField4: TIntegerField
       FieldName = 'MHTNCD'
@@ -399,10 +400,137 @@ object DataModule4: TDataModule4
     Top = 200
   end
   object ClientDataSetF0004: TClientDataSet
+    Active = True
     Aggregates = <>
     Params = <>
     ProviderName = 'DataSetProF0004'
     Left = 208
     Top = 200
+    object ClientDataSetF0004MHNO: TIntegerField
+      FieldName = 'MHNO'
+      Origin = 'MHNO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object ClientDataSetF0004MHIRDT: TDateField
+      FieldName = 'MHIRDT'
+      Origin = 'MHIRDT'
+    end
+    object ClientDataSetF0004MHKGDT: TDateField
+      FieldName = 'MHKGDT'
+      Origin = 'MHKGDT'
+    end
+    object ClientDataSetF0004MHTKCD: TStringField
+      FieldName = 'MHTKCD'
+      Origin = 'MHTKCD'
+      Size = 5
+    end
+    object ClientDataSetF0004MHTKNM: TStringField
+      FieldName = 'MHTKNM'
+      Origin = 'MHTKNM'
+      Size = 100
+    end
+    object ClientDataSetF0004MHGSRO: TIntegerField
+      FieldName = 'MHGSRO'
+      Origin = 'MHGSRO'
+      DisplayFormat = '###,###,###'
+    end
+    object ClientDataSetF0004MHGKIN: TIntegerField
+      FieldName = 'MHGKIN'
+      Origin = 'MHGKIN'
+      DisplayFormat = '###,###,###'
+    end
+    object ClientDataSetF0004MHTNCD: TIntegerField
+      FieldName = 'MHTNCD'
+      Origin = 'MHTNCD'
+      Required = True
+    end
+    object ClientDataSetF0004MHBIKO: TStringField
+      FieldName = 'MHBIKO'
+      Origin = 'MHBIKO'
+      Size = 100
+    end
+    object ClientDataSetF0004MHJTCD: TStringField
+      FieldName = 'MHJTCD'
+      Origin = 'MHJTCD'
+      Size = 1
+    end
+    object ClientDataSetF0004TNTNCD: TIntegerField
+      FieldName = 'TNTNCD'
+      Origin = 'TNTNCD'
+    end
+    object ClientDataSetF0004TNBKCD: TIntegerField
+      FieldName = 'TNBKCD'
+      Origin = 'TNBKCD'
+    end
+    object ClientDataSetF0004TNPASS: TVarBytesField
+      FieldName = 'TNPASS'
+      Origin = 'TNPASS'
+      Size = 2000
+    end
+    object ClientDataSetF0004TNNAME: TStringField
+      FieldName = 'TNNAME'
+      Origin = 'TNNAME'
+      Size = 16
+    end
+    object ClientDataSetF0004TNKGKB: TStringField
+      FieldName = 'TNKGKB'
+      Origin = 'TNKGKB'
+      Size = 1
+    end
+    object ClientDataSetF0004TNSTKB: TStringField
+      FieldName = 'TNSTKB'
+      Origin = 'TNSTKB'
+      Size = 4
+    end
+    object ClientDataSetF0004TNPWLA: TDateField
+      FieldName = 'TNPWLA'
+      Origin = 'TNPWLA'
+    end
+    object ClientDataSetF0004TNCRDT: TDateField
+      FieldName = 'TNCRDT'
+      Origin = 'TNCRDT'
+    end
+    object ClientDataSetF0004TNCRTM: TTimeField
+      FieldName = 'TNCRTM'
+      Origin = 'TNCRTM'
+    end
+    object ClientDataSetF0004TNCRPG: TStringField
+      FieldName = 'TNCRPG'
+      Origin = 'TNCRPG'
+    end
+    object ClientDataSetF0004TNCRWS: TStringField
+      FieldName = 'TNCRWS'
+      Origin = 'TNCRWS'
+    end
+    object ClientDataSetF0004TNCRUS: TStringField
+      FieldName = 'TNCRUS'
+      Origin = 'TNCRUS'
+    end
+    object ClientDataSetF0004TNUPDT: TDateField
+      FieldName = 'TNUPDT'
+      Origin = 'TNUPDT'
+    end
+    object ClientDataSetF0004TNUPTM: TTimeField
+      FieldName = 'TNUPTM'
+      Origin = 'TNUPTM'
+    end
+    object ClientDataSetF0004TNUPPG: TStringField
+      FieldName = 'TNUPPG'
+      Origin = 'TNUPPG'
+    end
+    object ClientDataSetF0004TNUPWS: TStringField
+      FieldName = 'TNUPWS'
+      Origin = 'TNUPWS'
+    end
+    object ClientDataSetF0004TNUPUS: TStringField
+      FieldName = 'TNUPUS'
+      Origin = 'TNUPUS'
+    end
+    object ClientDataSetF0004TNJTCD: TStringField
+      FieldName = 'TNJTCD'
+      Origin = 'TNJTCD'
+      Size = 1
+    end
   end
 end

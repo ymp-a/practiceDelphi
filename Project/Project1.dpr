@@ -36,16 +36,17 @@ uses
   DM3 in 'DM3.pas' {DataModule3: TDataModule},
   F0003 in 'F0003.pas' {F0003Frm},
   DM4 in 'DM4.pas' {DataModule4: TDataModule},
-  F0004 in 'F0004.pas' {F0004Frm};
+  F0004 in 'F0004.pas' {F0004Frm},
+  baseFormU in 'baseFormU.pas' {baseForm},
+  baseForm2U in 'baseForm2U.pas' {baseForm2},
+  IH001U in 'IH001U.pas' {IH001},
+  IH002U in 'IH002U.pas' {IH002};
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm1, Form1);
-  Application.CreateForm(TDataModule2, DataModule2);
-  Application.CreateForm(TDataModule3, DataModule3);
-  Application.CreateForm(TDataModule4, DataModule4);
+  Application.CreateForm(TEdtLoginFrm, EdtLoginFrm);
   Application.Run;
 end.

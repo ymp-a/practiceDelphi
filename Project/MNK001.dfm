@@ -49,4 +49,13 @@ object MNK001Frm: TMNK001Frm
     TabOrder = 3
     OnClick = Button4Click
   end
+  object Button5: TButton
+    Left = 48
+    Top = 176
+    Width = 150
+    Height = 25
+    Caption = #32153#25215
+    TabOrder = 4
+    OnClick = Button5Click
+  end
 end

@@ -244,6 +244,22 @@
             <Form>F0004Frm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="baseFormU.pas">
+            <Form>baseForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="baseForm2U.pas">
+            <Form>baseForm2</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="IH001U.pas">
+            <Form>IH001</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="IH002U.pas">
+            <Form>IH002</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

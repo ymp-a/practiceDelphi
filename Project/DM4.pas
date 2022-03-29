@@ -91,6 +91,34 @@ type
     FDQryF0004TNJTCD: TStringField;
     DataSetProF0004: TDataSetProvider;
     ClientDataSetF0004: TClientDataSet;
+    ClientDataSetF0004MHNO: TIntegerField;
+    ClientDataSetF0004MHIRDT: TDateField;
+    ClientDataSetF0004MHKGDT: TDateField;
+    ClientDataSetF0004MHTKCD: TStringField;
+    ClientDataSetF0004MHTKNM: TStringField;
+    ClientDataSetF0004MHGSRO: TIntegerField;
+    ClientDataSetF0004MHGKIN: TIntegerField;
+    ClientDataSetF0004MHTNCD: TIntegerField;
+    ClientDataSetF0004MHBIKO: TStringField;
+    ClientDataSetF0004MHJTCD: TStringField;
+    ClientDataSetF0004TNTNCD: TIntegerField;
+    ClientDataSetF0004TNBKCD: TIntegerField;
+    ClientDataSetF0004TNPASS: TVarBytesField;
+    ClientDataSetF0004TNNAME: TStringField;
+    ClientDataSetF0004TNKGKB: TStringField;
+    ClientDataSetF0004TNSTKB: TStringField;
+    ClientDataSetF0004TNPWLA: TDateField;
+    ClientDataSetF0004TNCRDT: TDateField;
+    ClientDataSetF0004TNCRTM: TTimeField;
+    ClientDataSetF0004TNCRPG: TStringField;
+    ClientDataSetF0004TNCRWS: TStringField;
+    ClientDataSetF0004TNCRUS: TStringField;
+    ClientDataSetF0004TNUPDT: TDateField;
+    ClientDataSetF0004TNUPTM: TTimeField;
+    ClientDataSetF0004TNUPPG: TStringField;
+    ClientDataSetF0004TNUPWS: TStringField;
+    ClientDataSetF0004TNUPUS: TStringField;
+    ClientDataSetF0004TNJTCD: TStringField;
     // ClientDataSetの日付フィールドのOnSetTextイベントに追加する
     procedure ClientDataSetTDateFieldSetText(Sender: TField; // 日付入力チェック
       const Text: string);
@@ -142,35 +170,39 @@ begin
 
     if MHNO<>'' then                      // 見積NO入力時の処理
     begin
-      qry.SQL.Add('AND MHNO = :MHNO ');       // TNTNCDに入力した担当者CDを代入する
+      qry.SQL.Add('WHERE MHNO = :MHNO ');       // TNTNCDに入力した担当者CDを代入する
       qry.ParamByName('MHNO').AsString:=MHNO; // 入力した担当者CDを'TNCD'に代入する
       andFlg:=true;                       // 入力時フラグオン
     end;
 
     if TODT<>'' then                      // 見積依頼日入力時の処理
     begin
-      qry.SQL.Add(' AND MHIRDT = :TODT');
+      if andFlg=true then qry.SQL.Add(' AND ') else qry.SQL.Add(' WHERE  ');
+      qry.SQL.Add('MHIRDT = :TODT');
       qry.ParamByName('TODT').AsString:=TODT; // 入力した担当者CDを'TNCD'に代入する
       andFlg:=true;                       // 入力時フラグオン
     end;
 
     if TODT<>'' then                      // 見積期限入力時の処理
     begin
-      qry.SQL.Add(' AND MHKGDT = :FRDT');
+      if andFlg=true then qry.SQL.Add(' AND ') else qry.SQL.Add(' WHERE  ');
+      qry.SQL.Add('MHKGDT = :FRDT');
       qry.ParamByName('FRDT').AsString:=FRDT; // 入力した担当者CDを'TNCD'に代入する
       andFlg:=true;                       // 入力時フラグオン
     end;
 
     if TKCD<>'' then                      // 得意先入力時の処理
     begin
-      qry.SQL.Add(' AND MHTKCD = :TKCD');
+    if andFlg=true then qry.SQL.Add(' AND ') else qry.SQL.Add(' WHERE  ');
+      qry.SQL.Add('MHTKCD = :TKCD');
       qry.ParamByName('TKCD').AsString:=TKCD; // 入力した担当者CDを'TNCD'に代入する
       andFlg:=true;                       // 入力時フラグオン
     end;
 
     if TNCD<>'' then                      // 担当者CD入力時の処理
     begin
-      qry.SQL.Add(' WHERE TNTNCD = :TNCD ');  // TNTNCDに入力した担当者CDを代入する
+      if andFlg=true then qry.SQL.Add(' AND ') else qry.SQL.Add(' WHERE  ');
+      qry.SQL.Add('TNTNCD = :TNCD ');  // TNTNCDに入力した担当者CDを代入する
       qry.ParamByName('TNCD').AsString:=TNCD; // 入力した担当者CDを'TNCD'に代入する
       andFlg:=true;                       // 入力時フラグオン
     end;
@@ -178,17 +210,18 @@ begin
     qry.SQL.Add(' ORDER BY MHNO ');           // 昇順
 
     qry.Open;                      // SQL文実行
+    cds.Open; // CDS開始
+
+
+
+    // 対象データが存在しない場合、データセットを閉じて終了
+    if cds.IsEmpty then
+    begin
+      cds.Close;
+      raise Exception.Create('対象データが存在しません');
+    end;
+
   end;
-
-
-  // 対象データが存在しない場合、データセットを閉じて終了
-  if qry.IsEmpty then
-  begin
-    qry.Close;
-    raise Exception.Create('対象データが存在しません');
-  end;
-
-  cds.Open; // CDS開始
 
 end; // OpenTNDataここまで
 
