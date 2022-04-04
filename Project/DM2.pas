@@ -4,35 +4,17 @@ interface
 
 uses
   System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,
-  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
-  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.UI.Intf,
-  FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Phys, FireDAC.VCLUI.Wait,
-  Data.DB, FireDAC.Comp.Client, FireDAC.Comp.DataSet, FireDAC.Phys.MSSQL,
-  FireDAC.Phys.MSSQLDef, Datasnap.Provider, Datasnap.DBClient, FireDAC.Comp.UI;
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.MSSQLDef,
+  FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf,
+  FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  FireDAC.Comp.UI, FireDAC.Phys.ODBCBase, FireDAC.Phys.MSSQL, Datasnap.DBClient,
+  Datasnap.Provider,MidasLib;
 
 type
   TDataModule2 = class(TDataModule)
     FDQryTNMMSP: TFDQuery;
-    FDConnection1: TFDConnection;
     DataSrcTNMMSP: TDataSource;
-    FDQryTNMMSPTNTNCD: TIntegerField;
-    FDQryTNMMSPTNBKCD: TIntegerField;
-    FDQryTNMMSPTNPASS: TVarBytesField;
-    FDQryTNMMSPTNNAME: TStringField;
-    FDQryTNMMSPTNKGKB: TStringField;
-    FDQryTNMMSPTNSTKB: TStringField;
-    FDQryTNMMSPTNPWLA: TDateField;
-    FDQryTNMMSPTNCRDT: TDateField;
-    FDQryTNMMSPTNCRTM: TTimeField;
-    FDQryTNMMSPTNCRPG: TStringField;
-    FDQryTNMMSPTNCRWS: TStringField;
-    FDQryTNMMSPTNCRUS: TStringField;
-    FDQryTNMMSPTNUPDT: TDateField;
-    FDQryTNMMSPTNUPTM: TTimeField;
-    FDQryTNMMSPTNUPPG: TStringField;
-    FDQryTNMMSPTNUPWS: TStringField;
-    FDQryTNMMSPTNUPUS: TStringField;
-    FDQryTNMMSPTNJTCD: TStringField;
     ClientDataSetTNMMSP: TClientDataSet;
     DataSetProTNMMSP: TDataSetProvider;
     ClientDataSetTNMMSPTNTNCD: TIntegerField;
@@ -53,12 +35,32 @@ type
     ClientDataSetTNMMSPTNUPWS: TStringField;
     ClientDataSetTNMMSPTNUPUS: TStringField;
     ClientDataSetTNMMSPTNJTCD: TStringField;
+    FDQry1: TFDQuery;
+    DataSrc1: TDataSource;
+    FDQry1TNTNCD: TIntegerField;
+    FDQry1TNBKCD: TIntegerField;
+    FDQry1TNPASS: TVarBytesField;
+    FDQry1TNNAME: TStringField;
+    FDQry1TNKGKB: TStringField;
+    FDQry1TNSTKB: TStringField;
+    FDQry1TNPWLA: TDateField;
+    FDQry1TNCRDT: TDateField;
+    FDQry1TNCRTM: TTimeField;
+    FDQry1TNCRPG: TStringField;
+    FDQry1TNCRWS: TStringField;
+    FDQry1TNCRUS: TStringField;
+    FDQry1TNUPDT: TDateField;
+    FDQry1TNUPTM: TTimeField;
+    FDQry1TNUPPG: TStringField;
+    FDQry1TNUPWS: TStringField;
+    FDQry1TNUPUS: TStringField;
+    FDQry1TNJTCD: TStringField;
 
   private
     { Private 宣言 }
   public
     { Public 宣言 }
-    procedure OpenTNData(TNCD,reNAME: String); // 担当者マスタデータオープン
+//    procedure OpenTNData(TNCD,reNAME: String); // 担当者マスタデータオープン
   end;
 
 var
@@ -77,7 +79,7 @@ uses functions, Utilybs, F0001;
  引数:
  戻値:
 *******************************************************************************}
-procedure TDataModule2.OpenTNData(TNCD,reNAME: String);
+{procedure TDataModule2.OpenTNData(TNCD,reNAME: String);
 var
   andFlg:boolean; // 入力フラグを設定
 
@@ -85,50 +87,51 @@ begin
 
   andFlg:=false;  // フラグ初期化
 
-  with ClientDataSetTNMMSP do
   begin
-    ClientDataSetTNMMSP.Active := False; // CDSを初期化
+    ClientDataSetTNMMSP.Close; // CDSを初期化
 
     with FDQryTNMMSP do
     begin
       FDQryTNMMSP.Close; // FDQueryLogin初期化
       SQL.Clear;         // SQL文初期化
+//      Params.Clear;
+
       // ここからSQL文↓
       SQL.Add(' SELECT * FROM TNMMSP  ');
-
-      if TNCD<>'' then                      // 担当者CD入力時の処理
+      SQL.Add(' where 1=1 ');
+      if TNCD<>'' then // 担当者CD入力時の処理
       begin
-        SQL.Add(' WHERE TNTNCD = :TNCD ');  // TNTNCDに入力した担当者CDを代入する
-        ParamByName('TNCD').AsString:=TNCD; // 入力した担当者CDを'TNCD'に代入する
+        SQL.Add(' AND TNTNCD = ''3'' '); // TNTNCDに入力した担当者CDを代入する
+//        ParamByName('TNCD').AsString:=TNCD; // 入力した担当者CDを'TNCD'に代入する
         andFlg:=true;                       // 入力時フラグオン
       end;
 
       if reNAME<>'' then                    // 担当者名入力時の処理
       begin
 
-        if andFlg=true then SQL.Add(' AND ')                 // 担当者CD入力有無でANDかWHEREに条件分岐する
-                       else SQL.Add(' WHERE ');
-        SQL.Add(' TNNAME LIKE :NAME ');                      // TNNAME LIKEに%入力名%をSQLStringに反映する
+       // if andFlg=true then SQL.Add(' AND ')                 // 担当者CD入力有無でANDかWHEREに条件分岐する
+       //                else SQL.Add(' WHERE ');
+        SQL.Add(' AND TNNAME LIKE :NAME ');                      // TNNAME LIKEに%入力名%をSQLStringに反映する
         ParamByName('NAME').AsWideString :='%' +reNAME+ '%'; // 部分一致の入力名を'NAME'へ代入する
         andFlg:=true;                                        // 入力時フラグオン
       end;
 
       SQL.Add(' ORDER BY TNTNCD ');     // 昇順
 
-      FDQryTNMMSP.Open;                 // SQL文実行
+      FDQryTNMMSP.Open();                 // SQL文実行
     end;
 
-    ClientDataSetTNMMSP.Active := True; // CDSを開く
+    ClientDataSetTNMMSP.Open(); // CDSを開く
 
 
-    if Eof and Bof then // 対象データが存在しない場合、データセットを閉じて終了
+    if ClientDataSetTNMMSP.Eof and ClientDataSetTNMMSP.Bof then // 対象データが存在しない場合、データセットを閉じて終了
     begin
-      Active := False;
+      ClientDataSetTNMMSP.Active := False;
       raise Exception.Create('対象データが存在しません');
     end;
 
   end;// CDSここまで
 
 end;// OpenTNDataここまで
-
+ }
 end.

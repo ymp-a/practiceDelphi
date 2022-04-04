@@ -103,7 +103,7 @@ object DataModule3: TDataModule3
     Top = 48
   end
   object FDQryF0002: TFDQuery
-    Connection = DataModule2.FDConnection1
+    Connection = dmUtilYbs.FDConnection1
     SQL.Strings = (
       'SELECT *'
       'FROM TNMMSP')
@@ -191,7 +191,7 @@ object DataModule3: TDataModule3
     end
   end
   object FDQryGene: TFDQuery
-    Connection = DataModule2.FDConnection1
+    Connection = dmUtilYbs.FDConnection1
     SQL.Strings = (
       'SELECT *'
       'FROM TNMMSP')

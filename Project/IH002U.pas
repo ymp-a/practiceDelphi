@@ -68,7 +68,7 @@ var
   SaveCursor: TCursor;   // 現在のマウスポインタ保持用
   rn,pk:Integer;
 begin
-  with DataModule4.FDQryF0004 do
+  with DataModule4.FDQryIH002 do
   begin
 
     if (mode<>'Add') and (Active=false) then Exit;
@@ -86,7 +86,7 @@ begin
     frm := TIH001.create(self,mode); // 見積メンテ画面を代入
     Screen.Cursor := SaveCursor;        // 保存していたマウスポインタに戻す
     frm.ShowModal;                      // 画面展開
-    frm.Release;                        // F0003インスタンス開放
+    frm.Release;                        // TIH001インスタンス開放
 
     //再検索
     if mode<>'Dsp' then
@@ -94,8 +94,8 @@ begin
       SaveCursor := Screen.Cursor;      //現マウスポインタを退避
       Screen.Cursor := crHourGlass;     //砂時計に変更
 
-      if DataModule4.FDQryF0004.Active then
-        DataModule4.FDQryF0004.Refresh; // Qryインスタンスの解放？
+      if DataModule4.FDQryIH002.Active then
+        DataModule4.FDQryIH002.Refresh; // Qryインスタンスの解放？
 
     {  if Active then                   // CDSでしかPacketRecordsは利用できない
       begin
@@ -148,7 +148,7 @@ begin
 
   DBGrid1.DataSource.DataSet.Close;                 //DBGrid1の初期化
 
-  DataModule4.OpenMHData(MHNO,TODT,FRDT,TKCD,TNCD); //見積検索を開く
+  DataModule4.OpenIH002MHData(MHNO,TODT,FRDT,TKCD,TNCD); //見積検索を開く
 
   DBGrid1.DataSource.DataSet.Open;                  // Grid1の展開
 end;
@@ -173,6 +173,7 @@ procedure TIH002.Button3Click(Sender: TObject);
 begin
   inherited;
   ShwNextFrm('Chg');
+  Button1Click(Sender); // 最新情報に更新
 end;
 
 {*******************************************************************************
@@ -184,6 +185,7 @@ procedure TIH002.Button4Click(Sender: TObject);
 begin
   inherited;
   ShwNextFrm('Del');
+  Button1Click(Sender); // 最新情報に更新
 end;
 
 

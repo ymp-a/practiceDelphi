@@ -39,6 +39,7 @@ uses
   F0004 in 'F0004.pas' {F0004Frm},
   baseFormU in 'baseFormU.pas' {baseForm},
   baseForm2U in 'baseForm2U.pas' {baseForm2},
+  F0001S in 'F0001S.pas' {F0001SFrm},
   IH001U in 'IH001U.pas' {IH001},
   IH002U in 'IH002U.pas' {IH002};
 

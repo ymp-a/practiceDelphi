@@ -125,7 +125,7 @@ object F0004Frm: TF0004Frm
     Height = 386
     Align = alClient
     TabOrder = 1
-    object DBGrid1: TDBGrid
+    object DBGrid0: TDBGrid
       Left = 1
       Top = 1
       Width = 783
@@ -140,7 +140,7 @@ object F0004Frm: TF0004Frm
       TitleFont.Height = -11
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
-      OnTitleClick = DBGrid1TitleClick
+      OnTitleClick = DBGrid0TitleClick
       Columns = <
         item
           Expanded = False
@@ -203,6 +203,7 @@ object F0004Frm: TF0004Frm
           Expanded = False
           FieldName = 'MHJTCD'
           Title.Caption = #29366#24907
+          Width = 64
           Visible = True
         end>
     end

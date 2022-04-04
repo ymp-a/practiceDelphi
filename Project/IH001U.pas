@@ -110,14 +110,14 @@ var
   x2: Integer;
 begin
   inherited;
-  DataModule4.ClientDataSetMTMFLP.AfterOpen:=AfterOpen;     // CDSへ各イベントをセットする
-  DataModule4.ClientDataSetMTMFLP.AfterInsert:=AfterInsert;
-  DataModule4.ClientDataSetMTMFLP.AfterScroll:=AfterScroll;
+  DataModule4.CDS_IH001_MTM.AfterOpen:=AfterOpen;     // CDSへ各イベントをセットする
+  DataModule4.CDS_IH001_MTM.AfterInsert:=AfterInsert;
+  DataModule4.CDS_IH001_MTM.AfterScroll:=AfterScroll;
 
   dspHeader;                                                // 表示-ヘッダー項目設定
   dspDetail;                                                // 表示-明細項目設定
-  cds1 := DataModule4.ClientDataSetMTHFLP;
-  cds2 := DataModule4.ClientDataSetMTMFLP;
+  cds1 := DataModule4.CDS_IH001_MTH;
+  cds2 := DataModule4.CDS_IH001_MTM;
   cds1.Open;                                                // CDSMTHFLPオープン
   cds2.Open;                                                // CDSMTMFLPオープン
 
@@ -132,21 +132,18 @@ begin
 //    DBText1.Field.AsInteger:=1;
 //    cds2.Post;
   end;
-
   //変更
   if pMode=2 then
   begin
     DBEdit1.Enabled:=false;
     DBEdit11Exit(DBEdit11);
   end;
-
   //削除
   if pMode=3 then
   begin
     DBEdit1.Enabled:=false;
     Button1.Enabled:=false;
     x1:= ComponentCount;
-
     for I := 0 to x1-1 do
     begin
       compo := Components[I];
@@ -155,10 +152,8 @@ begin
       if compo is TDBCheckBox then
         TDBCheckBox(compo).ReadOnly:=true;
     end;
-
     DBEdit11Exit(DBEdit11);
   end;
-
   //照会
   if pMode=4 then
   begin
@@ -166,7 +161,6 @@ begin
     Button1.Enabled:=false;
     button2.Enabled:=false;
     x1:= ComponentCount;
-
     for I := 0 to x1-1 do
     begin
       compo := Components[I];
@@ -175,8 +169,6 @@ begin
       if compo is TDBCheckBox then
         TDBCheckBox(compo).ReadOnly:=true;
     end;
-
-
     DBEdit11Exit(DBEdit11);
   end;
  }
@@ -210,10 +202,10 @@ begin
 
   with DataModule4 do // 使用したCDSとQryを終了
   begin
-    ClientDataSetMTHFLP.Close;
-    ClientDataSetMTMFLP.Close;
-    FDQryMTHFLP.Close;
-    FDQryMTMFLP.Close;
+    CDS_IH001_MTH.Close;
+    CDS_IH001_MTM.Close;
+    IH001_MTH.Close;
+    IH001_MTM.Close;
   end;
 
 end;
@@ -283,7 +275,7 @@ DBCtrlGridイベント
 ===============================================================================}
 procedure TIH001.DBCtrlGrid1Enter(Sender: TObject);
 begin
-  DataModule4.ClientDataSetMTMFLP.Edit;   // DBCtrlGridにカーソルinでCDS MTMFLP編集モード
+  DataModule4.CDS_IH001_MTM.Edit;   // DBCtrlGridにカーソルinでCDS MTMFLP編集モード
 end;
 
 {===============================================================================
@@ -291,8 +283,8 @@ DBCtrlGridイベント
 ===============================================================================}
 procedure TIH001.DBCtrlGrid1Exit(Sender: TObject);
 begin
-  if DataModule4.ClientDataSetMTMFLP.State=dsEdit then
-    DataModule4.ClientDataSetMTMFLP.Post; // DBCtrlGridにカーソルinでCDS MTMFLP確定させる
+  if DataModule4.CDS_IH001_MTM.State=dsEdit then
+    DataModule4.CDS_IH001_MTM.Post; // DBCtrlGridにカーソルinでCDS MTMFLP確定させる
 end;
 
 //ショートカット F6
@@ -315,7 +307,7 @@ procedure TIH001.dspDetail;
 var
   qry: TFDQuery;
 begin
-  qry := DataModule4.FDQryMTMFLP;
+  qry := DataModule4.IH001_MTM;
   try
     qry.Close;
     qry.SQL.Clear;
@@ -345,7 +337,7 @@ var
 begin
   Label15.Caption:='';
 
-  qry := DataModule4.FDQryMTHFLP;
+  qry := DataModule4.IH001_MTH;
   try
     qry.Close;
     qry.SQL.Clear;
@@ -374,12 +366,12 @@ procedure TIH001.hset();
 var
   cds1: TClientDataSet;
 begin
-  cds1 := DataModule4.ClientDataSetMTHFLP;
+  cds1 := DataModule4.CDS_IH001_MTH;
   cds1.Edit;
   //削除モードのみDで更新
   //※変更Mで削除データを見る事を想定
   //※今の処理では変更Mで削除データ生き返るよ
-  if Mode = 'Del' then
+  if PageTopFrm1.EdtMode.Text = '削除' then
     cds1.FieldByName('MHJTCD').AsString:='D'
   else cds1.FieldByName('MHJTCD').AsString:=''  ;
 
@@ -397,9 +389,12 @@ var
   cds1: TClientDataSet;
   cds2: TClientDataSet;
   I: Integer;
+  count: Integer;
 begin
-  cds1 := DataModule4.ClientDataSetMTHFLP;
-  cds2 := DataModule4.ClientDataSetMTMFLP;
+  cds1 := DataModule4.CDS_IH001_MTH;
+  cds2 := DataModule4.CDS_IH001_MTM;
+  count := 0; // MTJTCDが'D'の数をチェックする
+
 
   cds2.DisableControls;
   cds2.first;
@@ -407,9 +402,24 @@ begin
   begin
     cds2.FieldByName('MTNO').AsInteger:=cds1.FieldByName('MHNO').AsInteger;
 
-    if cds2.FieldByName('dataJTCD').AsBoolean then
+    // 見積明細にチェックがあるとき、もしくは見積ヘッダーが削除状態のとき
+    if (cds2.FieldByName('dataJTCD').AsBoolean) or (cds1.FieldByName('MHJTCD').AsString='D') then
       cds2.FieldByName('MTJTCD').AsString:='D'
-    else cds2.FieldByName('MTJTCD').AsString:=''  ;
+    else cds2.FieldByName('MTJTCD').AsString:='';
+
+    // 変更モード時見積明細すべて削除チェックならヘッダーも'D'にする
+    if PageTopFrm1.EdtMode.Text = '変更' then
+    begin
+      if cds2.FieldByName('MTJTCD').AsString='D' then
+        count := count + 1;
+
+      if count = cds2.RecordCount then
+      begin
+        cds1.Edit;;
+        cds1.FieldByName('MHJTCD').AsString:='D';
+        cds1.Post;
+      end;
+    end;
 
 
     cds2.Next;
@@ -430,7 +440,7 @@ begin
     Dataset.Edit;                                     // 編集モード開始
     inc(gnocount);                                    // gncount += 1と同義、インクリメントメソッド
     DataSet.FieldByName('mtgno').AsInteger:=gnocount; // 行数を設定する
-    Dataset.FieldByName('mtno').AsInteger:= DataModule4.FDQryMTHFLP.FieldByName('mhno').AsInteger; // （AfterScrollでフィールド値ないって怒られるから追記）
+    Dataset.FieldByName('mtno').AsInteger:= DataModule4.IH001_MTH.FieldByName('mhno').AsInteger; // （AfterScrollでフィールド値ないって怒られるから追記）
   end;
 
   Dataset.FieldByName('dataJTCD').AsBoolean:=false;   // data状態CDをfalse初期化
@@ -563,8 +573,8 @@ end;
 procedure TIH001.InzChgMode;
 begin
   inherited;
-//  EdtMode.Text := '変更';
-  pNo:=DataModule4.FDQryF0004.FieldByName('mhno').Asinteger;
+//  EdtMode.Text := '変更';          // 継承もとでやってる
+  pNo:=DataModule4.CDS_IH002.FieldByName('mhno').Asinteger;
   dspHeader;                         // 表示-ヘッダー項目設定
   dspDetail;                         // 表示-明細項目設定
 
@@ -579,33 +589,10 @@ end;
 procedure TIH001.InzDelMode;
 begin
   inherited;
-//  EdtMode.Text := '削除';
-  Button1.Enabled:=false;//処理中は追加ボタンロック
-  pNo:=DataModule4.FDQryF0004.FieldByName('mhno').Asinteger;
+
+  pNo:=DataModule4.CDS_IH002.FieldByName('mhno').Asinteger;
   dspHeader;                         // 表示-ヘッダー項目設定
   dspDetail;                         // 表示-明細項目設定
-
-//  ChgReadOnly(EdtMHNO,true);         // TNCDを読込専用にするかの判別処理
-//  ChgReadOnly(EdtMHIRDT,true);       // ChgReadOnlyメソッドでReadOnly:=False;
-//  ChgReadOnly(EdtMHKGDT,true);       // Color:=clWindow;
-//  ChgReadOnly(EdtMHTKCD,true);       // TabStop:=True;を行っている
-//  ChgReadOnly(EdtMHTKNM,true);
-//  ChgReadOnly(EdtMHTNCD,true);
-//  ChgReadOnly(EdtMHBIKO,true);
-//  ChgReadOnly(EdtMTSHCD,true);
-//  ChgReadOnly(EdtMTSHNM,true);
-//  ChgReadOnly(EdtMTTNKA,true);
-//  ChgReadOnly(EdtMTSRYO,true);
-//  ChgReadOnly(EdtMTKIN,true);
-//  ChgReadOnly(EdtMTBIKO,true);
-//  ChkDel1.Enabled:=false;
-//  ChgReadOnly(EdtMHGSRO,true);
-//  ChgReadOnly(EdtMHGKIN,true);
-
-    panel1.Enabled:=false;                 // 紙商ではにパネル単位でEnabledfalseしている
-    panel2.Enabled:=false;                 // シンプルでかんたん
-    F0002Frm.FldChange(Panel1);            // 入力フォームの色を一括変更している
-    F0002Frm.FldChange(Panel2);
 
 end;
 
@@ -626,7 +613,7 @@ begin
 //  Button1.Enabled:=false;                                    // 処理中は追加ボタンをロック
 //  Button2.Enabled:=false;                                    // 処理中は更新ボタンをロック
 
-  pNo:=DataModule4.FDQryF0004.FieldByName('mhno').Asinteger; // pNo値をDM4からもってくる
+  pNo:=DataModule4.CDS_IH002.FieldByName('mhno').Asinteger; // pNo値をDM4からもってくる
   dspHeader;                                                 // 表示-ヘッダー項目設定
   dspDetail;                                                 // 表示-明細項目設定
 
@@ -678,8 +665,8 @@ var
 begin
   inherited;
   con:= UtilYbs.dmUtilYbs.FDConnection1;
-  cds1 := DataModule4.ClientDataSetMTHFLP;
-  cds2 := DataModule4.ClientDataSetMTMFLP;
+  cds1 := DataModule4.CDS_IH001_MTH;
+  cds2 := DataModule4.CDS_IH001_MTM;
 
   hset;                   // ヘッダー項目セット
   mset;                   // 明細項目セット
@@ -722,8 +709,8 @@ var
 begin
   inherited;
   con:= UtilYbs.dmUtilYbs.FDConnection1;
-  cds1 := DataModule4.ClientDataSetMTHFLP;
-  cds2 := DataModule4.ClientDataSetMTMFLP;
+  cds1 := DataModule4.CDS_IH001_MTH;
+  cds2 := DataModule4.CDS_IH001_MTM;
 
   hset;                   // ヘッダー項目セット
   mset;                   // 明細項目セット
@@ -731,7 +718,7 @@ begin
   try
     con.StartTransaction; // 変更トランザクション開始（必ずコミットかロールバックすること）
 
-//    cds1.ApplyUpdates(0);
+//    cds1.ApplyUpdates(0); // 下とどちらの書き方でも同じ
 //    cds2.ApplyUpdates(0);
 
     //データベース更新
@@ -774,8 +761,8 @@ var
 begin
   inherited;
   con:= UtilYbs.dmUtilYbs.FDConnection1;
-  cds1 := DataModule4.ClientDataSetMTHFLP;
-  cds2 := DataModule4.ClientDataSetMTMFLP;
+  cds1 := DataModule4.CDS_IH001_MTH;
+  cds2 := DataModule4.CDS_IH001_MTM;
 
   hset;                   // ヘッダー項目セット
   mset;                   // 明細項目セット

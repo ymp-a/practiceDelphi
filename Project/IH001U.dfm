@@ -1,16 +1,18 @@
 inherited IH001: TIH001
   Caption = 'IH001'
   ClientHeight = 693
-  ExplicitTop = -233
   ExplicitHeight = 732
   PixelsPerInch = 96
   TextHeight = 13
   inherited ScrollBoxSCR: TScrollBox
     Height = 693
+    ExplicitHeight = 693
     inherited PanelSCR: TPanel
       Height = 689
+      ExplicitHeight = 689
       inherited Panel2: TPanel
         Top = 647
+        ExplicitTop = 647
       end
       inherited Panel1: TPanel
         Height = 119
@@ -70,7 +72,7 @@ inherited IH001: TIH001
           Width = 241
           Height = 21
           DataField = 'MHBIKO'
-          DataSource = DataModule4.DataSrcMTHFLP
+          DataSource = DataModule4.DataSrc_IH001_MTH
           TabOrder = 6
           OptLen = 20
           OptFldType = O
@@ -81,7 +83,7 @@ inherited IH001: TIH001
           Width = 121
           Height = 21
           DataField = 'MHKGDT'
-          DataSource = DataModule4.DataSrcMTHFLP
+          DataSource = DataModule4.DataSrc_IH001_MTH
           TabOrder = 2
         end
         object EdtMHTNCD: TDBEditUNIC
@@ -90,7 +92,7 @@ inherited IH001: TIH001
           Width = 55
           Height = 21
           DataField = 'MHTNCD'
-          DataSource = DataModule4.DataSrcMTHFLP
+          DataSource = DataModule4.DataSrc_IH001_MTH
           TabOrder = 5
           OnExit = EdtMHTNCDExit
           OptLen = 6
@@ -101,7 +103,7 @@ inherited IH001: TIH001
           Width = 121
           Height = 21
           DataField = 'MHIRDT'
-          DataSource = DataModule4.DataSrcMTHFLP
+          DataSource = DataModule4.DataSrc_IH001_MTH
           TabOrder = 1
         end
         object EdtMHTKNM: TDBEditUNIC
@@ -110,7 +112,7 @@ inherited IH001: TIH001
           Width = 180
           Height = 21
           DataField = 'MHTKNM'
-          DataSource = DataModule4.DataSrcMTHFLP
+          DataSource = DataModule4.DataSrc_IH001_MTH
           TabOrder = 4
           OptLen = 20
           OptFldType = O
@@ -121,7 +123,7 @@ inherited IH001: TIH001
           Width = 55
           Height = 21
           DataField = 'MHTKCD'
-          DataSource = DataModule4.DataSrcMTHFLP
+          DataSource = DataModule4.DataSrc_IH001_MTH
           TabOrder = 3
           OptLen = 6
         end
@@ -131,7 +133,7 @@ inherited IH001: TIH001
           Width = 121
           Height = 21
           DataField = 'MHNO'
-          DataSource = DataModule4.DataSrcMTHFLP
+          DataSource = DataModule4.DataSrc_IH001_MTH
           TabOrder = 0
           OptLen = 6
           OptFldType = S
@@ -139,6 +141,7 @@ inherited IH001: TIH001
       end
       inherited Panel4: TPanel
         Top = 153
+        ExplicitTop = 153
         object Label14: TLabel
           Left = 662
           Top = 24
@@ -160,7 +163,7 @@ inherited IH001: TIH001
           Height = 21
           TabStop = False
           DataField = 'sumKIN'
-          DataSource = DataModule4.DataSrcMTMFLP
+          DataSource = DataModule4.DataSrc_IH001_MTM
           ReadOnly = True
           TabOrder = 0
           Alignment = taRightJustify
@@ -172,7 +175,7 @@ inherited IH001: TIH001
           Height = 21
           TabStop = False
           DataField = 'sumSRYO'
-          DataSource = DataModule4.DataSrcMTMFLP
+          DataSource = DataModule4.DataSrc_IH001_MTM
           ReadOnly = True
           TabOrder = 1
           Alignment = taRightJustify
@@ -182,26 +185,26 @@ inherited IH001: TIH001
         Top = 204
         Height = 443
         ExplicitTop = 204
-        ExplicitHeight = 461
+        ExplicitHeight = 443
         inherited DBCtrlGrid1: TDBCtrlGrid
           Left = 14
-          Top = 48
-          Height = 361
-          DataSource = DataModule4.DataSrcMTMFLP
+          Top = 37
+          Height = 360
+          DataSource = DataModule4.DataSrc_IH001_MTM
           PanelHeight = 120
           RowCount = 3
           OnEnter = DBCtrlGrid1Enter
           OnExit = DBCtrlGrid1Exit
           ExplicitLeft = 14
-          ExplicitTop = 48
-          ExplicitHeight = 361
+          ExplicitTop = 37
+          ExplicitHeight = 360
           object EdtMTGNO: TDBText
             Left = 15
             Top = 40
             Width = 37
             Height = 17
             DataField = 'MTGNO'
-            DataSource = DataModule4.DataSrcMTMFLP
+            DataSource = DataModule4.DataSrc_IH001_MTM
           end
           object Label12: TLabel
             Left = 59
@@ -251,7 +254,7 @@ inherited IH001: TIH001
             Width = 55
             Height = 21
             DataField = 'MTTNKA'
-            DataSource = DataModule4.DataSrcMTMFLP
+            DataSource = DataModule4.DataSrc_IH001_MTM
             TabOrder = 2
             OnExit = EdtMTTNKAExit
             Alignment = taRightJustify
@@ -265,7 +268,7 @@ inherited IH001: TIH001
             Width = 241
             Height = 21
             DataField = 'MTBIKO'
-            DataSource = DataModule4.DataSrcMTMFLP
+            DataSource = DataModule4.DataSrc_IH001_MTM
             TabOrder = 6
             OptLen = 20
             OptFldType = O
@@ -276,7 +279,7 @@ inherited IH001: TIH001
             Width = 55
             Height = 21
             DataField = 'MTKIN'
-            DataSource = DataModule4.DataSrcMTMFLP
+            DataSource = DataModule4.DataSrc_IH001_MTM
             ReadOnly = True
             TabOrder = 4
             Alignment = taRightJustify
@@ -290,7 +293,7 @@ inherited IH001: TIH001
             Width = 55
             Height = 21
             DataField = 'MTSRYO'
-            DataSource = DataModule4.DataSrcMTMFLP
+            DataSource = DataModule4.DataSrc_IH001_MTM
             TabOrder = 3
             OnExit = EdtMTSRYOExit
             Alignment = taRightJustify
@@ -303,7 +306,7 @@ inherited IH001: TIH001
             Width = 180
             Height = 21
             DataField = 'MTSHNM'
-            DataSource = DataModule4.DataSrcMTMFLP
+            DataSource = DataModule4.DataSrc_IH001_MTM
             TabOrder = 1
             OptLen = 20
             OptFldType = O
@@ -314,7 +317,7 @@ inherited IH001: TIH001
             Width = 55
             Height = 21
             DataField = 'MTSHCD'
-            DataSource = DataModule4.DataSrcMTMFLP
+            DataSource = DataModule4.DataSrc_IH001_MTM
             TabOrder = 0
             OptLen = 6
           end
@@ -324,7 +327,7 @@ inherited IH001: TIH001
             Width = 24
             Height = 17
             DataField = 'dataJTCD'
-            DataSource = DataModule4.DataSrcMTMFLP
+            DataSource = DataModule4.DataSrc_IH001_MTM
             TabOrder = 5
           end
         end

@@ -55,7 +55,7 @@ implementation
 
 {$R *.dfm}
 
-uses Unit1, DM2, F0002, EdtMaster, MNK001, DM3, Datasnap.DBClient;
+uses Unit1, DM2, F0002, EdtMaster, MNK001, Datasnap.DBClient;
 
 {*******************************************************************************
  目的:検索ボタン押下時の処理
@@ -64,19 +64,16 @@ uses Unit1, DM2, F0002, EdtMaster, MNK001, DM3, Datasnap.DBClient;
 *******************************************************************************}
 procedure TF0001Frm.Button1Click(Sender: TObject);
 begin
-  begin
-  if Mode = 'Add' then EdtMode.Text := '追加';
-  if Mode = 'Chg' then EdtMode.Text := '変更';
-  if Mode = 'Dsp' then EdtMode.Text := '照会';
-  end;
 
   TNCD:=EdtTNCD.Text;                  // 担当者CDと担当者名をDM2へ渡す準備
   reNAME:=EdtNAME.Text;
 
-  DBGrid1.DataSource.DataSet.Close;    // DBGrid1の初期化
+//  DBGrid1.DataSource.DataSet.Close;    // DBGrid1の初期化
+//  showmessage('');
+//  DataModule2.OpenTNData(TNCD,reNAME); // 担当者検索を開く
 
-  DataModule2.OpenTNData(TNCD,reNAME); // 担当者検索を開く
-
+//  DBGrid1.DataSource.DataSet.Open;     // DBGrid1を展開（DMでCDS管理の場合DataSetOpen必須?）
+//  showmessage('');
 end; // 検索ボタンの処理ここまで
 
 
@@ -188,7 +185,7 @@ begin
 
     frm.ShowModal;                      // 画面展開
     frm.Release;                        // F0001インスタンス開放
-
+    {
     // 再検索
     if mode<>'Dsp' then
     begin
@@ -225,7 +222,7 @@ begin
       Screen.Cursor := SaveCursor;      // 保存していたマウスポインタに戻す
 
     end;
-
+      }
   end; // with
 
 end;

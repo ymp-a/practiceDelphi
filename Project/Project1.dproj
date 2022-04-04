@@ -252,6 +252,10 @@
             <Form>baseForm2</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="F0001S.pas">
+            <Form>F0001SFrm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <DCCReference Include="IH001U.pas">
             <Form>IH001</Form>
             <FormType>dfm</FormType>

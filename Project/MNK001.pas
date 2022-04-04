@@ -18,6 +18,7 @@ type
     procedure Button3Click(Sender: TObject); // 見積照会
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject); // 見積入力
+    procedure FormShow(Sender: TObject);
   private
     { Private 宣言 }
 
@@ -35,7 +36,7 @@ implementation
 {$R *.dfm}
 
 uses F0001, F0002, F0003, EdtMaster, DM3, FncLock, Utilybs, DM2, F0004,
-  baseFormU, baseForm2U;
+  baseFormU, baseForm2U, F0001S;
 
 {*******************************************************************************
  目的:担当者照会ボタン押下時の処理
@@ -44,10 +45,10 @@ uses F0001, F0002, F0003, EdtMaster, DM3, FncLock, Utilybs, DM2, F0004,
 *******************************************************************************}
 procedure TMNK001Frm.Button1Click(Sender: TObject);
 var
-  frm:TF0001Frm;
+  frm:TF0001SFrm;
 begin
-  frm := TF0001Frm.Create(Application); // 担当者照会画面を代入
-  frm.Mode := 'Dsp';                    // Dspモードセット
+  frm := TF0001SFrm.Create(self); // 担当者照会画面を代入
+//  frm.Mode := 'Dsp';                    // Dspモードセット
   frm.ShowModal;                        // 画面展開
   FreeAndNil(frm);                      // F0001インスタンス開放
 end;
@@ -99,5 +100,9 @@ begin
   FreeAndNil(frm);                       // TbaseForm2インスタンス開放
 end;
 
+procedure TMNK001Frm.FormShow(Sender: TObject);
+begin
+  UtilYbs.dmUtilYbs.FDConnection1.Close;
+end;
 
 end.

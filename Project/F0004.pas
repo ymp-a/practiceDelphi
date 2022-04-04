@@ -17,7 +17,7 @@ type
     Button1: TButton;
     EdtMode: TEdit;
     Panel2: TPanel;
-    DBGrid1: TDBGrid;
+    DBGrid0: TDBGrid;
     Panel3: TPanel;
     Button2: TButton;
     Button3: TButton;
@@ -43,7 +43,7 @@ type
     procedure Button2Click(Sender: TObject); // 変更ボタン
     procedure Button5Click(Sender: TObject); // 削除ボタン
     procedure Button6Click(Sender: TObject); // 表示ボタン
-    procedure DBGrid1TitleClick(Column: TColumn);
+    procedure DBGrid0TitleClick(Column: TColumn);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
 
   private
@@ -91,10 +91,11 @@ begin
   TKCD:=EdtTKCD.Text;                               // 得意先コード
   TNCD:=EdtTNCD.Text;                               // 担当者コード
 
-  DBGrid1.DataSource.DataSet.Close;                 //DBGrid1の初期化
+  DBGrid0.DataSource.DataSet.Close;                 //DBGrid1の初期化
 
   DataModule4.OpenMHData(MHNO,TODT,FRDT,TKCD,TNCD); //見積検索を開く
 
+  DBGrid0.DataSource.DataSet.Open;
 end;
 
 {*******************************************************************************
@@ -229,13 +230,13 @@ end; // ShwNextFrmここまで
  IndexDefsの定義はDatasnap.DBClient。
  並び順変更後はCDS開放前に項目名とindexを初期化すること。FormCloseの最初。
 *******************************************************************************}
-procedure TF0004Frm.DBGrid1TitleClick(Column: TColumn);
+procedure TF0004Frm.DBGrid0TitleClick(Column: TColumn);
 var
  sFieldNM :String; //退避フィールド名
 begin
   inherited;
 
-with DBGrid1 do
+with DBGrid0 do
   begin
     // 明細非表示時は処理無効
     if DataSource.DataSet.Active = False then Exit;
@@ -331,17 +332,17 @@ var
   i: Integer;
 begin
   // 明細非表示時は処理無効
-    if DBgrid1.DataSource.DataSet.Active = False then Exit;
+    if DBgrid0.DataSource.DataSet.Active = False then Exit;
   // 項目名の初期化
-    for i:=0 to (DBGrid1.Columns.Count)-1 do
+    for i:=0 to (DBGrid0.Columns.Count)-1 do
     begin
-      if AnsiPos('▲', DBGrid1.Columns[i].Title.Caption) <> 0 then
-        DBGrid1.Columns[i].Title.Caption := StringReplace( DBGrid1.Columns[i].Title.Caption, '▲', '', [rfReplaceAll]);
-      if AnsiPos('▼', DBGrid1.Columns[i].Title.Caption) <> 0 then
-        DBGrid1.Columns[i].Title.Caption := StringReplace( DBGrid1.Columns[i].Title.Caption, '▼', '', [rfReplaceAll]);
+      if AnsiPos('▲', DBGrid0.Columns[i].Title.Caption) <> 0 then
+        DBGrid0.Columns[i].Title.Caption := StringReplace( DBGrid0.Columns[i].Title.Caption, '▲', '', [rfReplaceAll]);
+      if AnsiPos('▼', DBGrid0.Columns[i].Title.Caption) <> 0 then
+        DBGrid0.Columns[i].Title.Caption := StringReplace( DBGrid0.Columns[i].Title.Caption, '▼', '', [rfReplaceAll]);
     end;
   // indexの初期化
-    with (DBgrid1.DataSource.DataSet as TClientDataSet) do
+    with (DBgrid0.DataSource.DataSet as TClientDataSet) do
     begin
     if  IndexName = 'aIndex' then
      DeleteIndex('aIndex');
@@ -360,5 +361,5 @@ end;
 {$WARN GARBAGE OFF} // <-- end.以下にコメント追加
 end.
 
-FormCloseのinherited前にCDSindex初期化を行う。
-先にinheritedを通過させると初期化ができなかったような気がする。
+//FormCloseのinherited前にCDSindex初期化を行う。
+//先にinheritedを通過させると初期化ができなかったような気がする。
