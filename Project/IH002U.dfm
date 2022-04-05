@@ -1,5 +1,6 @@
 inherited IH002: TIH002
   Caption = 'IH002'
+  ExplicitTop = -177
   PixelsPerInch = 96
   TextHeight = 13
   inherited Panel1: TPanel
@@ -96,12 +97,14 @@ inherited IH002: TIH002
           Expanded = False
           FieldName = 'MHKGDT'
           Title.Caption = #35211#31309#26399#38480
+          Width = 64
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'MHTKCD'
           Title.Caption = #24471#24847#20808'CD'
+          Width = 64
           Visible = True
         end
         item
@@ -115,24 +118,28 @@ inherited IH002: TIH002
           Expanded = False
           FieldName = 'MHGSRO'
           Title.Caption = #21512#35336#25968#37327
+          Width = 64
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'MHGKIN'
           Title.Caption = #21512#35336#37329#38989
+          Width = 64
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'MHTNCD'
           Title.Caption = #25285#24403#32773'CD'
+          Width = 64
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'TNNAME'
           Title.Caption = #25285#24403#32773#21517
+          Width = 64
           Visible = True
         end
         item
@@ -146,6 +153,7 @@ inherited IH002: TIH002
           Expanded = False
           FieldName = 'MHJTCD'
           Title.Caption = #29366#24907
+          Width = 64
           Visible = True
         end>
     end

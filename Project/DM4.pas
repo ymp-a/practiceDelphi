@@ -228,16 +228,27 @@ type
     StringField46: TStringField;
     StringField47: TStringField;
     StringField48: TStringField;
+    FDQryGene: TFDQuery;
+    DataSource4: TDataSource;
     // ClientDataSetの日付フィールドのOnSetTextイベントに追加する
     procedure ClientDataSetTDateFieldSetText(Sender: TField; // 日付入力チェック
       const Text: string);
     function DateFilldSetText(str:string):string;            // 日付形式に変換
+    //見積m
+  type dMTM = Record
+    Exists :Boolean;
+    MHNO:string;          //部課CD
+    JTCD:string;          //使用停止区分
+  end;
   private
     { Private 宣言 }
   public
     { Public 宣言 }
+
     procedure OpenMHData(MHNO,TODT,FRDT,TKCD,TNCD: String); // 見積データオープン
     procedure OpenIH002MHData(MHNO,TODT,FRDT,TKCD,TNCD: String); // 見積データオープン
+    function MTHMS(MHNO:string;IncD:boolean=false): dMTM; // 見積№チェック
+    function MHTNO(): dMTM; // 見積NoのLast+1の番号を返却
   end;
 
 var
@@ -483,6 +494,62 @@ begin
 
     Result:=FormatFloat('0000/00/00',inDT);
 
+  end;
+
+end;
+
+{*******************************************************************************
+ 目的:見積ヘッダーにデータがあるかチェックする
+ 引数:
+ 戻値:
+*******************************************************************************}
+function TDataModule4.MTHMS(MHNO:string;IncD:boolean=false): dMTM;
+begin
+
+  with FDQryGene do // チェックロジックなど確認用のSQLはtempクエリを利用する
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add(' SELECT * FROM MTHFLP ');
+    SQL.Add(' WHERE MHNO = :MHNO ');
+    if IncD=False then
+      SQL.Add(' AND MHJTCD <> ''D''  ');
+    ParamByName('MHNO').AsAnsiString:=MHNO;
+    Open;
+
+    if not eof then
+    begin
+      Result.Exists:= True;
+      Result.MHNO := FieldByName('MHNO').AsString;     // 部課CD
+      Result.JTCD := FieldByName('MHJTCD').AsString;     // 使用停止区分
+    end else begin
+      Result.Exists:= False;
+      Result.MHNO := '';     // 部課CD
+      Result.JTCD := '';     // 使用停止区分
+    end;
+
+    Close;
+    SQL.Clear;
+  end;
+
+end;
+
+function TDataModule4.MHTNO(): dMTM;
+begin
+
+  with FDQryGene do // チェックロジックなど確認用のSQLはtempクエリを利用する
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add(' SELECT * FROM MTHFLP ');
+    Open;
+
+    Result.Exists:= False;
+    Result.MHNO := IntToStr(RecordCount+1);     // 部課CD
+    Result.JTCD := '';     // 使用停止区分
+
+    Close;
+    SQL.Clear;
   end;
 
 end;

@@ -1063,4 +1063,14 @@ object DataModule4: TDataModule4
       Size = 1
     end
   end
+  object FDQryGene: TFDQuery
+    Connection = dmUtilYbs.FDConnection1
+    Left = 448
+    Top = 304
+  end
+  object DataSource4: TDataSource
+    DataSet = FDQryGene
+    Left = 448
+    Top = 376
+  end
 end

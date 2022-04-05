@@ -25,15 +25,17 @@ type
     procedure Button2Click(Sender: TObject); // 追加ボタン
     procedure Button3Click(Sender: TObject); // 変更ボタン
     procedure Button4Click(Sender: TObject); // 削除ボタン
+    procedure Button7Click(Sender: TObject); // コピーボタン
     procedure Button8Click(Sender: TObject); // 表示ボタン
     procedure DBGrid1TitleClick(Column: TColumn);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+
   private
     { Private 宣言 }
   public
     { Public 宣言 }
   var
-    Mode:String;                             // モード管理
+//    Mode:String;                             // モード管理
     pNo : integer;                           // 見積№
     procedure ShwNextFrm(mode: string);      // モード管理
   end;
@@ -188,6 +190,16 @@ begin
   Button1Click(Sender); // 最新情報に更新
 end;
 
+{*******************************************************************************
+ 目的:copyボタン押下時の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
+procedure TIH002.Button7Click(Sender: TObject);
+begin
+  inherited;
+  ShwNextFrm('Cpy');
+end;
 
 {*******************************************************************************
  目的:表示ボタン押下時の処理
@@ -339,5 +351,5 @@ end;
 {$WARN GARBAGE OFF} // <-- end.以下にコメント追加
 end.
 
-FormCloseのinherited前にCDSindex初期化を行う。
-先にinheritedを通過させると初期化ができなかったような気がする。
+//FormCloseのinherited前にCDSindex初期化を行う。
+//先にinheritedを通過させると初期化ができなかったような気がする。

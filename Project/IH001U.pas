@@ -70,7 +70,7 @@ type
 
     procedure InzAddMode;override;               // 初期設定（追加モード）
     procedure InzChgMode;override;               // 初期設定（変更モード）
-//    procedure InzCpyMode;override;               // 初期設定（Copyモード）
+    procedure InzCpyMode;override;               // 初期設定（Copyモード）
     procedure InzDelMode;override;               // 初期設定（削除モード）
     procedure InzDspMode;override;               // 初期設定（表示モード）
     procedure DbAdd;override;                    // データベースへの変更（追加モード）
@@ -82,10 +82,10 @@ type
   public
     { Public 宣言 }
   var
-    Mode : String;                               // モード判別用
+//    Mode : String; // ここで宣言すると初期化されるため不要。継承先でのみ宣言すること
     pNo : integer;                               // 見積№
     pMode:integer;                               // モード
-
+    copyNo:Integer;
   end;
 
 var
@@ -114,8 +114,8 @@ begin
   DataModule4.CDS_IH001_MTM.AfterInsert:=AfterInsert;
   DataModule4.CDS_IH001_MTM.AfterScroll:=AfterScroll;
 
-  dspHeader;                                                // 表示-ヘッダー項目設定
-  dspDetail;                                                // 表示-明細項目設定
+  dspHeader;                                                // 表示-ヘッダー項目設定 Qry
+  dspDetail;                                                // 表示-明細項目設定 Qry
   cds1 := DataModule4.CDS_IH001_MTH;
   cds2 := DataModule4.CDS_IH001_MTM;
   cds1.Open;                                                // CDSMTHFLPオープン
@@ -124,54 +124,6 @@ begin
   cds1.Edit;                                                // 編集モード
   cds2.Edit;                                                // 編集モード
 
-{
-  //新規
-  if pMode=1 then
-  begin
-//    cds2.Append;
-//    DBText1.Field.AsInteger:=1;
-//    cds2.Post;
-  end;
-  //変更
-  if pMode=2 then
-  begin
-    DBEdit1.Enabled:=false;
-    DBEdit11Exit(DBEdit11);
-  end;
-  //削除
-  if pMode=3 then
-  begin
-    DBEdit1.Enabled:=false;
-    Button1.Enabled:=false;
-    x1:= ComponentCount;
-    for I := 0 to x1-1 do
-    begin
-      compo := Components[I];
-      if compo is TDBEdit then
-        TDBEdit(compo).ReadOnly:=true;
-      if compo is TDBCheckBox then
-        TDBCheckBox(compo).ReadOnly:=true;
-    end;
-    DBEdit11Exit(DBEdit11);
-  end;
-  //照会
-  if pMode=4 then
-  begin
-    DBEdit1.Enabled:=false;
-    Button1.Enabled:=false;
-    button2.Enabled:=false;
-    x1:= ComponentCount;
-    for I := 0 to x1-1 do
-    begin
-      compo := Components[I];
-      if compo is TDBEdit then
-        TDBEdit(compo).ReadOnly:=true;
-      if compo is TDBCheckBox then
-        TDBCheckBox(compo).ReadOnly:=true;
-    end;
-    DBEdit11Exit(DBEdit11);
-  end;
- }
 
   //DBCheckboxの設定
   cds2.DisableControls;               // 画面ちらつき防止
@@ -187,6 +139,9 @@ begin
   cds2.First;                         // 最初のレコードに移動
   cds2.EnableControls;                // active画面遷移再開する
 
+  // 追加、コピーモード時は最新の見積№をセットしておく
+  if (Mode='Add') or (Mode='Cpy') then
+    DataModule4.CDS_IH001_MTH.FieldByName('MHNO').AsString:=DataModule4.MHTNO().MHNO;
 end;
 
 {===============================================================================
@@ -357,6 +312,28 @@ begin
 
   end;
 
+  if Mode='Cpy' then
+  begin
+    try
+      DataModule4.FDQryMTHFLP.Close;
+      DataModule4.FDQryMTHFLP.SQL.Clear;
+      DataModule4.FDQryMTHFLP.Params.Clear;
+
+      DataModule4.FDQryMTHFLP.SQL.Add('select * from mthflp');
+      DataModule4.FDQryMTHFLP.SQL.Add(' left join  tnmmsp on mhtncd=tntncd');
+      DataModule4.FDQryMTHFLP.SQL.Add(' where mhno=:no ');
+      DataModule4.FDQryMTHFLP.SQL.Add('');
+      DataModule4.FDQryMTHFLP.SQL.Add('');
+      DataModule4.FDQryMTHFLP.SQL.Add('');
+
+      DataModule4.FDQryMTHFLP.ParamByName('no').AsInteger:=pNo;
+      DataModule4.FDQryMTHFLP.Open();
+
+    finally
+
+    end;
+  end;
+
 end;
 
 {===============================================================================
@@ -512,9 +489,9 @@ begin
   ChkBlank(EdtMHNO,'見積№');
 
   //追加モードの場合見積№重複チェックを行う。
-  if (mode='Add') then
+  if (mode='Add') or (mode='Cpy') then
   begin
-    if DataModule3.TNMMS(EdtMHTNCD.Field.AsString,true).Exists=true then
+    if DataModule4.MTHMS(EdtMHNO.Field.AsString,true).Exists=true then
     begin
       MessageDlg('見積№が重複しています。', mtError, [mbOk], 0);
       EdtMHNO.SetFocus;
@@ -546,7 +523,7 @@ procedure TIH001.InzAddMode;
 begin
   inherited;
 //  EdtMode.Text := '追加';
-  Label15.Caption:='';    // 担当者名をブランクに初期化
+//  Label15.Caption:='';    // 担当者名をブランクに初期化
 
  //排他制御
  //     追加モードでロックファイルのレコードを１件作成する。
@@ -579,6 +556,35 @@ begin
   dspDetail;                         // 表示-明細項目設定
 
   ChgReadOnly(EdtMHNO,true);         // TNCDを読込専用にするかの判別処理
+end;
+
+{*******************************************************************************
+ 目的:初期設定   (copyモードの設定)
+ 引数:
+ 戻値:
+*******************************************************************************}
+procedure TIH001.InzCpyMode;
+begin
+  inherited;
+  pNo:=DataModule4.CDS_IH002.FieldByName('mhno').Asinteger;
+  dspHeader;                            // 表示-ヘッダー項目設定（CpyのときはQryMTHFLPも展開）
+  dspDetail;                            // 表示-明細項目設定
+  DataModule4.CDS_IH001_MTH.Open;       // CDS_IH001_MTH展開
+  DataModule4.ClientDataSetMTHFLP.Open; // CDSMTHFLP展開
+
+  DataModule4.CDS_IH001_MTH.Insert; // 挿入モードだとCDS_IH001_MTHヘッダー値が初期化されるので
+
+  // ヘッダーフィールドにClientDataSetMTHFLP値を格納する
+  DataModule4.CDS_IH001_MTH.FieldByName('MHNO').AsString:=DataModule4.MHTNO().MHNO; // 見積№最後尾+1
+  DataModule4.CDS_IH001_MTH.FieldByName('MHIRDT').AsString:=DataModule4.ClientDataSetMTHFLP.FieldByName('MHIRDT').AsString;
+  DataModule4.CDS_IH001_MTH.FieldByName('MHKGDT').AsString:=DataModule4.ClientDataSetMTHFLP.FieldByName('MHKGDT').AsString;
+  DataModule4.CDS_IH001_MTH.FieldByName('MHTKCD').AsString:=DataModule4.ClientDataSetMTHFLP.FieldByName('MHTKCD').AsString;
+  DataModule4.CDS_IH001_MTH.FieldByName('MHTKNM').AsString:=DataModule4.ClientDataSetMTHFLP.FieldByName('MHTKNM').AsString;
+  DataModule4.CDS_IH001_MTH.FieldByName('MHTNCD').AsString:=DataModule4.ClientDataSetMTHFLP.FieldByName('MHTNCD').AsString;
+  DataModule4.CDS_IH001_MTH.FieldByName('MHBIKO').AsString:=DataModule4.ClientDataSetMTHFLP.FieldByName('MHBIKO').AsString;
+
+  DataModule4.ClientDataSetMTHFLP.Close; // CDSMTHFLPをとじる
+
 end;
 
 {*******************************************************************************
@@ -695,6 +701,8 @@ begin
     end;
 
   end; // tryここまで
+
+   Close;                  // 画面終了
 
 end;
 
