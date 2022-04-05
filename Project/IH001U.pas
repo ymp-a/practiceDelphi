@@ -43,6 +43,7 @@ type
     Label8: TLabel;
     Label7: TLabel;
     Button3: TButton;
+    EdtMTNO: TDBText;
     procedure FormShow(Sender: TObject);         // 画面表示の処理
     procedure FormClose(Sender: TObject; var Action: TCloseAction); // 画面終了の処理
     procedure Button3Click(Sender: TObject);     // 追加ボタン
@@ -120,10 +121,9 @@ begin
   cds2 := DataModule4.CDS_IH001_MTM;
   cds1.Open;                                                // CDSMTHFLPオープン
   cds2.Open;                                                // CDSMTMFLPオープン
-
   cds1.Edit;                                                // 編集モード
   cds2.Edit;                                                // 編集モード
-
+  EdtMHTNCDExit(self);                                      // 担当者名表示
 
   //DBCheckboxの設定
   cds2.DisableControls;               // 画面ちらつき防止
@@ -237,9 +237,13 @@ end;
 DBCtrlGridイベント
 ===============================================================================}
 procedure TIH001.DBCtrlGrid1Exit(Sender: TObject);
+var
+  I:Integer;
 begin
+
   if DataModule4.CDS_IH001_MTM.State=dsEdit then
     DataModule4.CDS_IH001_MTM.Post; // DBCtrlGridにカーソルinでCDS MTMFLP確定させる
+
 end;
 
 //ショートカット F6
@@ -312,7 +316,7 @@ begin
 
   end;
 
-  if Mode='Cpy' then
+  if Mode='Cpy' then // Cpy用にもう一つ展開しておく
   begin
     try
       DataModule4.FDQryMTHFLP.Close;
@@ -455,6 +459,8 @@ end;
 論理チェック　引数：なし、戻り値：Bool
 ===============================================================================}
 function TIH001.LogicalChecOk: Boolean;
+var
+ I:Integer;
 begin
 
   Result :=False;
@@ -508,6 +514,28 @@ begin
 
   ChkBlank(EdtMHTNCD,'担当者CD');
 
+  //DBCheckboxの設定
+  DataModule4.CDS_IH001_MTM.DisableControls;               // 画面ちらつき防止
+  DataModule4.CDS_IH001_MTM.First;                         // 最初のレコードに移動
+  for I := 0 to DataModule4.CDS_IH001_MTM.RecordCount-1 do // cds2全レコードの空白チェック
+  begin                                                    // 商品CD商品名、合計金額、備考が空白なら行削除
+    if (DataModule4.CDS_IH001_MTM.FieldByName('MTSHCD').AsString='') AND
+       (DataModule4.CDS_IH001_MTM.FieldByName('MTSHNM').AsString='') AND
+       (DataModule4.CDS_IH001_MTM.FieldByName('MTKIN').AsString='0') OR
+       (DataModule4.CDS_IH001_MTM.FieldByName('MTKIN').AsString='')  AND
+       (DataModule4.CDS_IH001_MTM.FieldByName('MTBIKO').AsString='') then
+       begin
+         if MessageDlg('この行を削除します。よろしいですか？',
+            mtConfirmation, [mbYes,mbNo], 0) = mrYes then
+            DBCtrlGrid1.DataSource.DataSet.Delete; // 行削除できた
+       end;
+
+    DataModule4.CDS_IH001_MTM.Next;                        // レコードを一つ進める
+  end;
+  DataModule4.CDS_IH001_MTM.First;                         // 最初のレコードに移動
+  DataModule4.CDS_IH001_MTM.EnableControls;                // active画面遷移再開する
+// Exitで処理したほうが良い？更新の方が良い？
+
   ChkBlank(EdtMTSHCD,'商品CD');
 
   Result :=True;
@@ -522,24 +550,8 @@ end;
 procedure TIH001.InzAddMode;
 begin
   inherited;
-//  EdtMode.Text := '追加';
+//  EdtMode.Text := '追加'; // 継承元でやってる
 //  Label15.Caption:='';    // 担当者名をブランクに初期化
-
- //排他制御
- //     追加モードでロックファイルのレコードを１件作成する。
- //     繰り返し入力などがあるので作成は１回のみ
-
-//  if bFiest then
-//  begin
-//    bFiest:=False;
-//     //排他制御用のFormを開いた日時取得
-//    sOpenDATE:=dmUtilYbs.GetStmDate;
-//    SOpenTime:=dmUtilYbs.GetStmTime;
-//
-//  end;
-
-  FormShow(self);
-
 end;
 
 {*******************************************************************************
@@ -552,10 +564,9 @@ begin
   inherited;
 //  EdtMode.Text := '変更';          // 継承もとでやってる
   pNo:=DataModule4.CDS_IH002.FieldByName('mhno').Asinteger;
-  dspHeader;                         // 表示-ヘッダー項目設定
-  dspDetail;                         // 表示-明細項目設定
 
   ChgReadOnly(EdtMHNO,true);         // TNCDを読込専用にするかの判別処理
+
 end;
 
 {*******************************************************************************
@@ -567,15 +578,12 @@ procedure TIH001.InzCpyMode;
 begin
   inherited;
   pNo:=DataModule4.CDS_IH002.FieldByName('mhno').Asinteger;
-  dspHeader;                            // 表示-ヘッダー項目設定（CpyのときはQryMTHFLPも展開）
-  dspDetail;                            // 表示-明細項目設定
-  DataModule4.CDS_IH001_MTH.Open;       // CDS_IH001_MTH展開
-  DataModule4.ClientDataSetMTHFLP.Open; // CDSMTHFLP展開
+  DataModule4.CDS_IH001_MTH.Open;       // CDS_IH001_MTH展開 コピー用
+  DataModule4.ClientDataSetMTHFLP.Open; // CDSMTHFLP展開     コピー用
 
   DataModule4.CDS_IH001_MTH.Insert; // 挿入モードだとCDS_IH001_MTHヘッダー値が初期化されるので
 
   // ヘッダーフィールドにClientDataSetMTHFLP値を格納する
-  DataModule4.CDS_IH001_MTH.FieldByName('MHNO').AsString:=DataModule4.MHTNO().MHNO; // 見積№最後尾+1
   DataModule4.CDS_IH001_MTH.FieldByName('MHIRDT').AsString:=DataModule4.ClientDataSetMTHFLP.FieldByName('MHIRDT').AsString;
   DataModule4.CDS_IH001_MTH.FieldByName('MHKGDT').AsString:=DataModule4.ClientDataSetMTHFLP.FieldByName('MHKGDT').AsString;
   DataModule4.CDS_IH001_MTH.FieldByName('MHTKCD').AsString:=DataModule4.ClientDataSetMTHFLP.FieldByName('MHTKCD').AsString;
@@ -597,8 +605,6 @@ begin
   inherited;
 
   pNo:=DataModule4.CDS_IH002.FieldByName('mhno').Asinteger;
-  dspHeader;                         // 表示-ヘッダー項目設定
-  dspDetail;                         // 表示-明細項目設定
 
 end;
 
@@ -615,13 +621,12 @@ var
   x2: Integer;
 begin
   inherited;
-//  EdtMode.Text := '照会';
-//  Button1.Enabled:=false;                                    // 処理中は追加ボタンをロック
-//  Button2.Enabled:=false;                                    // 処理中は更新ボタンをロック
+//  EdtMode.Text := '照会';                                  // 継承元でやってる
+//  Button1.Enabled:=false;                                  // 処理中は追加ボタンをロック
+//  Button2.Enabled:=false;                                  // 処理中は更新ボタンをロック
 
-  pNo:=DataModule4.CDS_IH002.FieldByName('mhno').Asinteger; // pNo値をDM4からもってくる
-  dspHeader;                                                 // 表示-ヘッダー項目設定
-  dspDetail;                                                 // 表示-明細項目設定
+  pNo:=DataModule4.CDS_IH002.FieldByName('mhno').Asinteger;  // pNo値をDM4からもってくる
+
 
 //  ChgReadOnly(EdtMHNO,true);
 //  ChgReadOnly(EdtMHIRDT,true);

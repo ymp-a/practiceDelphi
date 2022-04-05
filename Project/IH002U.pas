@@ -70,7 +70,7 @@ var
   SaveCursor: TCursor;   // 現在のマウスポインタ保持用
   rn,pk:Integer;
 begin
-  with DataModule4.FDQryIH002 do
+  with DataModule4.CDS_IH002 do
   begin
 
     if (mode<>'Add') and (Active=false) then Exit;
@@ -96,10 +96,10 @@ begin
       SaveCursor := Screen.Cursor;      //現マウスポインタを退避
       Screen.Cursor := crHourGlass;     //砂時計に変更
 
-      if DataModule4.FDQryIH002.Active then
-        DataModule4.FDQryIH002.Refresh; // Qryインスタンスの解放？
+      if Active then
+        Refresh; // Qryインスタンスの解放？
 
-    {  if Active then                   // CDSでしかPacketRecordsは利用できない
+     if Active then                   // CDSでしかPacketRecordsは利用できない
       begin
         Refresh;
         if not IsEmpty then
@@ -108,7 +108,7 @@ begin
             rn:=1
           else
           begin
-            if (FDQryF0004.Records<rn)and(RecordCount<rn) then
+            if (PacketRecords<rn)and(RecordCount<rn) then
             begin
               pk:=PacketRecords;
               PacketRecords:=rn-RecordCount;
@@ -121,7 +121,7 @@ begin
           RecNo:=rn;
         end;
       end;
-     }
+
 
       Screen.Cursor := SaveCursor;      //保存していたマウスポインタに戻す
     end;
@@ -164,6 +164,7 @@ procedure TIH002.Button2Click(Sender: TObject);
 begin
   inherited;
   ShwNextFrm('Add');
+  Button1Click(Sender); // 最新情報に更新
 end;
 
 {*******************************************************************************
@@ -199,6 +200,7 @@ procedure TIH002.Button7Click(Sender: TObject);
 begin
   inherited;
   ShwNextFrm('Cpy');
+  Button1Click(Sender); // 最新情報に更新
 end;
 
 {*******************************************************************************

@@ -248,6 +248,14 @@ inherited IH001: TIH001
             Height = 13
             Caption = #21830#21697
           end
+          object EdtMTNO: TDBText
+            Left = 620
+            Top = 40
+            Width = 37
+            Height = 17
+            DataField = 'MTNO'
+            DataSource = DataModule4.DataSrc_IH001_MTM
+          end
           object EdtMTTNKA: TDBEditUNIC
             Left = 315
             Top = 36
