@@ -1,6 +1,7 @@
 inherited IH001: TIH001
   Caption = 'IH001'
   ClientHeight = 693
+  ExplicitTop = -72
   ExplicitHeight = 732
   PixelsPerInch = 96
   TextHeight = 13
@@ -244,9 +245,9 @@ inherited IH001: TIH001
           object Label7: TLabel
             Left = 59
             Top = 21
-            Width = 28
+            Width = 84
             Height = 13
-            Caption = #21830#21697
+            Caption = #21830#21697'CD'#12461#12540#20516
           end
           object EdtMTNO: TDBText
             Left = 620
@@ -255,6 +256,20 @@ inherited IH001: TIH001
             Height = 17
             DataField = 'MTNO'
             DataSource = DataModule4.DataSrc_IH001_MTM
+          end
+          object Label16: TLabel
+            Left = 11
+            Top = 21
+            Width = 42
+            Height = 13
+            Caption = #34892#30058#21495
+          end
+          object Label17: TLabel
+            Left = 620
+            Top = 21
+            Width = 70
+            Height = 13
+            Caption = 'MTNO'#12461#12540#20516
           end
           object EdtMTTNKA: TDBEditUNIC
             Left = 315

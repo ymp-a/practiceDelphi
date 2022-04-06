@@ -44,6 +44,8 @@ type
     Label7: TLabel;
     Button3: TButton;
     EdtMTNO: TDBText;
+    Label16: TLabel;
+    Label17: TLabel;
     procedure FormShow(Sender: TObject);         // 画面表示の処理
     procedure FormClose(Sender: TObject; var Action: TCloseAction); // 画面終了の処理
     procedure Button3Click(Sender: TObject);     // 追加ボタン
@@ -175,7 +177,7 @@ begin
   inherited;
   if DBCtrlGrid1.DataSource.DataSet.Active then
   begin
-    DBCtrlGrid1.DataSource.DataSet.Append;
+    DBCtrlGrid1.DataSource.DataSet.Append; // 最終行にレコード追加する
   end;
 end;
 
@@ -461,9 +463,11 @@ end;
 function TIH001.LogicalChecOk: Boolean;
 var
  I:Integer;
+ Delflag:Boolean;
 begin
 
   Result :=False;
+  Delflag :=False;
 
   if mode='Add' then
     //EdtTNCD.Color := clWindow;
@@ -532,6 +536,16 @@ begin
 
     DataModule4.CDS_IH001_MTM.Next;                        // レコードを一つ進める
   end;
+  DataModule4.CDS_IH001_MTM.First;                         // 最初のレコードに移動
+
+  // 見積行番号がずれてた場合レコード番号と合わせる
+  for I := 0 to DataModule4.CDS_IH001_MTM.RecordCount-1 do // cds2全レコードの空白チェック
+  begin // 見積行番号とレコードインデックス+1が合わなければ
+    if DataModule4.CDS_IH001_MTM.FieldByName('MTGNO').AsInteger<>I+1 then
+        DataModule4.CDS_IH001_MTM.FieldByName('MTGNO').AsInteger:=I+1; // 行番号とレコードインデックス+1を格納
+    DataModule4.CDS_IH001_MTM.Next;                        // レコードを一つ進める
+  end;
+
   DataModule4.CDS_IH001_MTM.First;                         // 最初のレコードに移動
   DataModule4.CDS_IH001_MTM.EnableControls;                // active画面遷移再開する
 // Exitで処理したほうが良い？更新の方が良い？
