@@ -1,7 +1,6 @@
 inherited IH001: TIH001
   Caption = 'IH001'
   ClientHeight = 693
-  ExplicitTop = -72
   ExplicitHeight = 732
   PixelsPerInch = 96
   TextHeight = 13
@@ -96,6 +95,7 @@ inherited IH001: TIH001
           DataSource = DataModule4.DataSrc_IH001_MTH
           TabOrder = 5
           OnExit = EdtMHTNCDExit
+          Alignment = taRightJustify
           OptLen = 6
         end
         object EdtMHIRDT: TDBEditUNIC
@@ -136,6 +136,7 @@ inherited IH001: TIH001
           DataField = 'MHNO'
           DataSource = DataModule4.DataSrc_IH001_MTH
           TabOrder = 0
+          Alignment = taRightJustify
           OptLen = 6
           OptFldType = S
         end
