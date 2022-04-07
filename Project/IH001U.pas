@@ -46,6 +46,10 @@ type
     EdtMTNO: TDBText;
     Label16: TLabel;
     Label17: TLabel;
+    mSRYO: TDBEditUNIC;
+    mKIN: TDBEditUNIC;
+    Label18: TLabel;
+    Label19: TLabel;
     procedure FormShow(Sender: TObject);         // 画面表示の処理
     procedure FormClose(Sender: TObject; var Action: TCloseAction); // 画面終了の処理
     procedure Button3Click(Sender: TObject);     // 追加ボタン
@@ -133,13 +137,24 @@ begin
   for I := 0 to cds2.RecordCount-1 do // cds2全レコードの'D'チェック
   begin                               // 'D'のヘッダーレコードにはdataJTCDオン
     if cds2.FieldByName('MTJTCD').AsString='D' then
-      cds2.FieldByName('dataJTCD').AsBoolean:=true
-    else  cds2.FieldByName('dataJTCD').AsBoolean:=false ;
-
+    begin
+      cds2.FieldByName('dataJTCD').AsBoolean:=true;
+      DataModule4.CDS_IH001_MTM.FieldByName('mSRYO').AsInteger:=
+      DataModule4.CDS_IH001_MTM.FieldByName('MTSRYO').AsInteger;
+      DataModule4.CDS_IH001_MTM.FieldByName('mKIN').AsInteger:=
+      DataModule4.CDS_IH001_MTM.FieldByName('MTKIN').AsInteger;
+    end else
+    begin
+      cds2.FieldByName('dataJTCD').AsBoolean:=false;
+      DataModule4.CDS_IH001_MTM.FieldByName('mSRYO').AsInteger:=0;
+      DataModule4.CDS_IH001_MTM.FieldByName('mKIN').AsInteger:=0;
+    end;
     cds2.Next;                        // レコードを一つ進める
   end;
   cds2.First;                         // 最初のレコードに移動
   cds2.EnableControls;                // active画面遷移再開する
+
+
 
   // 追加、コピーモード時は最新の見積№をセットしておく
   if (Mode='Add') or (Mode='Cpy') then
@@ -241,11 +256,38 @@ DBCtrlGridイベント
 procedure TIH001.DBCtrlGrid1Exit(Sender: TObject);
 var
   I:Integer;
+  cds1: TClientDataSet;
+  cds2: TClientDataSet;
 begin
+  cds1 := DataModule4.CDS_IH001_MTH;
+  cds2 := DataModule4.CDS_IH001_MTM;
 
   if DataModule4.CDS_IH001_MTM.State=dsEdit then
-    DataModule4.CDS_IH001_MTM.Post; // DBCtrlGridにカーソルinでCDS MTMFLP確定させる
+  begin
 
+    //DBCheckboxの設定
+    cds2.DisableControls;               // 画面ちらつき防止
+    cds2.First;                         // 最初のレコードに移動
+    for I := 0 to cds2.RecordCount-1 do // cds2全レコードの'D'チェック
+    begin                               // 'D'のヘッダーレコードにはdataJTCDオン
+      if cds2.FieldByName('dataJTCD').AsBoolean=true then
+      begin
+        DataModule4.CDS_IH001_MTM.FieldByName('mSRYO').AsInteger:=
+        DataModule4.CDS_IH001_MTM.FieldByName('MTSRYO').AsInteger;
+        DataModule4.CDS_IH001_MTM.FieldByName('mKIN').AsInteger:=
+        DataModule4.CDS_IH001_MTM.FieldByName('MTKIN').AsInteger;
+      end else
+      begin
+        DataModule4.CDS_IH001_MTM.FieldByName('mSRYO').AsInteger:=0;
+        DataModule4.CDS_IH001_MTM.FieldByName('mKIN').AsInteger:=0;
+      end;
+      cds2.Next;                        // レコードを一つ進める
+    end;
+    cds2.First;                         // 最初のレコードに移動
+    cds2.EnableControls;                // active画面遷移再開する
+
+    DataModule4.CDS_IH001_MTM.Post; // DBCtrlGridにカーソルinでCDS MTMFLP確定させる
+   end;
 end;
 
 //ショートカット F6
@@ -355,8 +397,10 @@ begin
   //※変更Mで削除データを見る事を想定
   //※今の処理では変更Mで削除データ生き返るよ
   if PageTopFrm1.EdtMode.Text = '削除' then
-    cds1.FieldByName('MHJTCD').AsString:='D'
-  else cds1.FieldByName('MHJTCD').AsString:=''  ;
+  begin
+    cds1.FieldByName('MHJTCD').AsString:='D';
+    mset;
+  end else cds1.FieldByName('MHJTCD').AsString:=''  ;
 
   cds1.FieldByName('MHGKIN').AsInteger:=EdtMHGKIN.Field.Value;
   cds1.FieldByName('MHGSRO').AsInteger:=EdtMHGSRO.Field.value;
@@ -387,8 +431,16 @@ begin
 
     // 見積明細にチェックがあるとき、もしくは見積ヘッダーが削除状態のとき
     if (cds2.FieldByName('dataJTCD').AsBoolean) or (cds1.FieldByName('MHJTCD').AsString='D') then
-      cds2.FieldByName('MTJTCD').AsString:='D'
-    else cds2.FieldByName('MTJTCD').AsString:='';
+    begin
+      cds2.FieldByName('MTJTCD').AsString:='D';
+      cds2.FieldByName('mSRYO').AsInteger:=cds2.FieldByName('MTSRYO').AsInteger;
+      cds2.FieldByName('mKIN').AsInteger:=cds2.FieldByName('MTKIN').AsInteger;
+    end else
+    begin
+      cds2.FieldByName('MTJTCD').AsString:='';
+      cds2.FieldByName('mSRYO').AsInteger:=0;
+      cds2.FieldByName('mKIN').AsInteger:=0;
+    end;
 
     // 変更モード時見積明細すべて削除チェックならヘッダーも'D'にする
     if PageTopFrm1.EdtMode.Text = '変更' then

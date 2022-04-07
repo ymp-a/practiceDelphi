@@ -566,9 +566,13 @@ object DataModule4: TDataModule4
     end
     object IntegerField6: TIntegerField
       FieldName = 'MHGSRO'
+      DisplayFormat = '###,###,##0'
+      EditFormat = '###,###,##0'
     end
     object IntegerField7: TIntegerField
       FieldName = 'MHGKIN'
+      DisplayFormat = '###,###,##0'
+      EditFormat = '###,###,##0'
     end
     object IntegerField8: TIntegerField
       FieldName = 'MHTNCD'
@@ -705,8 +709,11 @@ object DataModule4: TDataModule4
   object CDS_IH001_MTM: TClientDataSet
     Aggregates = <>
     AggregatesActive = True
+    FieldDefs = <>
+    IndexDefs = <>
     Params = <>
     ProviderName = 'DataSetProIH001_MTM'
+    StoreDefs = True
     Left = 213
     Top = 376
     object IntegerField17: TIntegerField
@@ -766,19 +773,38 @@ object DataModule4: TDataModule4
       FieldKind = fkInternalCalc
       FieldName = 'dataJTCD'
     end
+    object CDS_IH001_MTMdelflag: TIntegerField
+      FieldKind = fkInternalCalc
+      FieldName = 'delflag'
+    end
+    object CDS_IH001_MTMmSRYO: TIntegerField
+      FieldKind = fkInternalCalc
+      FieldName = 'mSRYO'
+      DisplayFormat = '###,###,##0'
+    end
+    object CDS_IH001_MTMmKIN: TIntegerField
+      FieldKind = fkInternalCalc
+      FieldName = 'mKIN'
+      DisplayFormat = '###,###,##0'
+      EditFormat = '###,###,###'
+    end
     object AggregateField1: TAggregateField
       FieldName = 'sumSRYO'
+      Visible = True
       Active = True
       DisplayName = ''
-      DisplayFormat = '###,###,###'
-      Expression = 'SUM(MTSRYO)'
+      DisplayFormat = '###,###,##0'
+      Expression = 'SUM(MTSRYO - mSRYO)'
+      IndexName = 'dflagindex'
     end
     object AggregateField2: TAggregateField
       FieldName = 'sumKIN'
+      Visible = True
       Active = True
       DisplayName = ''
-      DisplayFormat = '###,###,###'
-      Expression = 'SUM(MTKIN)'
+      DisplayFormat = '###,###,##0'
+      Expression = 'SUM(MTKIN - mKIN)'
+      IndexName = 'dflagindex'
     end
   end
   object DataSrc_IH001_MTM: TDataSource
@@ -963,12 +989,12 @@ object DataModule4: TDataModule4
     object IntegerField28: TIntegerField
       FieldName = 'MHGSRO'
       Origin = 'MHGSRO'
-      DisplayFormat = '###,###,###'
+      DisplayFormat = '###,###,##0'
     end
     object IntegerField29: TIntegerField
       FieldName = 'MHGKIN'
       Origin = 'MHGKIN'
-      DisplayFormat = '###,###,###'
+      DisplayFormat = '###,###,##0'
     end
     object IntegerField30: TIntegerField
       FieldName = 'MHTNCD'

@@ -223,7 +223,7 @@ inherited IH001: TIH001
             Caption = #21066#38500
           end
           object Label10: TLabel
-            Left = 437
+            Left = 436
             Top = 21
             Width = 28
             Height = 13
@@ -271,6 +271,20 @@ inherited IH001: TIH001
             Width = 70
             Height = 13
             Caption = 'MTNO'#12461#12540#20516
+          end
+          object Label18: TLabel
+            Left = 376
+            Top = 64
+            Width = 56
+            Height = 13
+            Caption = #38500#22806#25968#37327
+          end
+          object Label19: TLabel
+            Left = 439
+            Top = 64
+            Width = 56
+            Height = 13
+            Caption = #38500#22806#37329#38989
           end
           object EdtMTTNKA: TDBEditUNIC
             Left = 315
@@ -353,6 +367,33 @@ inherited IH001: TIH001
             DataField = 'dataJTCD'
             DataSource = DataModule4.DataSrc_IH001_MTM
             TabOrder = 5
+          end
+          object mSRYO: TDBEditUNIC
+            Left = 376
+            Top = 83
+            Width = 55
+            Height = 21
+            DataField = 'mSRYO'
+            DataSource = DataModule4.DataSrc_IH001_MTM
+            TabOrder = 7
+            OnExit = EdtMTSRYOExit
+            Alignment = taRightJustify
+            OptLen = 7
+            OptFldType = S
+          end
+          object mKIN: TDBEditUNIC
+            Left = 437
+            Top = 84
+            Width = 55
+            Height = 21
+            DataField = 'mKIN'
+            DataSource = DataModule4.DataSrc_IH001_MTM
+            ReadOnly = True
+            TabOrder = 8
+            Alignment = taRightJustify
+            OptLen = 9
+            OptFldType = S
+            OptMinus = True
           end
         end
         object Button3: TButton

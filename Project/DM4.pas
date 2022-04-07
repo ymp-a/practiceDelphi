@@ -230,6 +230,9 @@ type
     StringField48: TStringField;
     FDQryGene: TFDQuery;
     DataSource4: TDataSource;
+    CDS_IH001_MTMdelflag: TIntegerField;
+    CDS_IH001_MTMmSRYO: TIntegerField;
+    CDS_IH001_MTMmKIN: TIntegerField;
     // ClientDataSetの日付フィールドのOnSetTextイベントに追加する
     procedure ClientDataSetTDateFieldSetText(Sender: TField; // 日付入力チェック
       const Text: string);
