@@ -400,7 +400,7 @@ begin
   if PageTopFrm1.EdtMode.Text = '削除' then
   begin
     cds1.FieldByName('MHJTCD').AsString:='D';
-    mset; // ヘッダー内で明細確定処理することで削除フラグオン、合計数量、金額を0に書き換えている
+//    mset; // ヘッダー内で明細確定処理することで削除フラグオン、合計数量、金額を0に書き換えている
   end else cds1.FieldByName('MHJTCD').AsString:=''  ;
 
   cds1.FieldByName('MHGKIN').AsInteger:=EdtMHGKIN.Field.Value;
@@ -434,9 +434,11 @@ begin
     if (cds2.FieldByName('dataJTCD').AsBoolean) or (cds1.FieldByName('MHJTCD').AsString='D') then
     begin
       cds2.FieldByName('MTJTCD').AsString:='D';
+      cds2.FieldByName('dataJTCD').AsBoolean:=true;
     end else
     begin
       cds2.FieldByName('MTJTCD').AsString:='';
+      cds2.FieldByName('dataJTCD').AsBoolean:=false;
     end;
 
     // 変更モード時見積明細すべて削除チェックならヘッダーも'D'にする
@@ -460,6 +462,9 @@ begin
 
   cds2.EnableControls;
   cds2.Post;
+  // 削除モード時、見積ヘッダーの合計数量0、金額0を確定させるため再呼び出す
+  if PageTopFrm1.EdtMode.Text = '削除' then hset;
+
 end;
 
 {===============================================================================
@@ -514,21 +519,24 @@ procedure TIH001.BeforeScroll(DataSet: TDataSet);
 begin
   if PageTopFrm1.EdtMode.Text <> '追加' then
   begin
-  Dataset.Edit; // DataSet編集モード if FRecordCount = 0 のとき AfterInsertへ移行する
+  Dataset.Edit;
 
+  // 明細削除チェックがあるとき、またはヘッダー状態'D'のとき
   if DataModule4.CDS_IH001_MTM.FieldByName('dataJTCD').AsBoolean=true then
     begin
+      // 数量と金額をマイナスフィールドに格納する
       DataModule4.CDS_IH001_MTM.FieldByName('mSRYO').AsInteger:=
       DataModule4.CDS_IH001_MTM.FieldByName('MTSRYO').AsInteger;
       DataModule4.CDS_IH001_MTM.FieldByName('mKIN').AsInteger:=
       DataModule4.CDS_IH001_MTM.FieldByName('MTKIN').AsInteger;
     end else
     begin
+      // 明細削除チェックがないときマイナスフィールドを0にする
       DataModule4.CDS_IH001_MTM.FieldByName('mSRYO').AsInteger:=0;
       DataModule4.CDS_IH001_MTM.FieldByName('mKIN').AsInteger:=0;
     end;
 
-  Dataset.Post; // ここでフィールドMTNOの値が必要ですエラーがでた
+  Dataset.Post;
   Dataset.Edit;
   end;
 end;
