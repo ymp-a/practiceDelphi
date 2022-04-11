@@ -326,25 +326,30 @@ var
 begin
   // 明細非表示時は処理無効
     if DBgrid1.DataSource.DataSet.Active = False then Exit;
-  // 項目名の初期化
-    for i:=0 to (DBGrid1.Columns.Count)-1 do
-    begin
-      if AnsiPos('▲', DBGrid1.Columns[i].Title.Caption) <> 0 then
-        DBGrid1.Columns[i].Title.Caption := StringReplace( DBGrid1.Columns[i].Title.Caption, '▲', '', [rfReplaceAll]);
-      if AnsiPos('▼', DBGrid1.Columns[i].Title.Caption) <> 0 then
-        DBGrid1.Columns[i].Title.Caption := StringReplace( DBGrid1.Columns[i].Title.Caption, '▼', '', [rfReplaceAll]);
-    end;
-  // indexDefs[0]のフィールドを初期化
-    with (DBgrid1.DataSource.DataSet as TClientDataSet) do
-    begin
-      // 昇順フィールドの初期化
-      if IndexDefs[0].Fields <> '' then IndexDefs[0].Fields := '';
-      // 降順フィールドの初期化
-      if IndexDefs[0].DescFields <> '' then IndexDefs[0].DescFields := '';
-      // IndexNameを初期化
-      if IndexName = 'aIndex' then DeleteIndex('aIndex');
-    end;
 
+    with (DBGrid1.DataSource.DataSet as TClientDataSet) do
+    begin
+      // IndexDefsが存在するとき
+      if IndexDefs.count <> 0 then
+      begin
+        // 項目名の初期化
+        for i:=0 to (DBGrid1.Columns.Count)-1 do
+        begin
+          if AnsiPos('▲', DBGrid1.Columns[i].Title.Caption) <> 0 then
+            DBGrid1.Columns[i].Title.Caption := StringReplace( DBGrid1.Columns[i].Title.Caption, '▲', '', [rfReplaceAll]);
+          if AnsiPos('▼', DBGrid1.Columns[i].Title.Caption) <> 0 then
+            DBGrid1.Columns[i].Title.Caption := StringReplace( DBGrid1.Columns[i].Title.Caption, '▼', '', [rfReplaceAll]);
+        end;
+
+        // indexDefs[0]のフィールドを初期化
+        // 昇順フィールドの初期化
+        if IndexDefs[0].Fields <> '' then IndexDefs[0].Fields := '';
+        // 降順フィールドの初期化
+        if IndexDefs[0].DescFields <> '' then IndexDefs[0].DescFields := '';
+        // IndexNameを初期化
+        if IndexName = 'aIndex' then DeleteIndex('aIndex');
+      end;
+    end;
   inherited;
 
   with DataModule4 do
