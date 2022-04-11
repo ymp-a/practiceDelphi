@@ -283,4 +283,121 @@ object DataModule2: TDataModule2
     Left = 304
     Top = 224
   end
+  object DataSrc_IH003: TDataSource
+    DataSet = CDS_IH003
+    Left = 304
+    Top = 288
+  end
+  object CDS_IH003: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'DataSetProIH003'
+    Left = 221
+    Top = 288
+    object IntegerField3: TIntegerField
+      FieldName = 'TNTNCD'
+      Origin = 'TNTNCD'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object IntegerField4: TIntegerField
+      FieldName = 'TNBKCD'
+      Origin = 'TNBKCD'
+    end
+    object VarBytesField2: TVarBytesField
+      FieldName = 'TNPASS'
+      Origin = 'TNPASS'
+      Size = 2000
+    end
+    object StringField11: TStringField
+      FieldName = 'TNNAME'
+      Origin = 'TNNAME'
+      Size = 16
+    end
+    object StringField12: TStringField
+      FieldName = 'TNKGKB'
+      Origin = 'TNKGKB'
+      Size = 1
+    end
+    object StringField13: TStringField
+      FieldName = 'TNSTKB'
+      Origin = 'TNSTKB'
+      Size = 4
+    end
+    object DateField4: TDateField
+      FieldName = 'TNPWLA'
+      Origin = 'TNPWLA'
+    end
+    object DateField5: TDateField
+      FieldName = 'TNCRDT'
+      Origin = 'TNCRDT'
+    end
+    object TimeField3: TTimeField
+      FieldName = 'TNCRTM'
+      Origin = 'TNCRTM'
+    end
+    object StringField14: TStringField
+      FieldName = 'TNCRPG'
+      Origin = 'TNCRPG'
+    end
+    object StringField15: TStringField
+      FieldName = 'TNCRWS'
+      Origin = 'TNCRWS'
+    end
+    object StringField16: TStringField
+      FieldName = 'TNCRUS'
+      Origin = 'TNCRUS'
+    end
+    object DateField6: TDateField
+      FieldName = 'TNUPDT'
+      Origin = 'TNUPDT'
+    end
+    object TimeField4: TTimeField
+      FieldName = 'TNUPTM'
+      Origin = 'TNUPTM'
+    end
+    object StringField17: TStringField
+      FieldName = 'TNUPPG'
+      Origin = 'TNUPPG'
+    end
+    object StringField18: TStringField
+      FieldName = 'TNUPWS'
+      Origin = 'TNUPWS'
+    end
+    object StringField19: TStringField
+      FieldName = 'TNUPUS'
+      Origin = 'TNUPUS'
+    end
+    object StringField20: TStringField
+      FieldName = 'TNJTCD'
+      Origin = 'TNJTCD'
+      Size = 1
+    end
+  end
+  object DataSetProIH003: TDataSetProvider
+    DataSet = FDQryIH003
+    Left = 138
+    Top = 288
+  end
+  object FDQryIH003: TFDQuery
+    Connection = dmUtilYbs.FDConnection1
+    SQL.Strings = (
+      'SELECT *'
+      'FROM TNMMSP')
+    Left = 56
+    Top = 288
+  end
+  object FDQryGene: TFDQuery
+    Connection = dmUtilYbs.FDConnection1
+    SQL.Strings = (
+      'SELECT *'
+      'FROM TNMMSP')
+    Left = 56
+    Top = 352
+  end
+  object DataSource2: TDataSource
+    DataSet = FDQryGene
+    Left = 296
+    Top = 352
+  end
 end

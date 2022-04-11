@@ -77,6 +77,30 @@ type
     StringField9: TStringField;
     StringField10: TStringField;
     DataSrc_IH004: TDataSource;
+    DataSrc_IH003: TDataSource;
+    CDS_IH003: TClientDataSet;
+    IntegerField3: TIntegerField;
+    IntegerField4: TIntegerField;
+    VarBytesField2: TVarBytesField;
+    StringField11: TStringField;
+    StringField12: TStringField;
+    StringField13: TStringField;
+    DateField4: TDateField;
+    DateField5: TDateField;
+    TimeField3: TTimeField;
+    StringField14: TStringField;
+    StringField15: TStringField;
+    StringField16: TStringField;
+    DateField6: TDateField;
+    TimeField4: TTimeField;
+    StringField17: TStringField;
+    StringField18: TStringField;
+    StringField19: TStringField;
+    StringField20: TStringField;
+    DataSetProIH003: TDataSetProvider;
+    FDQryIH003: TFDQuery;
+    FDQryGene: TFDQuery;
+    DataSource2: TDataSource;
 
   private
     { Private êÈåæ }

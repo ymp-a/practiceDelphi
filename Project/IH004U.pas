@@ -16,10 +16,13 @@ type
     Label2: TLabel;
     procedure FormShow(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private 宣言 }
   public
     { Public 宣言 }
+    procedure ShwNextFrm(mode: string);      // モード管理
   end;
 
 var
@@ -29,7 +32,7 @@ implementation
 
 {$R *.dfm}
 
-uses DM2;
+uses DM2, IH003U;
 
 procedure TIH004.Button1Click(Sender: TObject);
 {*******************************************************************************
@@ -89,10 +92,98 @@ begin
 end;// OpenTNDataここまで
 
 
+procedure TIH004.Button2Click(Sender: TObject);
+begin
+  inherited;
+  ShwNextFrm('Add');
+  Button1Click(Sender); // 最新情報に更新
+end;
+
+procedure TIH004.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+  with DataModule2 do
+  begin
+    FDQryIH004.Close;
+    CDS_IH004.Close;
+  end;
+end;
+
 procedure TIH004.FormShow(Sender: TObject);
 begin
   inherited;
   Button1Click(Self);
 end;
+
+{*******************************************************************************
+ 目的:モード管理の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
+procedure TIH004.ShwNextFrm(mode: string);
+var
+  frm : Tform;
+  SaveCursor: TCursor;   // 現在のマウスポインタ保持用
+  rn,pk:Integer;
+begin
+  with DataModule2.CDS_IH004 do
+  begin
+
+    if (mode<>'Add') and (Active=false) then Exit;
+
+    if (mode='Chg') or (mode='Del') then
+    begin
+      // 元のソースコードにはロック排他制御があった
+    end;//if
+
+    if Active then  rn:=RecNo;
+
+
+    SaveCursor := Screen.Cursor;        // 現マウスポインタを退避
+    Screen.Cursor := crHourGlass;       // 砂時計に変更
+    frm := TIH003.create(self,mode);    // 担当メンテ画面を代入
+    Screen.Cursor := SaveCursor;        // 保存していたマウスポインタに戻す
+    frm.ShowModal;                      // 画面展開
+    frm.Release;                        // TIH003インスタンス開放
+
+    //再検索
+    if mode<>'Dsp' then
+    begin
+      SaveCursor := Screen.Cursor;      //現マウスポインタを退避
+      Screen.Cursor := crHourGlass;     //砂時計に変更
+
+      if Active then
+        Refresh; // Qryインスタンスの解放？
+
+     if Active then                   // CDSでしかPacketRecordsは利用できない
+      begin
+        Refresh;
+        if not IsEmpty then
+        begin
+          if rn<=0 then
+            rn:=1
+          else
+          begin
+            if (PacketRecords<rn)and(RecordCount<rn) then
+            begin
+              pk:=PacketRecords;
+              PacketRecords:=rn-RecordCount;
+              GetNextPacket;
+              PacketRecords:=pk;
+            end;
+            if RecordCount<rn then rn:=RecordCount;
+          end;
+
+          RecNo:=rn;
+        end;
+      end;
+
+
+      Screen.Cursor := SaveCursor;      //保存していたマウスポインタに戻す
+    end;
+
+  end; // with
+
+end; // ShwNextFrmここまで
 
 end.
