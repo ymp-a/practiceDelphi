@@ -246,10 +246,11 @@ with DBGrid1 do
       //----------------------------//
       // 明細の表題／並び替えの制御 //
       //----------------------------//
+      // ▲であればindex値が返る。▲以外であれば0なので▲のとき以下の処理を行う
       if AnsiPos('▲', Column.Title.Caption) <> 0 then
       begin
         // ----- 降順へ -----
-        // 表題設定
+        // 表題設定 古い▲を''に置換
         Column.Title.Caption := StringReplace(Column.Title.Caption, '▲', '', [rfReplaceAll]);
         Column.Title.Caption := Column.Title.Caption + '▼';
 
@@ -262,6 +263,7 @@ with DBGrid1 do
         // インデックスフィールドのオプション初期化
         IndexDefs[0].Options := [];
       end
+      // ▼のとき以下処理を行う
       else if AnsiPos('▼', Column.Title.Caption) <> 0 then
       begin
         // ----- 設定解除 -----
@@ -332,11 +334,15 @@ begin
       if AnsiPos('▼', DBGrid1.Columns[i].Title.Caption) <> 0 then
         DBGrid1.Columns[i].Title.Caption := StringReplace( DBGrid1.Columns[i].Title.Caption, '▼', '', [rfReplaceAll]);
     end;
-  // indexの初期化
+  // indexDefs[0]のフィールドを初期化
     with (DBgrid1.DataSource.DataSet as TClientDataSet) do
     begin
-    if  IndexName = 'aIndex' then
-     DeleteIndex('aIndex');
+      // 昇順フィールドの初期化
+      if IndexDefs[0].Fields <> '' then IndexDefs[0].Fields := '';
+      // 降順フィールドの初期化
+      if IndexDefs[0].DescFields <> '' then IndexDefs[0].DescFields := '';
+      // IndexNameを初期化
+      if IndexName = 'aIndex' then DeleteIndex('aIndex');
     end;
 
   inherited;

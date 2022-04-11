@@ -73,7 +73,7 @@ type
     procedure AfterOpen(DataSet: TDataSet);      // CDSOpen直後の処理
     procedure AfterInsert(DataSet: TDataSet);    // 行数設定を挿入する
     procedure AfterScroll(DataSet: TDataSet);    // DataSet編集確定編集モード切替
-
+    procedure BeforeScroll(DataSet: TDataSet);   // 行遷移時の数量金額の合計を反映したい
 
     procedure InzAddMode;override;               // 初期設定（追加モード）
     procedure InzChgMode;override;               // 初期設定（変更モード）
@@ -120,6 +120,7 @@ begin
   DataModule4.CDS_IH001_MTM.AfterOpen:=AfterOpen;     // CDSへ各イベントをセットする
   DataModule4.CDS_IH001_MTM.AfterInsert:=AfterInsert;
   DataModule4.CDS_IH001_MTM.AfterScroll:=AfterScroll;
+  DataModule4.CDS_IH001_MTM.BeforeScroll:=BeforeScroll;
 
   dspHeader;                                                // 表示-ヘッダー項目設定 Qry
   dspDetail;                                                // 表示-明細項目設定 Qry
@@ -139,15 +140,15 @@ begin
     if cds2.FieldByName('MTJTCD').AsString='D' then
     begin
       cds2.FieldByName('dataJTCD').AsBoolean:=true;
-      DataModule4.CDS_IH001_MTM.FieldByName('mSRYO').AsInteger:=
-      DataModule4.CDS_IH001_MTM.FieldByName('MTSRYO').AsInteger;
-      DataModule4.CDS_IH001_MTM.FieldByName('mKIN').AsInteger:=
-      DataModule4.CDS_IH001_MTM.FieldByName('MTKIN').AsInteger;
+//      DataModule4.CDS_IH001_MTM.FieldByName('mSRYO').AsInteger:=
+//      DataModule4.CDS_IH001_MTM.FieldByName('MTSRYO').AsInteger;
+//      DataModule4.CDS_IH001_MTM.FieldByName('mKIN').AsInteger:=
+//      DataModule4.CDS_IH001_MTM.FieldByName('MTKIN').AsInteger;
     end else
     begin
       cds2.FieldByName('dataJTCD').AsBoolean:=false;
-      DataModule4.CDS_IH001_MTM.FieldByName('mSRYO').AsInteger:=0;
-      DataModule4.CDS_IH001_MTM.FieldByName('mKIN').AsInteger:=0;
+//      DataModule4.CDS_IH001_MTM.FieldByName('mSRYO').AsInteger:=0;
+//      DataModule4.CDS_IH001_MTM.FieldByName('mKIN').AsInteger:=0;
     end;
     cds2.Next;                        // レコードを一つ進める
   end;
@@ -399,7 +400,7 @@ begin
   if PageTopFrm1.EdtMode.Text = '削除' then
   begin
     cds1.FieldByName('MHJTCD').AsString:='D';
-    mset;
+    mset; // ヘッダー内で明細確定処理することで削除フラグオン、合計数量、金額を0に書き換えている
   end else cds1.FieldByName('MHJTCD').AsString:=''  ;
 
   cds1.FieldByName('MHGKIN').AsInteger:=EdtMHGKIN.Field.Value;
@@ -433,13 +434,9 @@ begin
     if (cds2.FieldByName('dataJTCD').AsBoolean) or (cds1.FieldByName('MHJTCD').AsString='D') then
     begin
       cds2.FieldByName('MTJTCD').AsString:='D';
-      cds2.FieldByName('mSRYO').AsInteger:=cds2.FieldByName('MTSRYO').AsInteger;
-      cds2.FieldByName('mKIN').AsInteger:=cds2.FieldByName('MTKIN').AsInteger;
     end else
     begin
       cds2.FieldByName('MTJTCD').AsString:='';
-      cds2.FieldByName('mSRYO').AsInteger:=0;
-      cds2.FieldByName('mKIN').AsInteger:=0;
     end;
 
     // 変更モード時見積明細すべて削除チェックならヘッダーも'D'にする
@@ -507,6 +504,33 @@ begin
   Dataset.Edit; // DataSet編集モード if FRecordCount = 0 のとき AfterInsertへ移行する
   Dataset.Post; // ここでフィールドMTNOの値が必要ですエラーがでた
   Dataset.Edit;
+
+end;
+
+{===============================================================================
+ClientDataSetのイベントに設定するイベント
+===============================================================================}
+procedure TIH001.BeforeScroll(DataSet: TDataSet);
+begin
+  if PageTopFrm1.EdtMode.Text <> '追加' then
+  begin
+  Dataset.Edit; // DataSet編集モード if FRecordCount = 0 のとき AfterInsertへ移行する
+
+  if DataModule4.CDS_IH001_MTM.FieldByName('dataJTCD').AsBoolean=true then
+    begin
+      DataModule4.CDS_IH001_MTM.FieldByName('mSRYO').AsInteger:=
+      DataModule4.CDS_IH001_MTM.FieldByName('MTSRYO').AsInteger;
+      DataModule4.CDS_IH001_MTM.FieldByName('mKIN').AsInteger:=
+      DataModule4.CDS_IH001_MTM.FieldByName('MTKIN').AsInteger;
+    end else
+    begin
+      DataModule4.CDS_IH001_MTM.FieldByName('mSRYO').AsInteger:=0;
+      DataModule4.CDS_IH001_MTM.FieldByName('mKIN').AsInteger:=0;
+    end;
+
+  Dataset.Post; // ここでフィールドMTNOの値が必要ですエラーがでた
+  Dataset.Edit;
+  end;
 end;
 
 {===============================================================================
