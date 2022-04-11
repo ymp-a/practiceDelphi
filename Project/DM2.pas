@@ -55,6 +55,28 @@ type
     FDQry1TNUPWS: TStringField;
     FDQry1TNUPUS: TStringField;
     FDQry1TNJTCD: TStringField;
+    FDQryIH004: TFDQuery;
+    DataSetProIH004: TDataSetProvider;
+    CDS_IH004: TClientDataSet;
+    IntegerField1: TIntegerField;
+    IntegerField2: TIntegerField;
+    VarBytesField1: TVarBytesField;
+    StringField1: TStringField;
+    StringField2: TStringField;
+    StringField3: TStringField;
+    DateField1: TDateField;
+    DateField2: TDateField;
+    TimeField1: TTimeField;
+    StringField4: TStringField;
+    StringField5: TStringField;
+    StringField6: TStringField;
+    DateField3: TDateField;
+    TimeField2: TTimeField;
+    StringField7: TStringField;
+    StringField8: TStringField;
+    StringField9: TStringField;
+    StringField10: TStringField;
+    DataSrc_IH004: TDataSource;
 
   private
     { Private êÈåæ }
