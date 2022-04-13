@@ -18,6 +18,7 @@ type
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Button3Click(Sender: TObject);
   private
     { Private éŒ¾ }
   public
@@ -97,6 +98,12 @@ begin
   inherited;
   ShwNextFrm('Add');
   Button1Click(Sender); // ÅVî•ñ‚ÉXV
+end;
+
+procedure TIH004.Button3Click(Sender: TObject);
+begin
+  inherited;
+  ShwNextFrm('Chg');
 end;
 
 procedure TIH004.FormClose(Sender: TObject; var Action: TCloseAction);

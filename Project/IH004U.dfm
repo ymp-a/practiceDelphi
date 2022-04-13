@@ -8,9 +8,11 @@ inherited IH004: TIH004
   TextHeight = 13
   inherited Splitter1: TSplitter
     Width = 620
+    ExplicitWidth = 620
   end
   inherited Panel1: TPanel
     Width = 620
+    ExplicitWidth = 620
     object Label1: TLabel [0]
       Left = 32
       Top = 24
@@ -27,12 +29,15 @@ inherited IH004: TIH004
     end
     inherited Button1: TBitBtn
       Left = 522
+      ExplicitLeft = 522
     end
     inherited Button10: TBitBtn
       Left = 522
+      ExplicitLeft = 522
     end
     inherited BtnCSV: TBitBtn
       Left = 522
+      ExplicitLeft = 522
     end
     object EdtTNCD: TEdit
       Left = 122
@@ -52,6 +57,8 @@ inherited IH004: TIH004
   inherited Panel2: TPanel
     Width = 620
     Height = 257
+    ExplicitWidth = 620
+    ExplicitHeight = 257
     inherited DBGrid1: TDBGrid
       Width = 618
       Height = 255
@@ -100,13 +107,18 @@ inherited IH004: TIH004
   inherited Panel3: TPanel
     Top = 421
     Width = 620
+    ExplicitTop = 421
+    ExplicitWidth = 620
   end
   inherited PageTopFrm1: TPageTopFrm
     Width = 620
+    ExplicitWidth = 620
     inherited Panel2: TPanel
       Width = 620
+      ExplicitWidth = 620
       inherited Panel1: TPanel
         Left = 336
+        ExplicitLeft = 336
       end
     end
   end

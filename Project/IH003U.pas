@@ -26,6 +26,7 @@ type
   private
     { Private 宣言 }
     procedure InzAddMode;override;               // 初期設定（追加モード）
+    procedure InzChgMode;override;               // 初期設定（変更モード）
     function  GetDecPass: string;                   // 復号用
   public
     { Public 宣言 }
@@ -142,6 +143,20 @@ begin
     end;
 end;
 
+{*******************************************************************************
+ 目的:初期設定   (変更モードの設定)
+ 引数:
+ 戻値:
+*******************************************************************************}
+procedure TIH003.InzChgMode;
+begin
+  inherited;
+//  pNo:=DataModule2.CDS_IH002.FieldByName('mhno').Asinteger;
+
+//  ChgReadOnly(EdtMHNO,true);         // TNCDを読込専用にするかの判別処理
+
+end;
+
 {===============================================================================
 パスワード復号用
 ===============================================================================}
@@ -155,7 +170,7 @@ begin
     SQL.Clear;
     SQL.Add(' SELECT CAST(DECRYPTBYPASSPHRASE('''+DECKEY+''',TNPASS) AS varchar(10)) AS PASS ');
     SQL.Add('   FROM TNMMSP WHERE TNTNCD = :TNCD ');
-    ParamByName('TNCD').AsString:=DataModule2.ClientDataSetTNMMSP.FieldByName('TNTNCD').AsString;
+    ParamByName('TNCD').AsString:=DataModule2.CDS_IH004.FieldByName('TNTNCD').AsString;
     Open;
 
     if IsEmpty=false then

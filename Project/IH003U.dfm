@@ -9,16 +9,24 @@ inherited IH003: TIH003
   inherited ScrollBoxSCR: TScrollBox
     Width = 451
     Height = 291
+    ExplicitWidth = 451
+    ExplicitHeight = 291
     inherited PanelSCR: TPanel
       Width = 447
       Height = 287
+      ExplicitWidth = 447
+      ExplicitHeight = 287
       inherited Panel2: TPanel
         Top = 245
         Width = 445
+        ExplicitTop = 245
+        ExplicitWidth = 445
       end
       inherited Panel1: TPanel
         Width = 445
         Height = 211
+        ExplicitWidth = 445
+        ExplicitHeight = 211
         object Label1: TLabel
           Left = 32
           Top = 43
@@ -116,10 +124,13 @@ inherited IH003: TIH003
       end
       inherited PageTopFrm1: TPageTopFrm
         Width = 445
+        ExplicitWidth = 445
         inherited Panel2: TPanel
           Width = 445
+          ExplicitWidth = 445
           inherited Panel1: TPanel
             Left = 161
+            ExplicitLeft = 161
           end
         end
       end
