@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, EdtMaster, System.Actions, Vcl.ActnList,
   PageTop, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.Mask, Vcl.DBCtrls,
-  DBEditUNIC;
+  DBEditUNIC, FireDAC.Comp.Client, Data.DB, DBClient;
 
 type
   TIH003 = class(TEdtMasterFrm)
@@ -25,9 +25,12 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private 宣言 }
+    procedure tset();                            // 更新時ヘッダー設定
     procedure InzAddMode;override;               // 初期設定（追加モード）
     procedure InzChgMode;override;               // 初期設定（変更モード）
-    function  GetDecPass: string;                   // 復号用
+    function  GetDecPass: string;                // 復号用
+    procedure DbAdd;override;                    // データベースへの変更（追加モード）
+    function  LogicalChecOk:Boolean;override;    // 論理チェック
   public
     { Public 宣言 }
   end;
@@ -181,6 +184,157 @@ begin
     SQL.Clear;
 
   end;
+
+end;
+
+{===============================================================================
+データベースへの変更（追加モード）
+===============================================================================}
+procedure TIH003.DbAdd;
+var
+  cds1: TClientDataSet;
+  con: TFDConnection;
+begin
+  inherited;
+  con:= UtilYbs.dmUtilYbs.FDConnection1;
+  cds1 := DataModule2.CDS_IH003;
+
+
+  tset;                   // 項目セット
+
+  try
+    con.StartTransaction; // 変更トランザクション開始（必ずコミットかロールバックすること）
+
+    cds1.ApplyUpdates(0); // データ更新
+
+
+    //データベース更新
+//    if ApplyUpdates(0) >  0 then             //エラーの場合は中断
+//    begin
+//      Abort;
+//    end;
+
+    con.Commit;           //コミット
+    MessageDlg('新規登録が完了しました（・ω・）',mtInformation, [mbOK], 0); //更新確認ダイアログ
+
+    except
+    on e:Exception do     // 例外処理
+    begin
+      con.Rollback;       // エラー時はロールバック
+      MessageDlg(E.Message, mtError, [mbOK], 0);
+      Abort;
+    end;
+
+  end; // tryここまで
+
+   Close;                  // 画面終了
+
+end;
+
+{===============================================================================
+更新時担当マスタ項目セット
+===============================================================================}
+procedure TIH003.tset();
+begin
+  with  DataModule2.CDS_IH003 do
+  begin
+    // 権限
+    case CmbKGNM.ItemIndex of
+      0:FieldByName('TNKGKB').Asstring:='1';               // 一般
+      1:FieldByName('TNKGKB').Asstring:='2';               // 業務管理者
+      2:FieldByName('TNKGKB').Asstring:='5';               // システム管理者
+    end;
+
+    // 使用停止
+    if chkSTKB.Checked then FieldByName('TNSTKB').Asstring:='D'
+                       else FieldByName('TNSTKB').Asstring:='';
+
+    // 削除（使用停止区分）？
+    FieldByName('TNJTCD').Asstring:='';
+
+    // パスワード最終更新日
+    FieldByName('TNPWLA').AsDateTime := Date;
+
+    // 非表示項目の設定（変更者などのログ記録用）
+    FieldByName('TNCRWS').Asstring:=dmUtilYbs.GetComputerNameS;
+    FieldByName('TNCRPG').Asstring:=self.Name;
+    FieldByName('TNCRDT').AsDateTime:=Date;
+    FieldByName('TNCRTM').AsDateTime:=Time;
+    FieldByName('TNCRUS').AsString := dmUtilYbs.sUserName; // 作成ユーザー
+
+
+    // データベース更新
+    Post;
+  end;
+end;
+
+{===============================================================================
+論理チェック　引数：なし、戻り値：Bool
+===============================================================================}
+function TIH003.LogicalChecOk: Boolean;
+begin
+
+  Result :=False;
+
+  if mode='Add' then
+    EdtTNCD.Color := clWindow; // 担当者CDフォームに白を代入する
+
+  if mode='Del' then
+  begin
+
+    //得意先があったら削除禁止
+{    with DataModule3.FDQryGene do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Add(' SELECT TOTKCD FROM TOKMSP WHERE TOTNCD=:TNCD AND TOJTCD='''' ');
+      ParamByName('TNCD').AsString:=EdtTNCD.text;
+      Open;
+      if not IsEmpty then
+      begin
+        MessageDlg('紐づく得意先(CD:'+FieldByName('TOTKCD').AsString+'など)があるため削除できません', mtError, [mbOK], 0);
+        Exit;
+      end;
+    end;
+}
+    Result:=true;
+    exit;
+  end;
+
+
+//  EdtBKCD.Color := clWindow;
+
+  ChkBlank(EdtTNCD,'担当者CD');
+
+  //追加モードの場合KEY重複チェックを行う。
+  if (mode='Add') or (mode='Cpy') then
+  begin
+    if DataModule2.TNMMS(EdtTNCD.Text,true).Exists=true then
+    begin
+      MessageDlg('担当者CDが重複しています。', mtError, [mbOk], 0);
+      EdtTNCD.SetFocus;
+      EdtTNCD.Color := clERR;
+      Exit;
+    end;
+  end;
+
+  ChkBlank(EdtNAME,'担当者名');
+
+  ChkBlank(EdtPASS,'パスワード');
+
+  ChkBlank(CmbKGNM,'権限区分');
+
+//  ChkBlank(EdtBKCD,'部課CD');
+
+//  if BKMMS(EdtBKCD.Field.AsString).Exists=false then
+//  begin
+//    MessageDlg('部課CDが不正です。',mterror,[mbok],0);
+//    EdtBKCD.SetFocus;
+//    EdtBKCD.Color:=clERR;
+//    exit;
+//  end;
+
+  Result :=True;
 
 end;
 

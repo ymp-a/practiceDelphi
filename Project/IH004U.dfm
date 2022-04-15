@@ -68,6 +68,7 @@ inherited IH004: TIH004
           Expanded = False
           FieldName = 'TNTNCD'
           Title.Caption = #25285#24403#32773'CD'
+          Width = 64
           Visible = True
         end
         item
@@ -78,28 +79,28 @@ inherited IH004: TIH004
         end
         item
           Expanded = False
-          FieldName = 'TNUPDT'
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'TNUPTM'
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'TNUPPG'
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'TNUPWS'
+          FieldName = 'TNBKCD'
+          Title.Caption = #27177#38480
+          Width = 64
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'TNJTCD'
           Title.Caption = #29366#24907
+          Width = 64
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'TNUPTM'
+          Width = 64
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'TNUPPG'
+          Width = 64
           Visible = True
         end>
     end

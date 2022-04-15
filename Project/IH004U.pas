@@ -41,12 +41,10 @@ procedure TIH004.Button1Click(Sender: TObject);
  引数:
  戻値:
 *******************************************************************************}
-var
-  andFlg:boolean; // 入力フラグを設定
-
 begin
+  inherited;
 
-  andFlg:=false;  // フラグ初期化
+  DBGrid1.DataSource.DataSet.Close;    // DBGrid1の初期化
 
   begin
     DataModule2.CDS_IH004.Close; // CDSを初期化
@@ -64,14 +62,14 @@ begin
       begin
         SQL.Add(' AND TNTNCD = :TNCD ');
         ParamByName('TNCD').AsString:=EdtTNCD.Text; // 入力した担当者CDを'TNCD'に代入する
-        andFlg:=true;                       // 入力時フラグオン
+//        andFlg:=true;                       // 入力時フラグオン
       end;
 
       if EdtNAME.Text<>'' then                    // 担当者名入力時の処理
       begin
         SQL.Add(' AND TNNAME LIKE :NAME ');                      // TNNAME LIKEに%入力名%をSQLStringに反映する
         ParamByName('NAME').AsWideString :='%' +EdtNAME.Text+ '%'; // 部分一致の入力名を'NAME'へ代入する
-        andFlg:=true;                                        // 入力時フラグオン
+//        andFlg:=true;                                        // 入力時フラグオン
       end;
 
       SQL.Add(' ORDER BY TNTNCD ');     // 昇順
@@ -90,6 +88,8 @@ begin
 
   end;// CDSここまで
 
+  DBGrid1.DataSource.DataSet.Open;
+
 end;// OpenTNDataここまで
 
 
@@ -104,6 +104,7 @@ procedure TIH004.Button3Click(Sender: TObject);
 begin
   inherited;
   ShwNextFrm('Chg');
+  Button1Click(Sender); // 最新情報に更新
 end;
 
 procedure TIH004.FormClose(Sender: TObject; var Action: TCloseAction);

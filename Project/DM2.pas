@@ -101,11 +101,18 @@ type
     FDQryIH003: TFDQuery;
     FDQryGene: TFDQuery;
     DataSource2: TDataSource;
-
+  //担当者m
+  type dTNM = Record
+    Exists :Boolean;
+    NAME:WideString;      //担当者
+    BKCD:string;          //部課CD
+    STKB:string;          //使用停止区分
+  end;
   private
     { Private 宣言 }
   public
     { Public 宣言 }
+    function TNMMS(TNCD:string;IncD:boolean=false): dTNM; // 担当者マスタチェック
 //    procedure OpenTNData(TNCD,reNAME: String); // 担当者マスタデータオープン
   end;
 
@@ -119,6 +126,44 @@ implementation
 uses functions, Utilybs, F0001;
 
 {$R *.dfm}
+
+{*******************************************************************************
+ 目的:担当者マスタにデータがあるかチェックする
+ 引数:
+ 戻値:
+*******************************************************************************}
+function TDataModule2.TNMMS(TNCD:string;IncD:boolean=false): dTNM;
+begin
+
+  with FDQryGene do // チェックロジックなど確認用のSQLはtempクエリを利用する
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add(' SELECT * FROM TNMMSP ');
+    SQL.Add(' WHERE TNTNCD = :TNTNCD ');
+    if IncD=False then
+      SQL.Add(' AND TNJTCD <> ''D''  ');
+    ParamByName('TNTNCD').AsAnsiString:=TNCD;
+    Open;
+
+    if not eof then
+    begin
+      Result.Exists:= True;
+      Result.NAME := FieldByName('TNNAME').AsWideString; // 担当者名
+      Result.BKCD := FieldByName('TNBKCD').AsString;     // 部課CD
+      Result.STKB := FieldByName('TNSTKB').AsString;     // 使用停止区分
+    end else begin
+      Result.Exists:= False;
+      Result.NAME := '';     // 担当者名
+      Result.BKCD := '';     // 部課CD
+      Result.STKB := '';     // 使用停止区分
+    end;
+
+    Close;
+    SQL.Clear;
+  end;
+
+end;
 
 {*******************************************************************************
  目的:担当者マスタにデータオープン
