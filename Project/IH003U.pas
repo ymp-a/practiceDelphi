@@ -31,6 +31,8 @@ type
     function  GetDecPass: string;                // 復号用
     procedure DbAdd;override;                    // データベースへの変更（追加モード）
     function  LogicalChecOk:Boolean;override;    // 論理チェック
+    procedure SetEncPass;                        // パスワードの保存
+
   public
     { Public 宣言 }
   end;
@@ -138,7 +140,7 @@ begin
 
       CDS_IH003.Open;               // CDS開始
       CDS_IH003.EmptyDataSet;       // CDS抽出レコードを空にする
-      CDS_IH003.Append;             // CDS追加モード
+      CDS_IH003.Append;             // CDS追加モード 最後の行に+1してるイメージ
       try
         InitDataSet(CDS_IH003);     // detasetの初期化、0やNULLなど適切な空の表記にしている
       except
@@ -213,8 +215,8 @@ begin
 //    begin
 //      Abort;
 //    end;
-
-    con.Commit;           //コミット
+    SetEncPass;           // 暗号化
+    con.Commit;           // コミット
     MessageDlg('新規登録が完了しました（・ω・）',mtInformation, [mbOK], 0); //更新確認ダイアログ
 
     except
@@ -335,6 +337,25 @@ begin
 //  end;
 
   Result :=True;
+
+end;
+
+{===============================================================================
+パスワード暗号化用
+===============================================================================}
+procedure TIH003.SetEncPass;
+begin
+  with DataModule2.FDQryGene do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add(' UPDATE TNMMSP ');
+    SQL.Add('    SET TNPASS = ENCRYPTBYPASSPHRASE('''+DECKEY+''',:PASS) ');
+    SQL.Add('  WHERE TNTNCD = :TNCD ');
+    ParamByName('PASS').AsAnsiString:=EdtPass.Text;
+    ParamByName('TNCD').AsAnsiString:=EdtTNCD.Text;
+    ExecSQL;
+  end;
 
 end;
 
