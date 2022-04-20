@@ -28,11 +28,13 @@ type
     procedure tset();                            // 更新時ヘッダー設定
     procedure InzAddMode;override;               // 初期設定（追加モード）
     procedure InzChgMode;override;               // 初期設定（変更モード）
-    function  GetDecPass: string;                // 復号用
+    procedure InzDelMode;override;               // 初期設定（削除モード）
     procedure DbAdd;override;                    // データベースへの変更（追加モード）
     procedure DbChenge;override;                 // データベースへの変更（変更モード）
+    procedure DbDelete;override;                 // データベースへの変更（削除モード)
     function  LogicalChecOk:Boolean;override;    // 論理チェック
     procedure SetEncPass;                        // パスワードの保存
+    function  GetDecPass: string;                // 復号用
 
   public
     { Public 宣言 }
@@ -163,6 +165,24 @@ begin
 
 end;
 
+{*******************************************************************************
+ 目的:初期設定    (削除モードの設定)
+ 引数:
+ 戻値:
+*******************************************************************************}
+procedure TIH003.InzDelMode;
+begin
+  inherited;
+//  EdtMode.Text := '削除';
+
+//  DataOpen;                // 照会データを元に1レコードSQL出力する
+
+//  Panel1.Enabled := False; // パネル1の範囲を入力不可にする
+
+//  FldChange(Panel1);       //一括でEdit,MemoのColorをBtnFaceに変更。入力コンポーネントの色を灰色にする。
+
+end;
+
 {===============================================================================
 パスワード復号用
 ===============================================================================}
@@ -289,6 +309,54 @@ begin
       on e:Exception do
       begin
         dmUtilYbs.FDConnection1.Rollback;                    //エラー時はロールバック
+        MessageDlg(E.Message, mtError, [mbOK], 0);
+        Abort;
+      end;
+
+    end;
+
+  end;
+
+  Close;
+
+end;
+
+{===============================================================================
+データベースへの変更（削除モード）
+===============================================================================}
+procedure TIH003.DbDelete;
+begin
+  inherited;
+
+  with  DataModule2.CDS_IH003 do
+  begin
+    dmUtilYbs.FDConnection1.StartTransaction;                // トランザクション処理開始
+    try
+      // 削除
+      FieldByName('TNSTKB').Asstring:='D';
+
+      // 非表示項目の設定
+      FieldByName('TNUPWS').Asstring:=dmUtilYbs.GetComputerNameS;
+      FieldByName('TNUPPG').Asstring:=self.Name;
+      FieldByName('TNUPDT').AsDateTime:=Date;
+      FieldByName('TNUPTM').AsDateTime:=Time;
+      FieldByName('TNUPUS').AsString := dmUtilYbs.sUserName; // 作成ユーザー
+
+      // データベース更新
+      Post;
+      if ApplyUpdates(0) >  0 then                           // エラーの場合は中断
+      begin
+        Abort;
+      end;
+
+      dmUtilYbs.FDConnection1.Commit;                        // コミット
+      // 更新確認ダイアログ
+      MessageDlg('削除が完了しました（●o●）',mtInformation, [mbOK], 0);
+
+      except                                                 // 例外処理
+      on e:Exception do
+      begin
+        dmUtilYbs.FDConnection1.Rollback;                    // ロールバック
         MessageDlg(E.Message, mtError, [mbOK], 0);
         Abort;
       end;

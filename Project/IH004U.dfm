@@ -86,7 +86,7 @@ inherited IH004: TIH004
         end
         item
           Expanded = False
-          FieldName = 'TNJTCD'
+          FieldName = 'TNSTKB'
           Title.Caption = #29366#24907
           Width = 64
           Visible = True

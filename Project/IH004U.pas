@@ -15,10 +15,11 @@ type
     EdtNAME: TEdit;
     Label2: TLabel;
     procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
   private
     { Private 宣言 }
   public
@@ -104,6 +105,13 @@ procedure TIH004.Button3Click(Sender: TObject);
 begin
   inherited;
   ShwNextFrm('Chg');
+  Button1Click(Sender); // 最新情報に更新
+end;
+
+procedure TIH004.Button4Click(Sender: TObject);
+begin
+  inherited;
+  ShwNextFrm('Del');
   Button1Click(Sender); // 最新情報に更新
 end;
 
