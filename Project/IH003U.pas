@@ -30,6 +30,7 @@ type
     procedure InzChgMode;override;               // 初期設定（変更モード）
     function  GetDecPass: string;                // 復号用
     procedure DbAdd;override;                    // データベースへの変更（追加モード）
+    procedure DbChenge;override;                 // データベースへの変更（変更モード）
     function  LogicalChecOk:Boolean;override;    // 論理チェック
     procedure SetEncPass;                        // パスワードの保存
 
@@ -230,6 +231,73 @@ begin
   end; // tryここまで
 
    Close;                  // 画面終了
+
+end;
+
+{===============================================================================
+データベースへの変更（変更モード）
+===============================================================================}
+procedure TIH003.DbChenge;
+begin
+  inherited;
+
+  with  DataModule2.CDS_IH003 do                    // 紙商LiteVerの変更モード
+  begin
+    // 変更トランザクション開始（必ずコミットかロールバックすること）
+    dmUtilYbs.FDConnection1.StartTransaction;
+    try
+
+      // 権限
+      case CmbKGNM.ItemIndex of
+        0:FieldByName('TNKGKB').Asstring:='1';               // 一般
+        1:FieldByName('TNKGKB').Asstring:='2';               // 業務管理者
+        2:FieldByName('TNKGKB').Asstring:='5';               // システム管理者
+      end;
+
+      // 使用停止
+      if chkSTKB.Checked then FieldByName('TNSTKB').Asstring:='D'
+                         else FieldByName('TNSTKB').Asstring:='';
+
+      // 削除（使用停止区分）？
+      FieldByName('TNJTCD').Asstring:='';
+
+      // パスワード変更があった場合
+      if EdtPASS.Text <> GetDecPass then
+        FieldByName('TNPWLA').AsDateTime := Date;            // パスワード最終更新日
+
+      // 非表示項目の設定（変更者などのログ記録用）
+      FieldByName('TNUPWS').Asstring:=dmUtilYbs.GetComputerNameS;
+      FieldByName('TNUPPG').Asstring:=self.Name;
+      FieldByName('TNUPDT').AsDateTime:=Date;
+      FieldByName('TNUPTM').AsDateTime:=Time;
+      FieldByName('TNUPUS').AsString := dmUtilYbs.sUserName; // 作成ユーザー
+
+      // データベース更新
+      Post;
+      if ApplyUpdates(0) >  0 then                           // エラーの場合は中断
+      begin
+        Abort;
+      end;
+
+      SetEncPass;                                            // パスワードの暗号化登録へ
+
+      dmUtilYbs.FDConnection1.Commit;                        // コミット
+      //更新確認ダイアログ
+      MessageDlg('更新が完了しました（^ω^）',mtInformation, [mbOK], 0);
+
+      except                                                 // 例外処理
+      on e:Exception do
+      begin
+        dmUtilYbs.FDConnection1.Rollback;                    //エラー時はロールバック
+        MessageDlg(E.Message, mtError, [mbOK], 0);
+        Abort;
+      end;
+
+    end;
+
+  end;
+
+  Close;
 
 end;
 
