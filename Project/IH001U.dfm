@@ -85,6 +85,7 @@ inherited IH001: TIH001
           DataField = 'MHKGDT'
           DataSource = DataModule4.DataSrc_IH001_MTH
           TabOrder = 2
+          OnDblClick = EdtDateDblClick
         end
         object EdtMHTNCD: TDBEditUNIC
           Left = 392
@@ -107,6 +108,7 @@ inherited IH001: TIH001
           DataField = 'MHIRDT'
           DataSource = DataModule4.DataSrc_IH001_MTH
           TabOrder = 1
+          OnDblClick = EdtDateDblClick
         end
         object EdtMHTKNM: TDBEditUNIC
           Left = 453
