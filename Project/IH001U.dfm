@@ -80,7 +80,7 @@ inherited IH001: TIH001
         object EdtMHKGDT: TDBEditUNIC
           Left = 122
           Top = 77
-          Width = 121
+          Width = 80
           Height = 21
           DataField = 'MHKGDT'
           DataSource = DataModule4.DataSrc_IH001_MTH
@@ -103,7 +103,7 @@ inherited IH001: TIH001
         object EdtMHIRDT: TDBEditUNIC
           Left = 122
           Top = 50
-          Width = 121
+          Width = 80
           Height = 21
           DataField = 'MHIRDT'
           DataSource = DataModule4.DataSrc_IH001_MTH
@@ -134,7 +134,7 @@ inherited IH001: TIH001
         object EdtMHNO: TDBEditUNIC
           Left = 122
           Top = 23
-          Width = 121
+          Width = 80
           Height = 21
           DataField = 'MHNO'
           DataSource = DataModule4.DataSrc_IH001_MTH

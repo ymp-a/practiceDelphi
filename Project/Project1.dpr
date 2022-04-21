@@ -52,6 +52,5 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TEdtLoginFrm, EdtLoginFrm);
-  Application.CreateForm(TIH004MS, IH004MS);
   Application.Run;
 end.
