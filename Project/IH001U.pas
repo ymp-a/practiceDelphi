@@ -676,8 +676,8 @@ end;
 procedure TIH001.InzAddMode;
 begin
   inherited;
-//  EdtMode.Text := '追加'; // 継承元でやってる
-//  Label15.Caption:='';    // 担当者名をブランクに初期化
+  // 追加モード時は削除Boxに触らせない
+  ChkDel1.Enabled:=false;
 end;
 
 {*******************************************************************************
