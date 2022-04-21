@@ -25,9 +25,9 @@ inherited IH002: TIH002
       Caption = #35211#31309#20381#38972#26085
     end
     object Label5: TLabel [3]
-      Left = 228
-      Top = 51
-      Width = 14
+      Left = 219
+      Top = 53
+      Width = 15
       Height = 13
       Caption = #65374
     end
@@ -52,26 +52,36 @@ inherited IH002: TIH002
       Height = 21
       TabOrder = 6
     end
-    object EdtMHIRDT: TEdit
-      Left = 122
-      Top = 48
-      Width = 100
-      Height = 21
-      TabOrder = 7
-    end
-    object EdtMHKGDT: TEdit
-      Left = 248
-      Top = 48
-      Width = 100
-      Height = 21
-      TabOrder = 8
-    end
     object EdtTNCD: TEdit
       Left = 504
       Top = 48
       Width = 100
       Height = 21
+      TabOrder = 7
+    end
+    object EdtMHIRDT: TMaskEditDate
+      Left = 122
+      Top = 48
+      Width = 74
+      Height = 21
+      EditMask = '9999/99/99;0;'
+      MaxLength = 10
+      TabOrder = 8
+      Text = ''
+      OnDblClick = EdtDateDblClick
+      EndOfMonth = False
+    end
+    object EdtMHKGDT: TMaskEditDate
+      Left = 249
+      Top = 48
+      Width = 74
+      Height = 21
+      EditMask = '9999/99/99;0;'
+      MaxLength = 10
       TabOrder = 9
+      Text = ''
+      OnDblClick = EdtDateDblClick
+      EndOfMonth = False
     end
   end
   inherited Panel2: TPanel

@@ -292,49 +292,49 @@ begin
     qry.SQL.Add(' LEFT JOIN TNMMSP ON TNTNCD = MHTNCD  ');
    // SQL.Add(' WHERE MHJTCD <> ''D'' '); // 'D'も表示したい
 
-    if MHNO<>'' then                      // 見積NO入力時の処理
+    if MHNO<>'' then                          // 見積NO入力時の処理
     begin
-      qry.SQL.Add('WHERE MHNO = :MHNO ');       // TNTNCDに入力した担当者CDを代入する
+      qry.SQL.Add('WHERE MHNO = :MHNO ');     // TNTNCDに入力した担当者CDを代入する
       qry.ParamByName('MHNO').AsString:=MHNO; // 入力した担当者CDを'TNCD'に代入する
-      andFlg:=true;                       // 入力時フラグオン
+      andFlg:=true;                           // 入力時フラグオン
     end;
-
-    if TODT<>'' then                      // 見積依頼日入力時の処理
+                                              // Copy(TODT,1,4)は2022/04/22の2022部分があるかチェックしてる
+    if StrToIntDef(Copy(TODT,1,4),0)<>0 then  // 見積依頼日入力時の処理
     begin
       if andFlg=true then qry.SQL.Add(' AND ') else qry.SQL.Add(' WHERE  ');
       qry.SQL.Add('MHIRDT = :TODT');
       qry.ParamByName('TODT').AsString:=TODT; // 入力した担当者CDを'TNCD'に代入する
-      andFlg:=true;                       // 入力時フラグオン
+      andFlg:=true;                           // 入力時フラグオン
     end;
 
-    if TODT<>'' then                      // 見積期限入力時の処理
+    if StrToIntDef(Copy(FRDT,1,4),0)<>0 then  // 見積期限入力時の処理
     begin
       if andFlg=true then qry.SQL.Add(' AND ') else qry.SQL.Add(' WHERE  ');
       qry.SQL.Add('MHKGDT = :FRDT');
       qry.ParamByName('FRDT').AsString:=FRDT; // 入力した担当者CDを'TNCD'に代入する
-      andFlg:=true;                       // 入力時フラグオン
+      andFlg:=true;                           // 入力時フラグオン
     end;
 
-    if TKCD<>'' then                      // 得意先入力時の処理
+    if TKCD<>'' then                          // 得意先入力時の処理
     begin
     if andFlg=true then qry.SQL.Add(' AND ') else qry.SQL.Add(' WHERE  ');
       qry.SQL.Add('MHTKCD = :TKCD');
       qry.ParamByName('TKCD').AsString:=TKCD; // 入力した担当者CDを'TNCD'に代入する
-      andFlg:=true;                       // 入力時フラグオン
+      andFlg:=true;                           // 入力時フラグオン
     end;
 
-    if TNCD<>'' then                      // 担当者CD入力時の処理
+    if TNCD<>'' then                          // 担当者CD入力時の処理
     begin
       if andFlg=true then qry.SQL.Add(' AND ') else qry.SQL.Add(' WHERE  ');
-      qry.SQL.Add('TNTNCD = :TNCD ');  // TNTNCDに入力した担当者CDを代入する
+      qry.SQL.Add('TNTNCD = :TNCD ');         // TNTNCDに入力した担当者CDを代入する
       qry.ParamByName('TNCD').AsString:=TNCD; // 入力した担当者CDを'TNCD'に代入する
-      andFlg:=true;                       // 入力時フラグオン
+      andFlg:=true;                           // 入力時フラグオン
     end;
 
     qry.SQL.Add(' ORDER BY MHNO ');           // 昇順
 
-    qry.Open;                      // SQL文実行
-    cds.Open; // CDS開始
+    qry.Open;                                 // SQL文実行
+    cds.Open;                                 // CDS開始
 
 
 

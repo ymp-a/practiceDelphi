@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DspTran, Data.DB, System.Actions,
   Vcl.ActnList, PageTop, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons,
-  Vcl.ExtCtrls, Datasnap.DBClient;
+  Vcl.ExtCtrls, Datasnap.DBClient, functions, Vcl.Mask, MaskEditDate;
 
 type
   TIH002 = class(TDspTranFrm)
@@ -15,12 +15,13 @@ type
     Label3: TLabel;
     EdtTKCD: TEdit;
     Label2: TLabel;
-    EdtMHIRDT: TEdit;
     Label5: TLabel;
-    EdtMHKGDT: TEdit;
     Label4: TLabel;
     EdtTNCD: TEdit;
+    EdtMHIRDT: TMaskEditDate;
+    EdtMHKGDT: TMaskEditDate;
     procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Button1Click(Sender: TObject); // 検索ボタン
     procedure Button2Click(Sender: TObject); // 追加ボタン
     procedure Button3Click(Sender: TObject); // 変更ボタン
@@ -28,8 +29,6 @@ type
     procedure Button7Click(Sender: TObject); // コピーボタン
     procedure Button8Click(Sender: TObject); // 表示ボタン
     procedure DBGrid1TitleClick(Column: TColumn);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
-
   private
     { Private 宣言 }
   public
@@ -143,8 +142,8 @@ begin
 
   //担当者CDと担当者名をDM4へ渡す準備
   MHNO:=EdtMHNO.Text;                               // 見積№
-  TODT:=EdtMHIRDT.Text;                             // 見積依頼日
-  FRDT:=EdtMHKGDT.Text;                             // 見積期限
+  TODT:=EdtMHIRDT.EditText;                         // 見積依頼日
+  FRDT:=EdtMHKGDT.EditText;                         // 見積期限
   TKCD:=EdtTKCD.Text;                               // 得意先コード
   TNCD:=EdtTNCD.Text;                               // 担当者コード
 

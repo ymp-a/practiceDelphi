@@ -676,8 +676,8 @@ end;
 procedure TIH001.InzAddMode;
 begin
   inherited;
-  // 追加モード時は削除Boxに触らせない
-  ChkDel1.Enabled:=false;
+
+  ChkDel1.Enabled:=false;            // 追加モード時は削除Boxに触らせない
 end;
 
 {*******************************************************************************
