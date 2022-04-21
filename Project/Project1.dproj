@@ -272,6 +272,10 @@
             <Form>IH003</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="IH004MSU.pas">
+            <Form>IH004MS</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

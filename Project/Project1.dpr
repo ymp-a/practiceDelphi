@@ -43,7 +43,8 @@ uses
   IH001U in 'IH001U.pas' {IH001},
   IH002U in 'IH002U.pas' {IH002},
   IH004U in 'IH004U.pas' {IH004},
-  IH003U in 'IH003U.pas' {IH003};
+  IH003U in 'IH003U.pas' {IH003},
+  IH004MSU in 'IH004MSU.pas' {IH004MS};
 
 {$R *.res}
 
@@ -51,5 +52,6 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TEdtLoginFrm, EdtLoginFrm);
+  Application.CreateForm(TIH004MS, IH004MS);
   Application.Run;
 end.

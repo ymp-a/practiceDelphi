@@ -59,6 +59,8 @@ type
     procedure DBCtrlGrid1Exit(Sender: TObject);  // DBCtrlGrid1からカーソルout処理
     procedure DBCtrlGrid1Enter(Sender: TObject); // DBCtrlGrid1にカーソルinの処理
     procedure F6Execute(Sender: TObject);        // F6無効処理
+    procedure EdtTNCDDblClick(Sender: TObject);  // TNCDマスタ検索
+
   private
     { Private 宣言 }
     gnocount:integer;                            // 行№
@@ -102,7 +104,7 @@ implementation
 
 {$R *.dfm}
 
-uses DM4, DM3, functions, MN001C, Utilybs, F0002;
+uses DM4, DM3, functions, MN001C, Utilybs, F0002, IH004MSU;
 
 {===============================================================================
 画面展開後に設定するイベント
@@ -301,6 +303,32 @@ begin
 
   if Button1.Focused = true then
      Button1Click(Sender);
+
+end;
+
+// 担当者マスタ検索
+procedure TIH001.EdtTNCDDblClick(Sender: TObject);
+Var
+  frm : TForm;
+begin
+  // 読取専用時は終了する
+  if (Sender as TDBEditUNIC).ReadOnly=true then Exit;
+
+  // 担当者検索を作成
+  frm := TIH004MS.Create(Self);
+  // 担当者CDが入力されていれば担当検索画面のEdtTNCDテキストにセット
+  (frm as TIH004MS).EdtTNCD.text:=(Sender as TDBEditUNIC).Text;
+
+  // http://kakinotane.s7.xrea.com/delphi/d2/d034.html （詳細）
+  // 担当検索終了時の処理
+  if frm.showmodal = mrok then
+  begin
+    // 選択時、フィールドに値をセット  なぜ プロパティSltTNCD を使っている？
+    (Sender as TDBEditUNIC).Field.AsString :=(frm as TIH004MS).SltTNCD;
+    // TABキー押したようにカーソルを次へ動かす指示？
+    SendMessage(Handle, WM_NEXTDLGCTL, 0, 0);
+  end;
+  frm.Release;
 
 end;
 

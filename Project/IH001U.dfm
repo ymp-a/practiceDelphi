@@ -94,6 +94,7 @@ inherited IH001: TIH001
           DataField = 'MHTNCD'
           DataSource = DataModule4.DataSrc_IH001_MTH
           TabOrder = 5
+          OnDblClick = EdtTNCDDblClick
           OnExit = EdtMHTNCDExit
           Alignment = taRightJustify
           OptLen = 6
