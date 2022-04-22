@@ -319,6 +319,7 @@ inherited IH001: TIH001
             Top = 36
             Width = 55
             Height = 21
+            TabStop = False
             DataField = 'MTKIN'
             DataSource = DataModule4.DataSrc_IH001_MTM
             ReadOnly = True
@@ -367,6 +368,7 @@ inherited IH001: TIH001
             Top = 40
             Width = 24
             Height = 17
+            TabStop = False
             DataField = 'dataJTCD'
             DataSource = DataModule4.DataSrc_IH001_MTM
             TabOrder = 5
@@ -376,6 +378,7 @@ inherited IH001: TIH001
             Top = 83
             Width = 55
             Height = 21
+            TabStop = False
             DataField = 'mSRYO'
             DataSource = DataModule4.DataSrc_IH001_MTM
             TabOrder = 7
@@ -389,6 +392,7 @@ inherited IH001: TIH001
             Top = 84
             Width = 55
             Height = 21
+            TabStop = False
             DataField = 'mKIN'
             DataSource = DataModule4.DataSrc_IH001_MTM
             ReadOnly = True
