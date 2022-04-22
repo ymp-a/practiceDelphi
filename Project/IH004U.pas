@@ -111,6 +111,12 @@ end;
 procedure TIH004.Button4Click(Sender: TObject);
 begin
   inherited;
+  // 削除済の行はアラートを表示する
+  if DataModule2.CDS_IH004.FieldByName('TNSTKB').AsString='D' then
+    begin
+    MessageDlg('すでに削除されています。（´・ω・｀）', mtError, [mbOk], 0);
+    Exit;
+    end;
   ShwNextFrm('Del');
   Button1Click(Sender); // 最新情報に更新
 end;

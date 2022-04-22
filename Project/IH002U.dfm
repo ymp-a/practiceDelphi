@@ -1,5 +1,6 @@
 inherited IH002: TIH002
   Caption = 'IH002'
+  ExplicitTop = -177
   PixelsPerInch = 96
   TextHeight = 13
   inherited Panel1: TPanel
@@ -27,7 +28,7 @@ inherited IH002: TIH002
     object Label5: TLabel [3]
       Left = 219
       Top = 53
-      Width = 15
+      Width = 14
       Height = 13
       Caption = #65374
     end
