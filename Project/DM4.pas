@@ -294,8 +294,8 @@ begin
 
     if MHNO<>'' then                          // 見積NO入力時の処理
     begin
-      qry.SQL.Add('WHERE MHNO = :MHNO ');     // TNTNCDに入力した担当者CDを代入する
-      qry.ParamByName('MHNO').AsString:=MHNO; // 入力した担当者CDを'TNCD'に代入する
+      qry.SQL.Add('WHERE MHNO = :MHNO ');
+      qry.ParamByName('MHNO').AsString:=MHNO;
       andFlg:=true;                           // 入力時フラグオン
     end;
                                               // Copy(TODT,1,4)は2022/04/22の2022部分があるかチェックしてる

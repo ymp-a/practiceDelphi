@@ -637,13 +637,15 @@ begin
   begin                                                    // 商品CD商品名、合計金額、備考が空白なら行削除
     if (DataModule4.CDS_IH001_MTM.FieldByName('MTSHCD').AsString='') AND
        (DataModule4.CDS_IH001_MTM.FieldByName('MTSHNM').AsString='') AND
-       (DataModule4.CDS_IH001_MTM.FieldByName('MTKIN').AsString='0') OR
-       (DataModule4.CDS_IH001_MTM.FieldByName('MTKIN').AsString='')  AND
+       ((DataModule4.CDS_IH001_MTM.FieldByName('MTKIN').AsString='0') OR
+       (DataModule4.CDS_IH001_MTM.FieldByName('MTKIN').AsString=''))  AND
        (DataModule4.CDS_IH001_MTM.FieldByName('MTBIKO').AsString='') then
        begin
-         if MessageDlg('この行を削除します。よろしいですか？',
+         DataModule4.CDS_IH001_MTM.EnableControls;         // 削除ダイアログ表示で画面遷移再開する
+         if MessageDlg('行番号'+EdtMTGNO.Field.AsString+'を削除します。よろしいですか？',
             mtConfirmation, [mbYes,mbNo], 0) = mrYes then
-            DBCtrlGrid1.DataSource.DataSet.Delete; // 行削除できた
+            DBCtrlGrid1.DataSource.DataSet.Delete;         // 行削除できた
+            DataModule4.CDS_IH001_MTM.DisableControls;     // 削除ダイアログ後画面ちらつき防止する
        end;
 
     DataModule4.CDS_IH001_MTM.Next;                        // レコードを一つ進める
