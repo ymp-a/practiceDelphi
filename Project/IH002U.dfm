@@ -1,5 +1,6 @@
 inherited IH002: TIH002
   Caption = 'IH002'
+  ExplicitLeft = -94
   PixelsPerInch = 96
   TextHeight = 13
   inherited Panel1: TPanel
@@ -44,26 +45,44 @@ inherited IH002: TIH002
       Width = 7
       Height = 13
     end
+    inherited Button1: TBitBtn
+      TabOrder = 5
+    end
+    inherited Button10: TBitBtn
+      TabOrder = 7
+    end
+    inherited BtnCSV: TBitBtn
+      TabOrder = 8
+    end
+    inherited chkNotCDS: TCheckBox
+      TabOrder = 9
+    end
+    inherited ChckBoxFont: TCheckBox
+      TabOrder = 6
+    end
     object EdtMHNO: TEdit
       Left = 122
       Top = 21
       Width = 100
       Height = 21
-      TabOrder = 5
+      MaxLength = 4
+      TabOrder = 0
     end
     object EdtTKCD: TEdit
       Left = 504
       Top = 21
       Width = 100
       Height = 21
-      TabOrder = 6
+      MaxLength = 3
+      TabOrder = 3
     end
     object EdtTNCD: TEdit
       Left = 504
       Top = 48
       Width = 100
       Height = 21
-      TabOrder = 7
+      MaxLength = 4
+      TabOrder = 4
       OnDblClick = EdtTNCDDblClick
       OnExit = EdtTNCDExit
     end
@@ -74,7 +93,7 @@ inherited IH002: TIH002
       Height = 21
       EditMask = '9999/99/99;0;'
       MaxLength = 10
-      TabOrder = 8
+      TabOrder = 1
       Text = ''
       OnDblClick = EdtDateDblClick
       EndOfMonth = False
@@ -86,7 +105,7 @@ inherited IH002: TIH002
       Height = 21
       EditMask = '9999/99/99;0;'
       MaxLength = 10
-      TabOrder = 9
+      TabOrder = 2
       Text = ''
       OnDblClick = EdtDateDblClick
       EndOfMonth = False

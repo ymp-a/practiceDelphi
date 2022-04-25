@@ -13,6 +13,9 @@ inherited IH004: TIH004
   inherited Panel1: TPanel
     Width = 620
     ExplicitWidth = 620
+    DesignSize = (
+      620
+      128)
     object Label1: TLabel [0]
       Left = 32
       Top = 24
@@ -29,29 +32,37 @@ inherited IH004: TIH004
     end
     inherited Button1: TBitBtn
       Left = 522
+      TabOrder = 2
       ExplicitLeft = 522
     end
     inherited Button10: TBitBtn
       Left = 522
+      TabOrder = 3
       ExplicitLeft = 522
     end
     inherited BtnCSV: TBitBtn
       Left = 522
+      TabOrder = 4
       ExplicitLeft = 522
+    end
+    inherited chkNotCDS: TCheckBox
+      TabOrder = 5
     end
     object EdtTNCD: TEdit
       Left = 122
       Top = 21
       Width = 100
       Height = 21
-      TabOrder = 4
+      MaxLength = 4
+      TabOrder = 0
     end
     object EdtNAME: TEdit
       Left = 122
       Top = 54
       Width = 100
       Height = 21
-      TabOrder = 5
+      MaxLength = 20
+      TabOrder = 1
     end
   end
   inherited Panel2: TPanel
@@ -74,21 +85,18 @@ inherited IH004: TIH004
           Expanded = False
           FieldName = 'TNNAME'
           Title.Caption = #25285#24403#32773#21517
-          Width = 64
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'TNKGKB'
           Title.Caption = #27177#38480
-          Width = 64
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'TNSTKB'
           Title.Caption = #29366#24907
-          Width = 64
           Visible = True
         end>
     end

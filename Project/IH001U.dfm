@@ -73,6 +73,7 @@ inherited IH001: TIH001
           Height = 21
           DataField = 'MHBIKO'
           DataSource = DataModule4.DataSrc_IH001_MTH
+          MaxLength = 40
           TabOrder = 6
           OptLen = 20
           OptFldType = O
@@ -84,6 +85,7 @@ inherited IH001: TIH001
           Height = 21
           DataField = 'MHKGDT'
           DataSource = DataModule4.DataSrc_IH001_MTH
+          MaxLength = 10
           TabOrder = 2
           OnDblClick = EdtDateDblClick
         end
@@ -94,6 +96,7 @@ inherited IH001: TIH001
           Height = 21
           DataField = 'MHTNCD'
           DataSource = DataModule4.DataSrc_IH001_MTH
+          MaxLength = 4
           TabOrder = 5
           OnDblClick = EdtTNCDDblClick
           OnExit = EdtMHTNCDExit
@@ -107,6 +110,7 @@ inherited IH001: TIH001
           Height = 21
           DataField = 'MHIRDT'
           DataSource = DataModule4.DataSrc_IH001_MTH
+          MaxLength = 10
           TabOrder = 1
           OnDblClick = EdtDateDblClick
         end
@@ -117,6 +121,7 @@ inherited IH001: TIH001
           Height = 21
           DataField = 'MHTKNM'
           DataSource = DataModule4.DataSrc_IH001_MTH
+          MaxLength = 40
           TabOrder = 4
           OptLen = 20
           OptFldType = O
@@ -128,6 +133,7 @@ inherited IH001: TIH001
           Height = 21
           DataField = 'MHTKCD'
           DataSource = DataModule4.DataSrc_IH001_MTH
+          MaxLength = 4
           TabOrder = 3
           OptLen = 6
         end
@@ -138,6 +144,7 @@ inherited IH001: TIH001
           Height = 21
           DataField = 'MHNO'
           DataSource = DataModule4.DataSrc_IH001_MTH
+          Enabled = False
           TabOrder = 0
           Alignment = taRightJustify
           OptLen = 6

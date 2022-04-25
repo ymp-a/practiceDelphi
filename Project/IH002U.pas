@@ -57,6 +57,7 @@ procedure TIH002.FormShow(Sender: TObject);
 begin
   inherited;
   Button1Click(Sender);
+  EdtMHNO.SetFocus;
 end;
 
 {*******************************************************************************

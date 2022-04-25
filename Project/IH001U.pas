@@ -162,6 +162,9 @@ begin
   // 追加、コピーモード時は最新の見積№をセットしておく
   if (Mode='Add') or (Mode='Cpy') then
     DataModule4.CDS_IH001_MTH.FieldByName('MHNO').AsString:=DataModule4.MHTNO().MHNO;
+
+  // 見積依頼日に入力日をセットしておく
+  DataModule4.CDS_IH001_MTH.FieldByName('MHIRDT').AsString :=DateToStr(Date);
 end;
 
 {===============================================================================

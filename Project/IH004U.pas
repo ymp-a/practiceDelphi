@@ -135,6 +135,7 @@ procedure TIH004.FormShow(Sender: TObject);
 begin
   inherited;
   Button1Click(Self);
+  EdtTNCD.SetFocus;
 end;
 
 {*******************************************************************************
