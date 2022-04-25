@@ -50,7 +50,7 @@ uses
 
 begin
   Application.Initialize;
-  Application.MainFormOnTaskbar := True;
+  Application.MainFormOnTaskbar := False;
   Application.CreateForm(TEdtLoginFrm, EdtLoginFrm);
   Application.Run;
 end.
