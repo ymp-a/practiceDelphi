@@ -74,6 +74,7 @@ inherited IH004: TIH004
       Width = 618
       Height = 255
       DataSource = DataModule2.DataSrc_IH004
+      OnTitleClick = DBGrid1TitleClick
       Columns = <
         item
           Expanded = False
