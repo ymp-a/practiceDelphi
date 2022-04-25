@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DspTran, Data.DB, System.Actions,
   Vcl.ActnList, PageTop, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls, Vcl.Buttons,
-  Vcl.ExtCtrls, Datasnap.DBClient, functions, Vcl.Mask, MaskEditDate;
+  Vcl.ExtCtrls, Datasnap.DBClient, functions, Vcl.Mask, MaskEditDate, FireDAC.Comp.Client;
 
 type
   TIH002 = class(TDspTranFrm)
@@ -20,23 +20,25 @@ type
     EdtTNCD: TEdit;
     EdtMHIRDT: TMaskEditDate;
     EdtMHKGDT: TMaskEditDate;
+    Label6: TLabel;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure Button1Click(Sender: TObject); // 検索ボタン
-    procedure Button2Click(Sender: TObject); // 追加ボタン
-    procedure Button3Click(Sender: TObject); // 変更ボタン
-    procedure Button4Click(Sender: TObject); // 削除ボタン
-    procedure Button7Click(Sender: TObject); // コピーボタン
-    procedure Button8Click(Sender: TObject); // 表示ボタン
-    procedure DBGrid1TitleClick(Column: TColumn);
+    procedure Button1Click(Sender: TObject);      // 検索ボタン
+    procedure Button2Click(Sender: TObject);      // 追加ボタン
+    procedure Button3Click(Sender: TObject);      // 変更ボタン
+    procedure Button4Click(Sender: TObject);      // 削除ボタン
+    procedure Button7Click(Sender: TObject);      // コピーボタン
+    procedure Button8Click(Sender: TObject);      // 表示ボタン
+    procedure DBGrid1TitleClick(Column: TColumn); // Gridソート機能
+    procedure EdtTNCDDblClick(Sender: TObject);   // TNCDマスタ検索
+    procedure EdtTNCDExit(Sender: TObject);    // 担当者名自動挿入
   private
     { Private 宣言 }
   public
     { Public 宣言 }
   var
-//    Mode:String;                             // モード管理
-    pNo : integer;                           // 見積№
-    procedure ShwNextFrm(mode: string);      // モード管理
+    pNo : integer;                                // 見積№
+    procedure ShwNextFrm(mode: string);           // モード管理
   end;
 
 var
@@ -46,7 +48,7 @@ implementation
 
 {$R *.dfm}
 
-uses DM4, IH001U;
+uses DM4, IH001U, IH004MSU, DM3;
 
 {===============================================================================
 画面展開後に設定するイベント
@@ -217,6 +219,62 @@ procedure TIH002.Button8Click(Sender: TObject);
 begin
   inherited;
   ShwNextFrm('Dsp');
+end;
+
+{*******************************************************************************
+ 目的:担当者マスタ検索
+ 引数:
+ 戻値:
+*******************************************************************************}
+procedure TIH002.EdtTNCDDblClick(Sender: TObject);
+Var
+  frm : TForm;
+begin
+  // 読取専用時は終了する
+  if (Sender as TEdit).ReadOnly=true then Exit;
+
+  // 担当者検索を作成
+  frm := TIH004MS.Create(Self);
+  // 担当者CDが入力されていれば担当検索画面のEdtTNCDテキストにセット
+  (frm as TIH004MS).EdtTNCD.text:=(Sender as TEdit).Text;
+
+  // http://kakinotane.s7.xrea.com/delphi/d2/d034.html （詳細）
+  // 担当検索終了時の処理
+  if frm.showmodal = mrok then
+  begin
+    // 選択時、フィールドに値をセット  なぜ プロパティSltTNCD を使っている？
+    (Sender as TEdit).Text :=(frm as TIH004MS).SltTNCD;
+    // TABキー押したようにカーソルを次へ動かす指示？
+    SendMessage(Handle, WM_NEXTDLGCTL, 0, 0);
+  end;
+  frm.Release;
+
+end;
+
+{===============================================================================
+担当者CDExit時のイベント 入力したTNCDが存在したら担当名を表示する。
+===============================================================================}
+procedure TIH002.EdtTNCDExit(Sender: TObject);
+var
+  qry: TFDQuery;
+begin
+  qry:=DataModule3.FDQryGene;
+  qry.Close;
+  qry.SQL.Clear;
+  qry.Params.Clear;
+
+  qry.SQL.Add('select * from tnmmsp');
+  qry.SQL.Add(' where tntncd=:cd');
+  qry.SQL.Add('and tnstkb <> ''D'' ');
+  qry.SQL.Add('');
+  qry.ParamByName('cd').AsInteger:= StrToInt(EdtTNCD.Text);
+  qry.Open();
+
+  if qry.IsEmpty then EdtTNCD.Text := '';  // 有効なTNCD以外なら入力フォームをクリア
+
+  Label6.Caption:=qry.FieldByName('TNNAME').AsString; // 担当者名を挿入
+  qry.close;
+
 end;
 
 {*******************************************************************************
