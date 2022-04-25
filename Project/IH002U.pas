@@ -267,7 +267,7 @@ begin
   qry.SQL.Add(' where tntncd=:cd');
   qry.SQL.Add('and tnstkb <> ''D'' ');
   qry.SQL.Add('');
-  qry.ParamByName('cd').AsInteger:= StrToInt(EdtTNCD.Text);
+  qry.ParamByName('cd').AsInteger:=StrToIntDef(EdtTNCD.Text,-1); // EdtTNCD.TextがInt変換できないとき-1を代入
   qry.Open();
 
   if qry.IsEmpty then EdtTNCD.Text := '';  // 有効なTNCD以外なら入力フォームをクリア
