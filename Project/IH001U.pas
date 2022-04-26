@@ -270,12 +270,14 @@ begin
     begin                               // 'D'のヘッダーレコードにはdataJTCDオン
       if cds2.FieldByName('dataJTCD').AsBoolean=true then
       begin
+        // 数量と金額をマイナスフィールドに格納する
         DataModule4.CDS_IH001_MTM.FieldByName('mSRYO').AsInteger:=
         DataModule4.CDS_IH001_MTM.FieldByName('MTSRYO').AsInteger;
         DataModule4.CDS_IH001_MTM.FieldByName('mKIN').AsInteger:=
         DataModule4.CDS_IH001_MTM.FieldByName('MTKIN').AsInteger;
       end else
       begin
+        // 明細削除チェックがないときマイナスフィールドを0にする
         DataModule4.CDS_IH001_MTM.FieldByName('mSRYO').AsInteger:=0;
         DataModule4.CDS_IH001_MTM.FieldByName('mKIN').AsInteger:=0;
       end;
@@ -457,7 +459,7 @@ begin
   begin
     cds2.FieldByName('MTNO').AsInteger:=cds1.FieldByName('MHNO').AsInteger;
 
-    // 見積明細にチェックがあるとき、もしくは見積ヘッダーが削除状態のとき
+    // 見積明細にチェックがあるとき、もしくは見積ヘッダーが削除状態のときDBCheckBox表示を反映する
     if (cds2.FieldByName('dataJTCD').AsBoolean) or (cds1.FieldByName('MHJTCD').AsString='D') then
     begin
       cds2.FieldByName('MTJTCD').AsString:='D';
@@ -468,7 +470,7 @@ begin
       cds2.FieldByName('dataJTCD').AsBoolean:=false;
     end;
 
-    // 変更モード時見積明細すべて削除チェックならヘッダーも'D'にする
+    // 変更モード時見積明細のDBCheckBoxがすべて削除チェックならヘッダーも'D'にする
     if PageTopFrm1.EdtMode.Text = '変更' then
     begin
       if cds2.FieldByName('MTJTCD').AsString='D' then
@@ -624,6 +626,15 @@ begin
   ChkBlank(EdtMHIRDT,'見積依頼日');
 
   ChkBlank(EdtMHKGDT,'見積期限');
+
+  // 見積依頼日＜見積期限チェック
+  if EdtMHIRDT.Field.AsDateTime > EdtMHKGDT.Field.AsDateTime then
+  begin
+    MessageDlg('見積期限が見積依頼日より前になっています。', mtError, [mbOk], 0);
+    EdtMHKGDT.SetFocus;
+    EdtMHKGDT.Color := clERR;
+    Exit;
+  end;
 
   ChkBlank(EdtMHTKCD,'得意先CD');
 
