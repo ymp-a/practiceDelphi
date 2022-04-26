@@ -640,7 +640,8 @@ begin
 
   ChkBlank(EdtMHTNCD,'担当者CD');
 
-  //DBCheckboxの設定
+  // 空の行削除処理
+  // DBCheckboxの設定
   DataModule4.CDS_IH001_MTM.DisableControls;               // 画面ちらつき防止
   DataModule4.CDS_IH001_MTM.First;                         // 最初のレコードに移動
   for I := 0 to DataModule4.CDS_IH001_MTM.RecordCount-1 do // cds2全レコードの空白チェック
@@ -672,7 +673,7 @@ begin
 
   DataModule4.CDS_IH001_MTM.First;                         // 最初のレコードに移動
   DataModule4.CDS_IH001_MTM.EnableControls;                // active画面遷移再開する
-// Exitで処理したほうが良い？更新の方が良い？
+// 行削除後に行追加するとレコード最後+1で行番号を生成するため番号が飛んでしまう。仕様でいいのか？
 
   ChkBlank(EdtMTSHCD,'商品CD');
 
@@ -708,7 +709,7 @@ begin
 end;
 
 {*******************************************************************************
- 目的:初期設定   (copyモードの設定)
+ 目的:初期設定   (copyモードの設定) 2つ用意したCDSから値をコピーする
  引数:
  戻値:
 *******************************************************************************}
@@ -766,8 +767,8 @@ begin
   pNo:=DataModule4.CDS_IH002.FieldByName('mhno').Asinteger;  // pNo値をDM4からもってくる
 
 
-//  ChgReadOnly(EdtMHNO,true);
-//  ChgReadOnly(EdtMHIRDT,true);
+//  ChgReadOnly(EdtMHNO,true);             // 各コンポーネントを読取専用にするパターン
+//  ChgReadOnly(EdtMHIRDT,true);           // 記述量が半端なくなる
 //  ChgReadOnly(EdtMHKGDT,true);
 //  ChgReadOnly(EdtMHTKCD,true);
 //  ChgReadOnly(EdtMHTKNM,true);
@@ -783,23 +784,23 @@ begin
 //  ChgReadOnly(EdtMHGSRO,true);
 //  ChgReadOnly(EdtMHGKIN,true);
 
-{    x1:= ComponentCount;                   // 上のコメントアウトをひとまとめたものが以下
-    for I := 0 to x1-1 do                  // コンポーネントの数繰り返す処理
+{    x1:= ComponentCount;                  // 上の処理をまとめたものが以下
+    for I := 0 to x1-1 do                  // コンポーネントの数繰返す処理
     begin
       compo := Components[I];              // コンポーネントのindex[0]から格納する
       if compo is TDBEditUnic then         // コンポーネントがTEditUnicのとき
-//        TDBEdit(compo).ReadOnly:=true;     // ReadOnlyをオンにする、フォームの色は変わらない
+//        TDBEdit(compo).ReadOnly:=true;   // ReadOnlyをオンにする、フォームの色は変わらない
          ChgReadOnly(compo,true);          // ChgReadOnlyメソッドを利用してもOK
       if compo is TDBCheckBox then         // コンポーネントがTDBCheckBoxのとき
         TDBCheckBox(compo).ReadOnly:=true; // ReadOnlyをオンにする
     end;                                   // Enabledfalseにするには不向きなロジック
 }
-//    ActionList1[1].Enabled:=false;         // ファンクションキー更新（F6）の無効
+//    ActionList1[1].Enabled:=false;       // ファンクションキー更新（F6）の無効
                                            // ActionListインデックスはリスト並び順通り
 
-//    panel1.Enabled:=false;                 // 紙商ではにパネル単位でEnabledfalseしている
-//    panel2.Enabled:=false;                 // シンプルでかんたん
-//    F0002Frm.FldChange(Panel1);            // 入力フォームの色を一括変更している
+//    panel1.Enabled:=false;               // 紙商ではパネル単位でEnabledfalseしている
+//    panel2.Enabled:=false;               // シンプルでかんたん
+//    F0002Frm.FldChange(Panel1);          // 入力フォームの色を一括変更している
 //    F0002Frm.FldChange(Panel2);
 end;
 
