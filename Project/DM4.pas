@@ -331,7 +331,7 @@ begin
       andFlg:=true;                           // 入力時フラグオン
     end;
 
-    qry.SQL.Add(' ORDER BY MHNO ');           // 昇順
+    qry.SQL.Add(' ORDER BY MHNO DESC ');           // 降順
 
     qry.Open;                                 // SQL文実行
     cds.Open;                                 // CDS開始

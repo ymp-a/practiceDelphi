@@ -31,7 +31,7 @@ type
     procedure Button8Click(Sender: TObject);      // 表示ボタン
     procedure DBGrid1TitleClick(Column: TColumn); // Gridソート機能
     procedure EdtTNCDDblClick(Sender: TObject);   // TNCDマスタ検索
-    procedure EdtTNCDExit(Sender: TObject);    // 担当者名自動挿入
+    procedure EdtTNCDExit(Sender: TObject);       // 担当者名自動挿入
   private
     { Private 宣言 }
   public
@@ -51,13 +51,13 @@ implementation
 uses DM4, IH001U, IH004MSU, DM3;
 
 {===============================================================================
-画面展開後に設定するイベント
+画面展開時に設定するイベント
 ===============================================================================}
 procedure TIH002.FormShow(Sender: TObject);
 begin
   inherited;
-  Button1Click(Sender);
-  EdtMHNO.SetFocus;
+  Button1Click(Sender); // 検索ボタンタップ
+  EdtMHNO.SetFocus;     // 画面展開時の初期フォーカス指定
 end;
 
 {*******************************************************************************
@@ -80,47 +80,45 @@ begin
     if (mode='Chg') or (mode='Del') then
     begin
       // 元のソースコードにはロック排他制御があった
-    end;//if
+    end;
 
-    if Active then  rn:=RecNo;
+    if Active then  rn:=RecNo;          // CDSあるときアクティブレコード番号（カレント行）をrnへ格納する
 
 
     SaveCursor := Screen.Cursor;        // 現マウスポインタを退避
     Screen.Cursor := crHourGlass;       // 砂時計に変更
-    frm := TIH001.create(self,mode); // 見積メンテ画面を代入
+    frm := TIH001.create(self,mode);    // 見積メンテ画面を代入
     Screen.Cursor := SaveCursor;        // 保存していたマウスポインタに戻す
     frm.ShowModal;                      // 画面展開
-    frm.Release;                        // TIH001インスタンス開放
+    frm.Release;                        // TIH001画面インスタンス開放
 
-    //再検索
+    //再検索（元の行選択のまま再描写するための処理）
     if mode<>'Dsp' then
     begin
       SaveCursor := Screen.Cursor;      //現マウスポインタを退避
       Screen.Cursor := crHourGlass;     //砂時計に変更
 
-      if Active then
-        Refresh; // Qryインスタンスの解放？
-
-     if Active then                   // CDSでしかPacketRecordsは利用できない
+     Button1Click(self);                // CDS、DBGrid1データオープン
+     if Active then                     // CDSでしかPacketRecordsは利用できない
       begin
-        Refresh;
-        if not IsEmpty then
+        Refresh;                        // CDS_IH002データを最新化
+        if not IsEmpty then             // CDSデータが存在するとき
         begin
-          if rn<=0 then
-            rn:=1
+          if rn<=0 then                 // 初回（選択行がない場合）
+            rn:=1                       // 1をセット
           else
           begin
-            if (PacketRecords<rn)and(RecordCount<rn) then
+            if (PacketRecords<rn)and(RecordCount<rn) then // アクティブレコード51以上かつ追加登録後の場合
             begin
-              pk:=PacketRecords;
-              PacketRecords:=rn-RecordCount;
-              GetNextPacket;
-              PacketRecords:=pk;
+              pk:=PacketRecords;             // pkに今のPacketRecords（継承元指定の50）格納
+              PacketRecords:=rn-RecordCount; // 下処理のためPacketRecordsを再設定（パケットに入返すレコード最大数を指定）
+              GetNextPacket;                 // Dataに追加されたレコード数を返す。戻値0なら全レコードが取得済。この処理後RecordCountが変化する（基本rnと同じ値になっている）
+              PacketRecords:=pk;             // PacketRecordsに50を戻す
             end;
-            if RecordCount<rn then rn:=RecordCount;
+            if RecordCount<rn then rn:=RecordCount;       // rn未満のときはRecordCountにあわせる（例外パターンが不明）
           end;
 
-          RecNo:=rn;
+          RecNo:=rn;                                      // 直前まで作業してた選択行を指定
         end;
       end;
 
@@ -428,5 +426,7 @@ end;
 {$WARN GARBAGE OFF} // <-- end.以下にコメント追加
 end.
 
-//FormCloseのinherited前にCDSindex初期化を行う。
-//先にinheritedを通過させると初期化ができなかったような気がする。
+// FormCloseのinherited前にCDSindex初期化を行う。
+// 先にinheritedを通過させると初期化ができなかったような気がする。
+// Button1Click(Sender);とButton1Click(self);とButton1Click(Button1);の違い下記参照↓
+// https://yoshikawa-ybs.cybozu.com/o/ag.cgi?page=ReportView&rRID=1363456&rr=DR&cp=rp&sp=

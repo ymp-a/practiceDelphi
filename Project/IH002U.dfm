@@ -1,6 +1,5 @@
 inherited IH002: TIH002
   Caption = 'IH002'
-  ExplicitLeft = -94
   PixelsPerInch = 96
   TextHeight = 13
   inherited Panel1: TPanel
