@@ -71,7 +71,7 @@ type
     procedure hset();                            // 更新時ヘッダー設定
     procedure mset();                            // 更新時明細設定
 
-    //ClientDataSetのイベントに設定するイベント
+    //ClientDataSetに設定するイベント
     procedure AfterOpen(DataSet: TDataSet);      // CDSOpen直後の処理
     procedure AfterInsert(DataSet: TDataSet);    // 行数設定を挿入する
     procedure AfterScroll(DataSet: TDataSet);    // DataSet編集確定編集モード切替
@@ -91,7 +91,6 @@ type
   public
     { Public 宣言 }
   var
-//    Mode : String; // ここで宣言すると初期化されるため不要。継承先でのみ宣言すること
     pNo : integer;                               // 見積№
     pMode:integer;                               // モード
     copyNo:Integer;
@@ -119,7 +118,7 @@ var
   x2: Integer;
 begin
   inherited;
-  DataModule4.CDS_IH001_MTM.AfterOpen:=AfterOpen;     // CDSへ各イベントをセットする
+  DataModule4.CDS_IH001_MTM.AfterOpen:=AfterOpen;           // CDSへ各イベントをセットする
   DataModule4.CDS_IH001_MTM.AfterInsert:=AfterInsert;
   DataModule4.CDS_IH001_MTM.AfterScroll:=AfterScroll;
   DataModule4.CDS_IH001_MTM.BeforeScroll:=BeforeScroll;
@@ -132,25 +131,19 @@ begin
   cds2.Open;                                                // CDSMTMFLPオープン
   cds1.Edit;                                                // 編集モード
   cds2.Edit;                                                // 編集モード
-  EdtMHTNCDExit(self);                                      // 担当者名表示
+  EdtMHTNCDExit(self);                                      // 担当者名あれば表示
 
   //DBCheckboxの設定
   cds2.DisableControls;               // 画面ちらつき防止
   cds2.First;                         // 最初のレコードに移動
   for I := 0 to cds2.RecordCount-1 do // cds2全レコードの'D'チェック
-  begin                               // 'D'のヘッダーレコードにはdataJTCDオン
+  begin                               // 'D'のヘッダーレコードにはdataJTCDオン(DBCheckBoxの表示)
     if cds2.FieldByName('MTJTCD').AsString='D' then
     begin
       cds2.FieldByName('dataJTCD').AsBoolean:=true;
-//      DataModule4.CDS_IH001_MTM.FieldByName('mSRYO').AsInteger:=
-//      DataModule4.CDS_IH001_MTM.FieldByName('MTSRYO').AsInteger;
-//      DataModule4.CDS_IH001_MTM.FieldByName('mKIN').AsInteger:=
-//      DataModule4.CDS_IH001_MTM.FieldByName('MTKIN').AsInteger;
     end else
     begin
       cds2.FieldByName('dataJTCD').AsBoolean:=false;
-//      DataModule4.CDS_IH001_MTM.FieldByName('mSRYO').AsInteger:=0;
-//      DataModule4.CDS_IH001_MTM.FieldByName('mKIN').AsInteger:=0;
     end;
     cds2.Next;                        // レコードを一つ進める
   end;
@@ -159,12 +152,13 @@ begin
 
 
 
-  // 追加、コピーモード時は最新の見積№をセットしておく
+  // 追加、コピーモード時は最新の見積№をセット
   if (Mode='Add') or (Mode='Cpy') then
     DataModule4.CDS_IH001_MTH.FieldByName('MHNO').AsString:=DataModule4.MHTNO().MHNO;
 
-  // 見積依頼日に入力日をセットしておく
-  DataModule4.CDS_IH001_MTH.FieldByName('MHIRDT').AsString :=DateToStr(Date);
+  // 追加モード時は見積依頼日に入力日をセット
+  if (Mode='Add') then
+    DataModule4.CDS_IH001_MTH.FieldByName('MHIRDT').AsString :=DateToStr(Date);
 end;
 
 {===============================================================================
@@ -176,9 +170,7 @@ begin
     // 非表示チェック
   if (Button2.Enabled=false)or(Button2.Visible=false) then abort;
 
-//  Close;              // 画面終了
-
-  with DataModule4 do // 使用したCDSとQryを終了
+  with DataModule4 do   // 使用したCDSとQryを終了
   begin
     CDS_IH001_MTH.Close;
     CDS_IH001_MTM.Close;
@@ -218,7 +210,7 @@ begin
   qry.SQL.Add(' where tntncd=:cd');
   qry.SQL.Add('and tnstkb <> ''D'' ');
   qry.SQL.Add('');
-  qry.ParamByName('cd').AsInteger:= EdtMHTNCD.Field.AsInteger;
+  qry.ParamByName('cd').AsInteger:= EdtMHTNCD.Field.AsInteger; // 未入力（空白）は0に自動変換される便利
   qry.Open();
 
   if qry.IsEmpty then EdtMHTNCD.Field.AsString := '';  // 有効なTNCD以外なら入力フォームをクリア
@@ -229,7 +221,7 @@ begin
 end;
 
 {===============================================================================
-単価Exit時のイベント
+単価Exit時のイベント（数量*単価）
 ===============================================================================}
 procedure TIH001.EdtMTTNKAExit(Sender: TObject);
 begin
@@ -239,7 +231,7 @@ begin
 end;
 
 {===============================================================================
-単価Exit時のイベント
+単価Exit時のイベント（数量*単価）
 ===============================================================================}
 procedure TIH001.EdtMTSRYOExit(Sender: TObject);
 begin
@@ -249,7 +241,7 @@ begin
 end;
 
 {===============================================================================
-DBCtrlGridイベント
+DBCtrlGridEnter時のイベント
 ===============================================================================}
 procedure TIH001.DBCtrlGrid1Enter(Sender: TObject);
 begin
@@ -257,7 +249,7 @@ begin
 end;
 
 {===============================================================================
-DBCtrlGridイベント
+DBCtrlGridExit時のイベント
 ===============================================================================}
 procedure TIH001.DBCtrlGrid1Exit(Sender: TObject);
 var
@@ -292,24 +284,28 @@ begin
     cds2.First;                         // 最初のレコードに移動
     cds2.EnableControls;                // active画面遷移再開する
 
-    DataModule4.CDS_IH001_MTM.Post; // DBCtrlGridにカーソルinでCDS MTMFLP確定させる
+    DataModule4.CDS_IH001_MTM.Post;     // DBCtrlGridにカーソルinでCDS MTMFLP確定させる
    end;
 end;
 
-//ショートカット F6
+{===============================================================================
+ショートカット F6　継承時の削除画面でF6キー無効化にしたかった
+===============================================================================}
 procedure TIH001.F6Execute(Sender: TObject);
 begin
 
-  if Button1.Enabled = false  then exit;//ボタン押せない時は処理しない
+  if Button1.Enabled = false  then exit;// ボタン1が押せない時は終了する
 
-  Button1.SetFocus;
+    Button1.SetFocus;                   // ボタン1へフォーカスセット
 
-  if Button1.Focused = true then
-     Button1Click(Sender);
+  if Button1.Focused = true then        // フォーカスセットできた時は
+     Button1Click(Sender);              // ボタン1クリックイベント発火
 
 end;
 
-// 担当者マスタ検索
+{===============================================================================
+ 担当者マスタ検索処理（ダブルクリックイベント）
+===============================================================================}
 procedure TIH001.EdtTNCDDblClick(Sender: TObject);
 Var
   frm : TForm;
@@ -328,7 +324,7 @@ begin
   begin
     // 選択時、フィールドに値をセット  なぜ プロパティSltTNCD を使っている？
     (Sender as TDBEditUNIC).Field.AsString :=(frm as TIH004MS).SltTNCD;
-    // TABキー押したようにカーソルを次へ動かす指示？
+    // TABキー押したようにカーソルを次へ動かす指示
     SendMessage(Handle, WM_NEXTDLGCTL, 0, 0);
   end;
   frm.Release;
@@ -548,7 +544,7 @@ ClientDataSetのイベントに設定するイベント
 ===============================================================================}
 procedure TIH001.BeforeScroll(DataSet: TDataSet);
 begin
-  if PageTopFrm1.EdtMode.Text <> '追加' then
+  if PageTopFrm1.EdtMode.Text <> '追加' then  // Add時除外理由->スタックオーバーフロー回避のため
   begin
   Dataset.Edit;
 
