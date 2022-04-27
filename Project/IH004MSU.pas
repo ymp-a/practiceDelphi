@@ -28,25 +28,39 @@ implementation
 
 {$R *.dfm}
 
-// 選択ボタンをタップ
+{*******************************************************************************
+ 目的:選択ボタンをタップ時の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TIH004MS.Button2Click(Sender: TObject);
 begin
-  //  inherited;
+  //  inherited; //Button2Clickの処理が異なるため継承してはいけない
   DBGrid1.SetFocus;
   rstTNCD := DBGrid1.DataSource.DataSet.FieldByName('TNTNCD').AsString;
   ModalResult := mrOk;
 end;
 
-// 選択行をダブルクリック
+
+{*******************************************************************************
+ 目的:選択行をダブルクリックした時の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TIH004MS.DBGrid1DblClick(Sender: TObject);
 begin
-  inherited;
+//  inherited; // 継承元にないので記載する意味もないはず
 
   rstTNCD := DBGrid1.DataSource.DataSet.FieldByName('TNTNCD').AsString;
   ModalResult := mrOk;
 
 end;
 
+{*******************************************************************************
+ 目的:GetTNCD関数の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
 function TIH004MS.GetTNCD: string;
 begin
   Result := rstTNCD;
