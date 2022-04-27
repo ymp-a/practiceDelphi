@@ -98,7 +98,7 @@ begin
       SaveCursor := Screen.Cursor;      //現マウスポインタを退避
       Screen.Cursor := crHourGlass;     //砂時計に変更
 
-     Button1Click(self);                // CDS、DBGrid1データオープン
+     Button1Click(self);                // CDS、DBGrid1データオープン(最新情報に更新)
      if Active then                     // CDSでしかPacketRecordsは利用できない
       begin
         Refresh;                        // CDS_IH002データを最新化
@@ -164,7 +164,6 @@ procedure TIH002.Button2Click(Sender: TObject);
 begin
   inherited;
   ShwNextFrm('Add');
-  Button1Click(Sender); // 最新情報に更新
 end;
 
 {*******************************************************************************
@@ -176,7 +175,6 @@ procedure TIH002.Button3Click(Sender: TObject);
 begin
   inherited;
   ShwNextFrm('Chg');
-  Button1Click(Sender); // 最新情報に更新
 end;
 
 {*******************************************************************************
@@ -194,7 +192,6 @@ begin
     Exit;
     end;
   ShwNextFrm('Del');
-  Button1Click(Sender); // 最新情報に更新
 end;
 
 {*******************************************************************************
@@ -206,7 +203,6 @@ procedure TIH002.Button7Click(Sender: TObject);
 begin
   inherited;
   ShwNextFrm('Cpy');
-  Button1Click(Sender); // 最新情報に更新
 end;
 
 {*******************************************************************************
