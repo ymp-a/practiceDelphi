@@ -86,18 +86,21 @@ inherited IH004: TIH004
           Expanded = False
           FieldName = 'TNNAME'
           Title.Caption = #25285#24403#32773#21517
+          Width = 64
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'TNKGKB'
           Title.Caption = #27177#38480
+          Width = 64
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'TNSTKB'
           Title.Caption = #29366#24907
+          Width = 64
           Visible = True
         end>
     end

@@ -99,14 +99,12 @@ procedure TIH004.Button2Click(Sender: TObject);
 begin
   inherited;
   ShwNextFrm('Add');
-  Button1Click(Sender); // 最新情報に更新
 end;
 
 procedure TIH004.Button3Click(Sender: TObject);
 begin
   inherited;
   ShwNextFrm('Chg');
-  Button1Click(Sender); // 最新情報に更新
 end;
 
 procedure TIH004.Button4Click(Sender: TObject);
@@ -119,7 +117,6 @@ begin
     Exit;
     end;
   ShwNextFrm('Del');
-  Button1Click(Sender); // 最新情報に更新
 end;
 
 procedure TIH004.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -164,7 +161,7 @@ end;
 procedure TIH004.FormShow(Sender: TObject);
 begin
   inherited;
-  Button1Click(Self);
+  Button1Click(Sender);
   EdtTNCD.SetFocus;
 end;
 
@@ -202,15 +199,13 @@ begin
     //再検索
     if mode<>'Dsp' then
     begin
-      SaveCursor := Screen.Cursor;      //現マウスポインタを退避
-      Screen.Cursor := crHourGlass;     //砂時計に変更
+      SaveCursor := Screen.Cursor;      // 現マウスポインタを退避
+      Screen.Cursor := crHourGlass;     // 砂時計に変更
 
-      if Active then
-        Refresh; // Qryインスタンスの解放？
-
-     if Active then                   // CDSでしかPacketRecordsは利用できない
+     Button1Click(self);                // 最新情報に更新(本来はデータオープンするだけ)
+     if Active then                     // CDSでしかPacketRecordsは利用できない
       begin
-        Refresh;
+        Refresh;                        // CDS_IH002データを最新化
         if not IsEmpty then
         begin
           if rn<=0 then
