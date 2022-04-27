@@ -22,7 +22,7 @@ type
     chkSTKB: TCheckBox;
     EdtKGKB: TDBEditUNIC;
     procedure FormShow(Sender: TObject);         // 画面表示の処理
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);  // 画面終了の処理
   private
     { Private 宣言 }
     procedure tset();                            // 更新時ヘッダー設定
@@ -50,7 +50,7 @@ implementation
 uses DM2, Utilybs, functions;
 
 {===============================================================================
-画面展開後に設定するイベント
+画面展開時に設定するイベント
 ===============================================================================}
 procedure TIH003.FormShow(Sender: TObject);
 begin
@@ -83,24 +83,24 @@ begin
       CDS_IH003.Edit;              // CDS編集モード
 
       // 権限
-      if StrToIntDef(EdtKGKB.TEXT,-1)-1>=0 then
+      if StrToIntDef(EdtKGKB.TEXT,-1)-1>=0 then // (EdtKGKB.TEXTがInt変換できなければ-1を返す)-1 > 0 を判断する
       begin
         case StrToIntDef(EdtKGKB.TEXT,0) of
-          1: CmbKGNM.ItemIndex:=0;        // 一般
-          2: CmbKGNM.ItemIndex:=1;        // 業務管理者
-          5: CmbKGNM.ItemIndex:=2;        // システム管理者
+          1: CmbKGNM.ItemIndex:=0;              // 一般
+          2: CmbKGNM.ItemIndex:=1;              // 業務管理者
+          5: CmbKGNM.ItemIndex:=2;              // システム管理者
         end;
       end;
 
-      EdtPASS.Text:= GetDecPass;          // パスワードの処理（復号後の平文PASSを持ってくる）
+      EdtPASS.Text:= GetDecPass;                // パスワードの処理（復号後の平文PASSを持ってくる）
 
-      // 検索非表示（状態がDの時はチェックあり）
+      // STKBがDの時は削除ボックスにチェックオン
       if DataModule2.CDS_IH003.FieldByName('TNSTKB').Asstring='D' then
         chkSTKB.Checked:=true
       else
         chkSTKB.Checked:=false;
 
-      except on e:Exception do            // 例外処理
+      except on e:Exception do                  // 例外処理
       begin
         MessageDlg(E.Message, mtError, [mbOK], 0);
         self.close;
@@ -108,15 +108,16 @@ begin
       end;
 
     end; // tryここまで
-
-
   end; // withここまで
 end;
 
+{===============================================================================
+画面終了時に設定するイベント
+===============================================================================}
 procedure TIH003.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   inherited;
-  with DataModule2 do // 担当者マスタで使用したDMの終了
+  with DataModule2 do // 担当者マスタで使用したDMのQry,CDSの終了
   begin
     FDQryGene.Close;
     FDQryIH003.Close;
@@ -134,18 +135,18 @@ begin
   inherited;
     with DataModule2 do
     begin
-      // 編集用に1レコード追加している
-      CDS_IH003.Close;              // CDS終了
+      // 編集用に1レコード追加する処理↓以下
+      CDS_IH003.Close;                       // CDS終了
       FDQryIH003.Close;                      // Qry終了
       FDQryIH003.SQL.Clear;                  // SQL初期化
       FDQryIH003.SQL.add(' SELECT TOP 1 * ');
       FDQryIH003.SQL.add(' FROM TNMMSP ');   // 先頭の1レコードを抽出
 
-      CDS_IH003.Open;               // CDS開始
-      CDS_IH003.EmptyDataSet;       // CDS抽出レコードを空にする
-      CDS_IH003.Append;             // CDS追加モード 最後の行に+1してるイメージ
+      CDS_IH003.Open;                        // CDS開始
+      CDS_IH003.EmptyDataSet;                // CDS抽出レコードを空にする
+      CDS_IH003.Append;                      // 最終レコード行に+1追加してるイメージ
       try
-        InitDataSet(CDS_IH003);     // detasetの初期化、0やNULLなど適切な空の表記にしている
+        InitDataSet(CDS_IH003);              // detasetの初期化、0やNULLなど適切な空の表記にしている
       except
       end;
     end;
@@ -159,10 +160,6 @@ end;
 procedure TIH003.InzChgMode;
 begin
   inherited;
-//  pNo:=DataModule2.CDS_IH002.FieldByName('mhno').Asinteger;
-
-//  ChgReadOnly(EdtMHNO,true);         // TNCDを読込専用にするかの判別処理
-
 end;
 
 {*******************************************************************************
@@ -173,14 +170,6 @@ end;
 procedure TIH003.InzDelMode;
 begin
   inherited;
-//  EdtMode.Text := '削除';
-
-//  DataOpen;                // 照会データを元に1レコードSQL出力する
-
-//  Panel1.Enabled := False; // パネル1の範囲を入力不可にする
-
-//  FldChange(Panel1);       //一括でEdit,MemoのColorをBtnFaceに変更。入力コンポーネントの色を灰色にする。
-
 end;
 
 {===============================================================================
@@ -250,7 +239,7 @@ begin
 
   end; // tryここまで
 
-   Close;                  // 画面終了
+  Close;                  // 画面終了
 
 end;
 
@@ -261,10 +250,10 @@ procedure TIH003.DbChenge;
 begin
   inherited;
 
-  with  DataModule2.CDS_IH003 do                    // 紙商LiteVerの変更モード
+  with  DataModule2.CDS_IH003 do                             // 紙商LiteVerの変更モード
   begin
     // 変更トランザクション開始（必ずコミットかロールバックすること）
-    dmUtilYbs.FDConnection1.StartTransaction;
+    dmUtilYbs.FDConnection1.StartTransaction;                // トランザクション処理開始（必ずコミットかロールバックすること）
     try
 
       // 権限
@@ -292,8 +281,8 @@ begin
       FieldByName('TNUPTM').AsDateTime:=Time;
       FieldByName('TNUPUS').AsString := dmUtilYbs.sUserName; // 作成ユーザー
 
+      Post;                                                  // CDSセット内容を確定
       // データベース更新
-      Post;
       if ApplyUpdates(0) >  0 then                           // エラーの場合は中断
       begin
         Abort;
@@ -308,16 +297,16 @@ begin
       except                                                 // 例外処理
       on e:Exception do
       begin
-        dmUtilYbs.FDConnection1.Rollback;                    //エラー時はロールバック
-        MessageDlg(E.Message, mtError, [mbOK], 0);
+        dmUtilYbs.FDConnection1.Rollback;                    // エラー時はロールバック
+        MessageDlg(E.Message, mtError, [mbOK], 0);           // エラーダイアログ表示して中断
         Abort;
       end;
 
-    end;
+    end; // tryここまで
 
-  end;
+  end; // DataModule2.CDS_IH003ここまで
 
-  Close;
+  Close;                                                     // 画面終了
 
 end;
 
@@ -330,7 +319,7 @@ begin
 
   with  DataModule2.CDS_IH003 do
   begin
-    dmUtilYbs.FDConnection1.StartTransaction;                // トランザクション処理開始
+    dmUtilYbs.FDConnection1.StartTransaction;                // トランザクション処理開始（必ずコミットかロールバックすること）
     try
       // 削除
       FieldByName('TNSTKB').Asstring:='D';
@@ -342,8 +331,9 @@ begin
       FieldByName('TNUPTM').AsDateTime:=Time;
       FieldByName('TNUPUS').AsString := dmUtilYbs.sUserName; // 作成ユーザー
 
+
+      Post;                                                  // CDSセット内容を確定
       // データベース更新
-      Post;
       if ApplyUpdates(0) >  0 then                           // エラーの場合は中断
       begin
         Abort;
@@ -361,11 +351,11 @@ begin
         Abort;
       end;
 
-    end;
+    end; // tryここまで
 
-  end;
+  end; // DataModule2.CDS_IH003ここまで
 
-  Close;
+  Close;                                                     // 画面終了
 
 end;
 
@@ -400,8 +390,7 @@ begin
     FieldByName('TNCRTM').AsDateTime:=Time;
     FieldByName('TNCRUS').AsString := dmUtilYbs.sUserName; // 作成ユーザー
 
-
-    // データベース更新
+    // CDSセット内容を確定
     Post;
   end;
 end;
@@ -419,28 +408,11 @@ begin
 
   if mode='Del' then
   begin
-
-    //得意先があったら削除禁止
-{    with DataModule3.FDQryGene do
-    begin
-      Close;
-      SQL.Clear;
-      SQL.Add(' SELECT TOTKCD FROM TOKMSP WHERE TOTNCD=:TNCD AND TOJTCD='''' ');
-      ParamByName('TNCD').AsString:=EdtTNCD.text;
-      Open;
-      if not IsEmpty then
-      begin
-        MessageDlg('紐づく得意先(CD:'+FieldByName('TOTKCD').AsString+'など)があるため削除できません', mtError, [mbOK], 0);
-        Exit;
-      end;
-    end;
-}
     Result:=true;
     exit;
   end;
 
 
-//  EdtBKCD.Color := clWindow;
 
   ChkBlank(EdtTNCD,'担当者CD');
 
@@ -461,16 +433,6 @@ begin
   ChkBlank(EdtPASS,'パスワード');
 
   ChkBlank(CmbKGNM,'権限区分');
-
-//  ChkBlank(EdtBKCD,'部課CD');
-
-//  if BKMMS(EdtBKCD.Field.AsString).Exists=false then
-//  begin
-//    MessageDlg('部課CDが不正です。',mterror,[mbok],0);
-//    EdtBKCD.SetFocus;
-//    EdtBKCD.Color:=clERR;
-//    exit;
-//  end;
 
   Result :=True;
 
