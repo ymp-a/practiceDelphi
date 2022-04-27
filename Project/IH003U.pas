@@ -22,7 +22,7 @@ type
     chkSTKB: TCheckBox;
     EdtKGKB: TDBEditUNIC;
     procedure FormShow(Sender: TObject);         // 画面表示の処理
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);  // 画面終了の処理
+    procedure FormClose(Sender: TObject; var Action: TCloseAction); // 画面終了の処理
   private
     { Private 宣言 }
     procedure tset();                            // 更新時ヘッダー設定

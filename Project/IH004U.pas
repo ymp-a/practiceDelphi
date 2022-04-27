@@ -14,18 +14,18 @@ type
     Label1: TLabel;
     EdtNAME: TEdit;
     Label2: TLabel;
-    procedure FormShow(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);          // 画面表示の処理
+    procedure FormClose(Sender: TObject; var Action: TCloseAction); // 画面終了の処理
+    procedure Button1Click(Sender: TObject);      // 検索ボタン
+    procedure Button2Click(Sender: TObject);      // 追加ボタン
+    procedure Button3Click(Sender: TObject);      // 変更ボタン
+    procedure Button4Click(Sender: TObject);      // 削除ボタン
     procedure DBGrid1TitleClick(Column: TColumn); // Gridソート機能
   private
     { Private 宣言 }
   public
     { Public 宣言 }
-    procedure ShwNextFrm(mode: string);      // モード管理
+    procedure ShwNextFrm(mode: string);           // モード管理
   end;
 
 var
@@ -46,67 +46,83 @@ procedure TIH004.Button1Click(Sender: TObject);
 begin
   inherited;
 
-  DBGrid1.DataSource.DataSet.Close;    // DBGrid1の初期化
+  DBGrid1.DataSource.DataSet.Close;                 // DBGrid1の初期化
 
   begin
-    DataModule2.CDS_IH004.Close; // CDSを初期化
+    DataModule2.CDS_IH004.Close;                    // CDSを初期化
 
     with DataModule2.FDQryIH004 do
     begin
-      Close; // FDQueryLogin初期化
-      SQL.Clear;         // SQL文初期化
-//      Params.Clear;
+      Close;                                        // FDQueryLogin初期化
+      SQL.Clear;                                    // SQL文初期化
+//      Params.Clear; これはいるのか調査？
 
       // ここからSQL文↓
       SQL.Add(' SELECT * FROM TNMMSP  ');
-      SQL.Add(' where 1=1 ');
-      if EdtTNCD.Text<>'' then // 担当者CD入力時の処理
+      SQL.Add(' where 1=1 ');                       // 1=1でWHEREを通し以下条件はANDのみで続きが書ける
+      if EdtTNCD.Text<>'' then                      // 担当者CD入力時の処理
       begin
         SQL.Add(' AND TNTNCD = :TNCD ');
         ParamByName('TNCD').AsString:=EdtTNCD.Text; // 入力した担当者CDを'TNCD'に代入する
-//        andFlg:=true;                       // 入力時フラグオン
+//        andFlg:=true;                             // 入力時フラグオン
       end;
 
-      if EdtNAME.Text<>'' then                    // 担当者名入力時の処理
+      if EdtNAME.Text<>'' then                      // 担当者名入力時の処理
       begin
-        SQL.Add(' AND TNNAME LIKE :NAME ');                      // TNNAME LIKEに%入力名%をSQLStringに反映する
+        SQL.Add(' AND TNNAME LIKE :NAME ');         // TNNAME LIKEに%入力名%をSQLStringに反映する
         ParamByName('NAME').AsWideString :='%' +EdtNAME.Text+ '%'; // 部分一致の入力名を'NAME'へ代入する
-//        andFlg:=true;                                        // 入力時フラグオン
+//        andFlg:=true;                             // 入力時フラグオン
       end;
 
-      SQL.Add(' ORDER BY TNTNCD ');     // 昇順
+      SQL.Add(' ORDER BY TNTNCD ');                 // 昇順
 
-      Open();                 // SQL文実行
-    end;
+      Open();                                       // SQL文実行
+//    end;
 
-    DataModule2.CDS_IH004.Open(); // CDSを開く
+    DataModule2.CDS_IH004.Open();                   // CDSを開く
 
 
-    if DataModule2.CDS_IH004.Eof and DataModule2.CDS_IH004.Bof then // 対象データが存在しない場合、データセットを閉じて終了
-    begin
-      DataModule2.CDS_IH004.Active := False;
-      raise Exception.Create('対象データが存在しません');
-    end;
+//      if DataModule2.CDS_IH004.Eof and DataModule2.CDS_IH004.Bof then
+      if isEmpty then                               // データセットがなければ終了、上記も同義
+      begin
+        DataModule2.CDS_IH004.Active := False;
+        raise Exception.Create('対象データが存在しません');
+      end;
 
-  end;// CDSここまで
+    end; // DataModule2.FDQryIH004ここまで
+  end;
 
-  DBGrid1.DataSource.DataSet.Open;
+  DBGrid1.DataSource.DataSet.Open;                  // DBGrid1の展開
 
 end;// OpenTNDataここまで
 
-
+{*******************************************************************************
+ 目的:追加ボタン押下時の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TIH004.Button2Click(Sender: TObject);
 begin
   inherited;
   ShwNextFrm('Add');
 end;
 
+{*******************************************************************************
+ 目的:変更ボタン押下時の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TIH004.Button3Click(Sender: TObject);
 begin
   inherited;
   ShwNextFrm('Chg');
 end;
 
+{*******************************************************************************
+ 目的:削除ボタン押下時の処理
+ 引数:
+ 戻値:
+*******************************************************************************}
 procedure TIH004.Button4Click(Sender: TObject);
 begin
   inherited;
@@ -119,6 +135,9 @@ begin
   ShwNextFrm('Del');
 end;
 
+{===============================================================================
+画面終了時に設定するイベント
+===============================================================================}
 procedure TIH004.FormClose(Sender: TObject; var Action: TCloseAction);
 var
   frm:TForm;
@@ -150,7 +169,9 @@ begin
         if IndexName = 'aIndex' then DeleteIndex('aIndex');
       end;
     end;
+
   inherited;
+  // 使用したDM2のCDS、Qryを終了
   with DataModule2 do
   begin
     FDQryIH004.Close;
@@ -158,6 +179,9 @@ begin
   end;
 end;
 
+{===============================================================================
+画面展開時に設定するイベント
+===============================================================================}
 procedure TIH004.FormShow(Sender: TObject);
 begin
   inherited;
