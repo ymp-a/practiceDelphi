@@ -277,6 +277,10 @@ object DataModule2: TDataModule2
       Origin = 'TNJTCD'
       Size = 1
     end
+    object CDS_IH004TNKGNM: TStringField
+      FieldKind = fkInternalCalc
+      FieldName = 'TNKGNM'
+    end
   end
   object DataSrc_IH004: TDataSource
     DataSet = CDS_IH004

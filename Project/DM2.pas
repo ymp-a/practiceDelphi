@@ -101,6 +101,7 @@ type
     FDQryIH003: TFDQuery;
     FDQryGene: TFDQuery;
     DataSource2: TDataSource;
+    CDS_IH004TNKGNM: TStringField;
   //’S“–ŽÒm
   type dTNM = Record
     Exists :Boolean;

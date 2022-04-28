@@ -43,6 +43,8 @@ procedure TIH004.Button1Click(Sender: TObject);
  引数:
  戻値:
 *******************************************************************************}
+Var
+  I:Integer;
 begin
   inherited;
 
@@ -90,6 +92,46 @@ begin
       end;
 
     end; // DataModule2.FDQryIH004ここまで
+
+
+
+    // 権限名の設定
+    DataModule2.CDS_IH004.DisableControls;               // 画面ちらつき防止
+    DataModule2.CDS_IH004.First;                         // 最初のレコードに移動
+    DBGrid1.DataSource.DataSet.Edit;
+
+    for I := 0 to DataModule2.CDS_IH004.RecordCount-1 do // cds2全レコードの'D'チェック
+
+      case DataModule2.CDS_IH004.FieldByName('TNKGKB').AsInteger of
+    1:begin
+         DataModule2.CDS_IH004.FieldByName('TNKGNM').AsString:='一般';
+         DBGrid1.DataSource.DataSet.Post;
+         DataModule2.CDS_IH004.Next;                      // レコードを一つ進める
+         DBGrid1.DataSource.DataSet.Edit;
+      end;
+    2:begin
+        DataModule2.CDS_IH004.FieldByName('TNKGNM').AsString:='業務管理者';
+        DBGrid1.DataSource.DataSet.Post;
+        DataModule2.CDS_IH004.Next;                      // レコードを一つ進める
+        DBGrid1.DataSource.DataSet.Edit;
+      end;
+    5:begin
+        DataModule2.CDS_IH004.FieldByName('TNKGNM').AsString:='システム管理者';
+        DBGrid1.DataSource.DataSet.Post;
+        DataModule2.CDS_IH004.Next;                      // レコードを一つ進める
+        DBGrid1.DataSource.DataSet.Edit;
+      end;
+      else begin
+          DataModule2.CDS_IH004.FieldByName('TNKGNM').AsString:='それ以外です。';
+      end;
+
+
+    end;
+    DataModule2.CDS_IH004.First;                         // 最初のレコードに移動
+    DataModule2.CDS_IH004.EnableControls;                // active画面遷移再開する
+
+
+
   end;
 
   DBGrid1.DataSource.DataSet.Open;                  // DBGrid1の展開

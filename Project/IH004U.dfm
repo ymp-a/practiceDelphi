@@ -102,6 +102,12 @@ inherited IH004: TIH004
           Title.Caption = #29366#24907
           Width = 64
           Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'TNKGNM'
+          Title.Caption = #27177#38480
+          Visible = True
         end>
     end
   end
