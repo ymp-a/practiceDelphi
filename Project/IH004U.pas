@@ -130,8 +130,6 @@ begin
     DataModule2.CDS_IH004.First;                         // 最初のレコードに移動
     DataModule2.CDS_IH004.EnableControls;                // active画面遷移再開する
 
-
-
   end;
 
   DBGrid1.DataSource.DataSet.Open;                  // DBGrid1の展開

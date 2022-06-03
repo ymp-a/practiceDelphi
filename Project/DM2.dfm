@@ -1,6 +1,6 @@
 object DataModule2: TDataModule2
   OldCreateOrder = False
-  Height = 431
+  Height = 489
   Width = 463
   object FDQryTNMMSP: TFDQuery
     Connection = dmUtilYbs.FDConnection1
@@ -111,8 +111,8 @@ object DataModule2: TDataModule2
     SQL.Strings = (
       'SELECT *'
       'FROM TNMMSP')
-    Left = 64
-    Top = 152
+    Left = 56
+    Top = 128
     object FDQry1TNTNCD: TIntegerField
       FieldName = 'TNTNCD'
       Required = True
@@ -176,8 +176,8 @@ object DataModule2: TDataModule2
   end
   object DataSrc1: TDataSource
     DataSet = FDQry1
-    Left = 152
-    Top = 152
+    Left = 136
+    Top = 128
   end
   object FDQryIH004: TFDQuery
     Connection = dmUtilYbs.FDConnection1
@@ -403,5 +403,152 @@ object DataModule2: TDataModule2
     DataSet = FDQryGene
     Left = 296
     Top = 352
+  end
+  object FDQryIH005: TFDQuery
+    Connection = dmUtilYbs.FDConnection1
+    SQL.Strings = (
+      'select MH.* ,MM.*'
+      'from MTMFLP AS MM'
+      'LEFT JOIN MTHFLP AS MH'
+      'ON MM.MTNO = MH.MHNO'
+      'WHERE MHTKCD=001')
+    Left = 56
+    Top = 408
+  end
+  object DataSetProIH005: TDataSetProvider
+    DataSet = FDQryIH005
+    Left = 138
+    Top = 408
+  end
+  object CDS_IH005: TClientDataSet
+    Active = True
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'DataSetProIH005'
+    Left = 221
+    Top = 408
+    object CDS_IH005MHNO: TIntegerField
+      FieldName = 'MHNO'
+      Origin = 'MHNO'
+    end
+    object CDS_IH005MHIRDT: TDateField
+      FieldName = 'MHIRDT'
+      Origin = 'MHIRDT'
+    end
+    object CDS_IH005MHKGDT: TDateField
+      FieldName = 'MHKGDT'
+      Origin = 'MHKGDT'
+    end
+    object CDS_IH005MHTKCD: TStringField
+      FieldName = 'MHTKCD'
+      Origin = 'MHTKCD'
+      Size = 5
+    end
+    object CDS_IH005MHTKNM: TStringField
+      FieldName = 'MHTKNM'
+      Origin = 'MHTKNM'
+      Size = 100
+    end
+    object CDS_IH005MHGSRO: TIntegerField
+      FieldName = 'MHGSRO'
+      Origin = 'MHGSRO'
+    end
+    object CDS_IH005MHGKIN: TIntegerField
+      FieldName = 'MHGKIN'
+      Origin = 'MHGKIN'
+    end
+    object CDS_IH005MHTNCD: TIntegerField
+      FieldName = 'MHTNCD'
+      Origin = 'MHTNCD'
+    end
+    object CDS_IH005MHBIKO: TStringField
+      FieldName = 'MHBIKO'
+      Origin = 'MHBIKO'
+      Size = 100
+    end
+    object CDS_IH005MHJTCD: TStringField
+      FieldName = 'MHJTCD'
+      Origin = 'MHJTCD'
+      Size = 1
+    end
+    object CDS_IH005MTNO: TIntegerField
+      FieldName = 'MTNO'
+      Origin = 'MTNO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object CDS_IH005MTGNO: TIntegerField
+      FieldName = 'MTGNO'
+      Origin = 'MTGNO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object CDS_IH005MTSHCD: TStringField
+      FieldName = 'MTSHCD'
+      Origin = 'MTSHCD'
+      Size = 7
+    end
+    object CDS_IH005MTSHNM: TStringField
+      FieldName = 'MTSHNM'
+      Origin = 'MTSHNM'
+      Size = 100
+    end
+    object CDS_IH005MTTNKA: TBCDField
+      FieldName = 'MTTNKA'
+      Origin = 'MTTNKA'
+      Precision = 10
+      Size = 2
+    end
+    object CDS_IH005MTSRYO: TIntegerField
+      FieldName = 'MTSRYO'
+      Origin = 'MTSRYO'
+    end
+    object CDS_IH005MTKIN: TIntegerField
+      FieldName = 'MTKIN'
+      Origin = 'MTKIN'
+    end
+    object CDS_IH005MTBIKO: TStringField
+      FieldName = 'MTBIKO'
+      Origin = 'MTBIKO'
+      Size = 100
+    end
+    object CDS_IH005MTJTCD: TStringField
+      FieldName = 'MTJTCD'
+      Origin = 'MTJTCD'
+      Size = 1
+    end
+  end
+  object DataSrc_IH005: TDataSource
+    DataSet = CDS_IH005
+    Left = 304
+    Top = 408
+  end
+  object frxDBDatasetIH005: TfrxDBDataset
+    UserName = 'frxDBDatasetIH005'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'MHNO=MHNO'
+      'MHIRDT=MHIRDT'
+      'MHKGDT=MHKGDT'
+      'MHTKCD=MHTKCD'
+      'MHTKNM=MHTKNM'
+      'MHGSRO=MHGSRO'
+      'MHGKIN=MHGKIN'
+      'MHTNCD=MHTNCD'
+      'MHBIKO=MHBIKO'
+      'MHJTCD=MHJTCD'
+      'MTNO=MTNO'
+      'MTGNO=MTGNO'
+      'MTSHCD=MTSHCD'
+      'MTSHNM=MTSHNM'
+      'MTTNKA=MTTNKA'
+      'MTSRYO=MTSRYO'
+      'MTKIN=MTKIN'
+      'MTBIKO=MTBIKO'
+      'MTJTCD=MTJTCD')
+    DataSet = CDS_IH005
+    BCDToCurrency = False
+    Left = 392
+    Top = 408
   end
 end

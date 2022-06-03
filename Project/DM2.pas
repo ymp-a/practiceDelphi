@@ -9,7 +9,7 @@ uses
   FireDAC.VCLUI.Wait, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf,
   FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   FireDAC.Comp.UI, FireDAC.Phys.ODBCBase, FireDAC.Phys.MSSQL, Datasnap.DBClient,
-  Datasnap.Provider,MidasLib;
+  Datasnap.Provider,MidasLib, frxClass, frxDBSet;
 
 type
   TDataModule2 = class(TDataModule)
@@ -102,6 +102,30 @@ type
     FDQryGene: TFDQuery;
     DataSource2: TDataSource;
     CDS_IH004TNKGNM: TStringField;
+    FDQryIH005: TFDQuery;
+    DataSetProIH005: TDataSetProvider;
+    CDS_IH005: TClientDataSet;
+    DataSrc_IH005: TDataSource;
+    frxDBDatasetIH005: TfrxDBDataset;
+    CDS_IH005MHNO: TIntegerField;
+    CDS_IH005MHIRDT: TDateField;
+    CDS_IH005MHKGDT: TDateField;
+    CDS_IH005MHTKCD: TStringField;
+    CDS_IH005MHTKNM: TStringField;
+    CDS_IH005MHGSRO: TIntegerField;
+    CDS_IH005MHGKIN: TIntegerField;
+    CDS_IH005MHTNCD: TIntegerField;
+    CDS_IH005MHBIKO: TStringField;
+    CDS_IH005MHJTCD: TStringField;
+    CDS_IH005MTNO: TIntegerField;
+    CDS_IH005MTGNO: TIntegerField;
+    CDS_IH005MTSHCD: TStringField;
+    CDS_IH005MTSHNM: TStringField;
+    CDS_IH005MTTNKA: TBCDField;
+    CDS_IH005MTSRYO: TIntegerField;
+    CDS_IH005MTKIN: TIntegerField;
+    CDS_IH005MTBIKO: TStringField;
+    CDS_IH005MTJTCD: TStringField;
   //’S“–ŽÒm
   type dTNM = Record
     Exists :Boolean;

@@ -44,7 +44,8 @@ uses
   IH002U in 'IH002U.pas' {IH002},
   IH004U in 'IH004U.pas' {IH004},
   IH003U in 'IH003U.pas' {IH003},
-  IH004MSU in 'IH004MSU.pas' {IH004MS};
+  IH004MSU in 'IH004MSU.pas' {IH004MS},
+  IH005U in 'IH005U.pas' {IH005};
 
 {$R *.res}
 
