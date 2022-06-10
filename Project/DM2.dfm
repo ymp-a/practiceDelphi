@@ -1,6 +1,6 @@
 object DataModule2: TDataModule2
   OldCreateOrder = False
-  Height = 489
+  Height = 599
   Width = 463
   object FDQryTNMMSP: TFDQuery
     Connection = dmUtilYbs.FDConnection1
@@ -407,11 +407,43 @@ object DataModule2: TDataModule2
   object FDQryIH005: TFDQuery
     Connection = dmUtilYbs.FDConnection1
     SQL.Strings = (
-      'select MH.* ,MM.*'
+      'select  DENSE_RANK() OVER(ORDER BY T.NewMTNO) AS NewMTNO,'
+      'T.MHNO,T.MHIRDT,T.MHTKNM'
+      'FROM'
+      '(select'
+      
+        '(case when (MTGNO > 3) and (MTGNO % 3 = 0) then (RANK() OVER(ORD' +
+        'ER BY MHIRDT,MHTKCD))+(MTGNO/3)'
+      ' else  '
+      
+        '  (case when (MTGNO > 3) and (MTGNO % 3 = 2) then (RANK() OVER(O' +
+        'RDER BY MHIRDT,MHTKCD))+(MTGNO/3) '
+      ' else '
+      
+        '  (case when (MTGNO > 3) and (MTGNO % 3 = 1) then (RANK() OVER(O' +
+        'RDER BY MHIRDT,MHTKCD))+(MTGNO/3) '
+      ' else '
+      '  (RANK() OVER(ORDER BY MHIRDT,MHTKCD)) end)end)end) AS NewMTNO,'
+      ''
+      '(case when (MTGNO % 3 = 1) then 1 '
+      ' else'
+      '  (case when (MTGNO % 3 = 2) then 2 '
+      '   else '
+      '    (case when (MTGNO % 3 = 0) then 3 '
+      #9' else '
+      #9'  0 end) end) end) as NewGNO,'
+      ' '
+      ' MH.*,'
+      ' MM.*'
+      ''
       'from MTMFLP AS MM'
       'LEFT JOIN MTHFLP AS MH'
-      'ON MM.MTNO = MH.MHNO'
-      'WHERE MHTKCD=001')
+      'ON MM.MTNO = MH.MHNO) AS T'
+      ''
+      ''
+      'WHERE T.MHTKCD=003'
+      'GROUP BY T.NewMTNO,T.MHIRDT,T.MHNO,T.MHTKNM'
+      '--ORDER BY T.MHIRDT,T.MHTKCD')
     Left = 56
     Top = 408
   end
@@ -427,6 +459,11 @@ object DataModule2: TDataModule2
     ProviderName = 'DataSetProIH005'
     Left = 221
     Top = 408
+    object CDS_IH005NewMTNO: TLargeintField
+      FieldName = 'NewMTNO'
+      Origin = 'NewMTNO'
+      ReadOnly = True
+    end
     object CDS_IH005MHNO: TIntegerField
       FieldName = 'MHNO'
       Origin = 'MHNO'
@@ -435,87 +472,10 @@ object DataModule2: TDataModule2
       FieldName = 'MHIRDT'
       Origin = 'MHIRDT'
     end
-    object CDS_IH005MHKGDT: TDateField
-      FieldName = 'MHKGDT'
-      Origin = 'MHKGDT'
-    end
-    object CDS_IH005MHTKCD: TStringField
-      FieldName = 'MHTKCD'
-      Origin = 'MHTKCD'
-      Size = 5
-    end
     object CDS_IH005MHTKNM: TStringField
       FieldName = 'MHTKNM'
       Origin = 'MHTKNM'
       Size = 100
-    end
-    object CDS_IH005MHGSRO: TIntegerField
-      FieldName = 'MHGSRO'
-      Origin = 'MHGSRO'
-    end
-    object CDS_IH005MHGKIN: TIntegerField
-      FieldName = 'MHGKIN'
-      Origin = 'MHGKIN'
-    end
-    object CDS_IH005MHTNCD: TIntegerField
-      FieldName = 'MHTNCD'
-      Origin = 'MHTNCD'
-    end
-    object CDS_IH005MHBIKO: TStringField
-      FieldName = 'MHBIKO'
-      Origin = 'MHBIKO'
-      Size = 100
-    end
-    object CDS_IH005MHJTCD: TStringField
-      FieldName = 'MHJTCD'
-      Origin = 'MHJTCD'
-      Size = 1
-    end
-    object CDS_IH005MTNO: TIntegerField
-      FieldName = 'MTNO'
-      Origin = 'MTNO'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
-      Required = True
-    end
-    object CDS_IH005MTGNO: TIntegerField
-      FieldName = 'MTGNO'
-      Origin = 'MTGNO'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
-      Required = True
-    end
-    object CDS_IH005MTSHCD: TStringField
-      FieldName = 'MTSHCD'
-      Origin = 'MTSHCD'
-      Size = 7
-    end
-    object CDS_IH005MTSHNM: TStringField
-      FieldName = 'MTSHNM'
-      Origin = 'MTSHNM'
-      Size = 100
-    end
-    object CDS_IH005MTTNKA: TBCDField
-      FieldName = 'MTTNKA'
-      Origin = 'MTTNKA'
-      Precision = 10
-      Size = 2
-    end
-    object CDS_IH005MTSRYO: TIntegerField
-      FieldName = 'MTSRYO'
-      Origin = 'MTSRYO'
-    end
-    object CDS_IH005MTKIN: TIntegerField
-      FieldName = 'MTKIN'
-      Origin = 'MTKIN'
-    end
-    object CDS_IH005MTBIKO: TStringField
-      FieldName = 'MTBIKO'
-      Origin = 'MTBIKO'
-      Size = 100
-    end
-    object CDS_IH005MTJTCD: TStringField
-      FieldName = 'MTJTCD'
-      Origin = 'MTJTCD'
-      Size = 1
     end
   end
   object DataSrc_IH005: TDataSource
@@ -527,6 +487,27 @@ object DataModule2: TDataModule2
     UserName = 'frxDBDatasetIH005'
     CloseDataSource = False
     FieldAliases.Strings = (
+      'NewMTNO=NewMTNO'
+      'MHNO=MHNO'
+      'MHIRDT=MHIRDT'
+      'MHTKNM=MHTKNM')
+    DataSet = CDS_IH005
+    BCDToCurrency = False
+    Left = 392
+    Top = 408
+  end
+  object DataSrcIH005MS: TDataSource
+    DataSet = CDS_IH005MS
+    Left = 304
+    Top = 488
+  end
+  object frxDBDatasetIH005MS: TfrxDBDataset
+    UserName = 'frxDBDatasetIH005MS'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'NewMTNO=NewMTNO'
+      'NewMTNO_1=NewMTNO_1'
+      'NewGNO=NewGNO'
       'MHNO=MHNO'
       'MHIRDT=MHIRDT'
       'MHKGDT=MHKGDT'
@@ -546,9 +527,171 @@ object DataModule2: TDataModule2
       'MTKIN=MTKIN'
       'MTBIKO=MTBIKO'
       'MTJTCD=MTJTCD')
-    DataSet = CDS_IH005
+    DataSet = CDS_IH005MS
     BCDToCurrency = False
-    Left = 392
-    Top = 408
+    Left = 384
+    Top = 488
+  end
+  object FDQryIH005MS: TFDQuery
+    Connection = dmUtilYbs.FDConnection1
+    SQL.Strings = (
+      'select  DENSE_RANK() OVER(ORDER BY T.NewMTNO) AS NewMTNO,'
+      'T.*'
+      'FROM'
+      '(select'
+      
+        '(case when (MTGNO > 3) and (MTGNO % 3 = 0) then (RANK() OVER(ORD' +
+        'ER BY MHIRDT,MHTKCD))+(MTGNO/3)'
+      ' else  '
+      
+        '  (case when (MTGNO > 3) and (MTGNO % 3 = 2) then (RANK() OVER(O' +
+        'RDER BY MHIRDT,MHTKCD))+(MTGNO/3) '
+      ' else '
+      
+        '  (case when (MTGNO > 3) and (MTGNO % 3 = 1) then (RANK() OVER(O' +
+        'RDER BY MHIRDT,MHTKCD))+(MTGNO/3) '
+      ' else '
+      '  (RANK() OVER(ORDER BY MHIRDT,MHTKCD)) end)end)end) AS NewMTNO,'
+      ''
+      '(case when (MTGNO % 3 = 1) then 1 '
+      ' else'
+      '  (case when (MTGNO % 3 = 2) then 2 '
+      '   else '
+      '    (case when (MTGNO % 3 = 0) then 3 '
+      #9' else '
+      #9'  0 end) end) end) as NewGNO,'
+      ' '
+      ' MH.*,'
+      ' MM.*'
+      ''
+      'from MTMFLP AS MM'
+      'LEFT JOIN MTHFLP AS MH'
+      'ON MM.MTNO = MH.MHNO) AS T'
+      ''
+      ''
+      'WHERE T.MHTKCD=003'
+      '--GROUP BY T.NewMTNO,T.MHIRDT,T.MHNO,T.MHTKNM'
+      '--ORDER BY T.MHIRDT,T.MHTKCD')
+    Left = 56
+    Top = 488
+  end
+  object DataSetProIH005MS: TDataSetProvider
+    DataSet = FDQryIH005MS
+    Left = 138
+    Top = 488
+  end
+  object CDS_IH005MS: TClientDataSet
+    Active = True
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'DataSetProIH005MS'
+    Left = 221
+    Top = 488
+    object CDS_IH005MSNewMTNO: TLargeintField
+      FieldName = 'NewMTNO'
+      Origin = 'NewMTNO'
+      ReadOnly = True
+    end
+    object CDS_IH005MSNewMTNO_1: TLargeintField
+      FieldName = 'NewMTNO_1'
+      Origin = 'NewMTNO'
+      ReadOnly = True
+    end
+    object CDS_IH005MSNewGNO: TIntegerField
+      FieldName = 'NewGNO'
+      Origin = 'NewGNO'
+      ReadOnly = True
+      Required = True
+    end
+    object CDS_IH005MSMHNO: TIntegerField
+      FieldName = 'MHNO'
+      Origin = 'MHNO'
+    end
+    object CDS_IH005MSMHIRDT: TDateField
+      FieldName = 'MHIRDT'
+      Origin = 'MHIRDT'
+    end
+    object CDS_IH005MSMHKGDT: TDateField
+      FieldName = 'MHKGDT'
+      Origin = 'MHKGDT'
+    end
+    object CDS_IH005MSMHTKCD: TStringField
+      FieldName = 'MHTKCD'
+      Origin = 'MHTKCD'
+      Size = 5
+    end
+    object CDS_IH005MSMHTKNM: TStringField
+      FieldName = 'MHTKNM'
+      Origin = 'MHTKNM'
+      Size = 100
+    end
+    object CDS_IH005MSMHGSRO: TIntegerField
+      FieldName = 'MHGSRO'
+      Origin = 'MHGSRO'
+    end
+    object CDS_IH005MSMHGKIN: TIntegerField
+      FieldName = 'MHGKIN'
+      Origin = 'MHGKIN'
+    end
+    object CDS_IH005MSMHTNCD: TIntegerField
+      FieldName = 'MHTNCD'
+      Origin = 'MHTNCD'
+    end
+    object CDS_IH005MSMHBIKO: TStringField
+      FieldName = 'MHBIKO'
+      Origin = 'MHBIKO'
+      Size = 100
+    end
+    object CDS_IH005MSMHJTCD: TStringField
+      FieldName = 'MHJTCD'
+      Origin = 'MHJTCD'
+      Size = 1
+    end
+    object CDS_IH005MSMTNO: TIntegerField
+      FieldName = 'MTNO'
+      Origin = 'MTNO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object CDS_IH005MSMTGNO: TIntegerField
+      FieldName = 'MTGNO'
+      Origin = 'MTGNO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object CDS_IH005MSMTSHCD: TStringField
+      FieldName = 'MTSHCD'
+      Origin = 'MTSHCD'
+      Size = 7
+    end
+    object CDS_IH005MSMTSHNM: TStringField
+      FieldName = 'MTSHNM'
+      Origin = 'MTSHNM'
+      Size = 100
+    end
+    object CDS_IH005MSMTTNKA: TBCDField
+      FieldName = 'MTTNKA'
+      Origin = 'MTTNKA'
+      Precision = 10
+      Size = 2
+    end
+    object CDS_IH005MSMTSRYO: TIntegerField
+      FieldName = 'MTSRYO'
+      Origin = 'MTSRYO'
+    end
+    object CDS_IH005MSMTKIN: TIntegerField
+      FieldName = 'MTKIN'
+      Origin = 'MTKIN'
+    end
+    object CDS_IH005MSMTBIKO: TStringField
+      FieldName = 'MTBIKO'
+      Origin = 'MTBIKO'
+      Size = 100
+    end
+    object CDS_IH005MSMTJTCD: TStringField
+      FieldName = 'MTJTCD'
+      Origin = 'MTJTCD'
+      Size = 1
+    end
   end
 end

@@ -22,7 +22,10 @@ type
     EdtTRDTFR: TMaskEditDate;
     Label4: TLabel;
     EdtMHNO: TNumberEdit;
+    frxReport0: TfrxReport;
     frxReport1: TfrxReport;
+    frxReport2: TfrxReport;
+    frxReport3: TfrxReport;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure BtnPrtClick(Sender: TObject);
     procedure BtnPrvClick(Sender: TObject);
@@ -30,7 +33,7 @@ type
     { Private 宣言 }
     function LogicalChecOk:Boolean; //論理チェック
     procedure DataSetSQL;//印刷対象データ抽出
-    procedure MMPrv;virtual;     //納品書帳票プレビュー
+
   public
     { Public 宣言 }
   end;
@@ -53,6 +56,9 @@ begin
     CDS_IH005.Close;
     FDQryIH005.Close;
     FDQryIH005.SQL.Clear;
+    CDS_IH005MS.Close;
+    FDQryIH005MS.Close;
+    FDQryIH005MS.SQL.Clear;
   end;
 end;
 
@@ -142,6 +148,15 @@ begin
     frxReport1.PrintOptions.ShowDialog := True;
     frxReport1.ShowReport();
 
+
+{   //複数帳票を同時出力 重ならず
+    frxReport1.LoadFromFile('C:\data\report1.fr3');
+    frxReport1.PrepareReport;
+    frxReport1.LoadFromFile('C:\data\report2.fr3');
+    frxReport1.PrepareReport(False);
+    frxReport1.ShowPreparedReport;
+}
+
    { dmUtils.StartTransaction;
 
     try
@@ -193,23 +208,104 @@ procedure TIH005.DataSetSQL;
  引数:
  戻値:
 *******************************************************************************}
-var
-  SINM,HSNM:string;
+
 begin
   DataModule2.CDS_IH005.Close;
+  DataModule2.CDS_IH005MS.Close;
 
   with DataModule2.FDQryIH005 do
+  begin
+    Close;                                        // FDQueryLogin初期化
+      SQL.Clear;                                    // SQL文初期化
+
+      // ここからSQL文↓
+      SQL.Add(' select ');
+      SQL.Add(' DENSE_RANK() OVER(ORDER BY T.NewMTNO) AS NewMTNO, ');
+      SQL.Add(' T.MHNO,T.MHIRDT,T.MHTKNM ');
+      SQL.Add(' FROM ');
+      SQL.Add(' (select ');
+      SQL.Add(' (case when (MTGNO > 3) and (MTGNO % 3 = 0) then (RANK() OVER(ORDER BY MHIRDT,MHTKCD))+(MTGNO/3) ');
+      SQL.Add(' else ');
+      SQL.Add(' (case when (MTGNO > 3) and (MTGNO % 3 = 2) then (RANK() OVER(ORDER BY MHIRDT,MHTKCD))+(MTGNO/3) ');
+      SQL.Add(' else ');
+      SQL.Add(' (case when (MTGNO > 3) and (MTGNO % 3 = 1) then (RANK() OVER(ORDER BY MHIRDT,MHTKCD))+(MTGNO/3)  ');
+      SQL.Add(' else ');
+      SQL.Add('   (RANK() OVER(ORDER BY MHIRDT,MHTKCD)) end)end)end) AS NewMTNO, ');
+      SQL.Add('  ');
+      SQL.Add(' (case when (MTGNO % 3 = 1) then 1  ');
+      SQL.Add(' else ');
+      SQL.Add('   (case when (MTGNO % 3 = 2) then 2 ');
+      SQL.Add(' else ');
+      SQL.Add('     (case when (MTGNO % 3 = 0) then 3 ');
+      SQL.Add(' else ');
+      SQL.Add(' 	  0 end) end) end) as NewGNO, ');
+      SQL.Add('  ');
+      SQL.Add(' MH.*, MM.* ');
+      SQL.Add(' FROM MTMFLP AS MM ');
+      SQL.Add(' LEFT JOIN MTHFLP AS MH ');
+      SQL.Add(' ON MM.MTNO = MH.MHNO) AS T ');
+      SQL.Add('  ');
+      SQL.Add(' WHERE T.MHTKCD=003 ');
+      SQL.Add(' GROUP BY T.NewMTNO,T.MHIRDT,T.MHNO,T.MHTKNM ');
+      SQL.Add('  ');
+
+      Open();                                       // SQL文実行
+
+      DataModule2.CDS_IH005.Open();                   // CDSを開く
+
+
+
+      if isEmpty then                               // データセットがなければ終了、上記も同義
+      begin
+        DataModule2.CDS_IH005.Active := False;
+        raise Exception.Create('対象データが存在しません');
+      end;
+  end;
+
+  with DataModule2.FDQryIH005MS do
   begin
       Close;                                        // FDQueryLogin初期化
       SQL.Clear;                                    // SQL文初期化
 
       // ここからSQL文↓
-      SQL.Add(' select MH.* ,MM.* ');
+      SQL.Add(' select ');
+      SQL.Add(' DENSE_RANK() OVER(ORDER BY T.NewMTNO) AS NewMTNO, ');
+      SQL.Add(' T.* ');
+      SQL.Add(' FROM ');
+      SQL.Add('  ');
+      SQL.Add('  ');
+      SQL.Add(' (select ');
+      SQL.Add(' (case when (MTGNO > 3) and (MTGNO % 3 = 0) then (RANK() OVER(ORDER BY MHIRDT,MHTKCD))+(MTGNO/3) ');
+      SQL.Add(' else ');
+      SQL.Add('   (case when (MTGNO > 3) and (MTGNO % 3 = 2) then (RANK() OVER(ORDER BY MHIRDT,MHTKCD))+(MTGNO/3)  ');
+      SQL.Add(' else ');
+      SQL.Add(' (case when (MTGNO > 3) and (MTGNO % 3 = 1) then (RANK() OVER(ORDER BY MHIRDT,MHTKCD))+(MTGNO/3)  ');
+      SQL.Add(' else ');
+      SQL.Add(' (RANK() OVER(ORDER BY MHIRDT,MHTKCD)) end)end)end) AS NewMTNO, ');
+      SQL.Add('  ');
+      SQL.Add(' (case when (MTGNO % 3 = 1) then 1  ');
+      SQL.Add(' else ');
+      SQL.Add(' (case when (MTGNO % 3 = 2) then 2  ');
+      SQL.Add(' else ');
+      SQL.Add(' (case when (MTGNO % 3 = 0) then 3  ');
+      SQL.Add(' else ');
+      SQL.Add(' 0 end) end) end) as NewGNO, ');
+      SQL.Add('  ');
+      SQL.Add(' MH.*, ');
+      SQL.Add(' MM.* ');
+      SQL.Add('  ');
+      SQL.Add('  ');
       SQL.Add(' from MTMFLP AS MM ');
       SQL.Add(' LEFT JOIN MTHFLP AS MH ');
-      SQL.Add(' ON MM.MTNO = MH.MHNO ');
-      SQL.Add(' WHERE MHTKCD=001  ');
-
+      SQL.Add(' ON MM.MTNO = MH.MHNO) AS T ');
+      SQL.Add(' WHERE MHTKCD=003  ');
+      SQL.Add('  ');
+      SQL.Add('  ');
+      SQL.Add('  ');
+      SQL.Add('  ');
+      SQL.Add('  ');
+      SQL.Add('  ');
+      SQL.Add('  ');
       //      if EdtTNCD.Text<>'' then                      // 担当者CD入力時の処理
 //      begin
 //        SQL.Add(' AND TNTNCD = :TNCD ');
@@ -224,43 +320,25 @@ begin
 ////        andFlg:=true;                             // 入力時フラグオン
 //      end;
 
-      SQL.Add(' ORDER BY MHIRDT,MHTKCD,MTNO,MTGNO ');                 // 昇順
+//      SQL.Add(' ORDER BY MHIRDT,MHTKCD ');                 // 昇順
 
       Open();                                       // SQL文実行
 //    end;
 
-    DataModule2.CDS_IH005.Open();                   // CDSを開く
+    DataModule2.CDS_IH005MS.Open();                   // CDSを開く
 
 
 //      if DataModule2.CDS_IH004.Eof and DataModule2.CDS_IH004.Bof then
       if isEmpty then                               // データセットがなければ終了、上記も同義
       begin
-        DataModule2.CDS_IH005.Active := False;
+        DataModule2.CDS_IH005MS.Active := False;
         raise Exception.Create('対象データが存在しません');
       end;
 
-    end; // DataModule2.FDQryIH004ここまで
-  DataModule2.CDS_IH005.Open;
-end;
-
-procedure TIH005.MMPrv;
-//納品書のプレビュー
-var
-  prtnm:string;
-begin
-  //事務所出力
-
-    with frxReport1 do
-    begin
-      //出力先プリンタ
-//      prtnm:=GetPRTNAM(dmUtilYbs.GetComputerNameS,Self.Name);
-//      if prtnm <> '' then
-//        PrintOptions.Printer := prtnm;      プリンタなしでもいけないか？
-
-      PrintOptions.ShowDialog := True;
-      ShowReport();
-    end;
+    end; // DataModule2.FDQryIH005MSここまで
 
 end;
+
+
 
 end.
