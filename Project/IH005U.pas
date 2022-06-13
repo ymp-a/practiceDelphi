@@ -218,19 +218,19 @@ begin
     Close;                                        // FDQueryLogin初期化
       SQL.Clear;                                    // SQL文初期化
 
-      // ここからSQL文↓
+      // ここからSQL文↓ PageHeader
       SQL.Add(' select ');
-      SQL.Add(' DENSE_RANK() OVER(ORDER BY T.NewMTNO) AS NewMTNO, ');
+      SQL.Add(' DENSE_RANK() OVER(ORDER BY T.OldMTNO) AS NewMTNO, ');
       SQL.Add(' T.MHNO,T.MHIRDT,T.MHTKNM ');
       SQL.Add(' FROM ');
       SQL.Add(' (select ');
-      SQL.Add(' (case when (MTGNO > 3) and (MTGNO % 3 = 0) then (RANK() OVER(ORDER BY MHIRDT,MHTKCD))+(MTGNO/3) ');
+      SQL.Add(' (case when (MTGNO > 3) and (MTGNO % 3 = 0) then (RANK() OVER(ORDER BY MHIRDT,MHTKCD))+(MTGNO/3-1) ');
       SQL.Add(' else ');
       SQL.Add(' (case when (MTGNO > 3) and (MTGNO % 3 = 2) then (RANK() OVER(ORDER BY MHIRDT,MHTKCD))+(MTGNO/3) ');
       SQL.Add(' else ');
       SQL.Add(' (case when (MTGNO > 3) and (MTGNO % 3 = 1) then (RANK() OVER(ORDER BY MHIRDT,MHTKCD))+(MTGNO/3)  ');
       SQL.Add(' else ');
-      SQL.Add('   (RANK() OVER(ORDER BY MHIRDT,MHTKCD)) end)end)end) AS NewMTNO, ');
+      SQL.Add('   (RANK() OVER(ORDER BY MHIRDT,MHTKCD)) end)end)end) AS OldMTNO, ');
       SQL.Add('  ');
       SQL.Add(' (case when (MTGNO % 3 = 1) then 1  ');
       SQL.Add(' else ');
@@ -245,14 +245,18 @@ begin
       SQL.Add(' LEFT JOIN MTHFLP AS MH ');
       SQL.Add(' ON MM.MTNO = MH.MHNO) AS T ');
       SQL.Add('  ');
-      SQL.Add(' WHERE T.MHTKCD=003 ');
-      SQL.Add(' GROUP BY T.NewMTNO,T.MHIRDT,T.MHNO,T.MHTKNM ');
+      SQL.Add(' WHERE 1=1 ');
+
+      if EdtTKCD.Text<>'' then                      // 担当者名入力時の処理
+      begin
+        SQL.Add(' AND T.MHTKCD= :TKCD ');
+        ParamByName('TKCD').AsString := EdtTKCD.Text;
+      end;
+
+      SQL.Add(' GROUP BY T.OldMTNO,T.MHIRDT,T.MHNO,T.MHTKNM ');
       SQL.Add('  ');
 
       Open();                                       // SQL文実行
-
-      DataModule2.CDS_IH005.Open();                   // CDSを開く
-
 
 
       if isEmpty then                               // データセットがなければ終了、上記も同義
@@ -260,6 +264,9 @@ begin
         DataModule2.CDS_IH005.Active := False;
         raise Exception.Create('対象データが存在しません');
       end;
+
+       DataModule2.CDS_IH005.Open();                   // CDSを開く
+
   end;
 
   with DataModule2.FDQryIH005MS do
@@ -267,21 +274,21 @@ begin
       Close;                                        // FDQueryLogin初期化
       SQL.Clear;                                    // SQL文初期化
 
-      // ここからSQL文↓
+      // ここからSQL文↓ 明細行
       SQL.Add(' select ');
-      SQL.Add(' DENSE_RANK() OVER(ORDER BY T.NewMTNO) AS NewMTNO, ');
+      SQL.Add(' DENSE_RANK() OVER(ORDER BY T.OldMTNO) AS NewMTNO, ');
       SQL.Add(' T.* ');
       SQL.Add(' FROM ');
       SQL.Add('  ');
       SQL.Add('  ');
       SQL.Add(' (select ');
-      SQL.Add(' (case when (MTGNO > 3) and (MTGNO % 3 = 0) then (RANK() OVER(ORDER BY MHIRDT,MHTKCD))+(MTGNO/3) ');
+      SQL.Add(' (case when (MTGNO > 3) and (MTGNO % 3 = 0) then (RANK() OVER(ORDER BY MHIRDT,MHTKCD))+(MTGNO/3-1) ');
       SQL.Add(' else ');
       SQL.Add('   (case when (MTGNO > 3) and (MTGNO % 3 = 2) then (RANK() OVER(ORDER BY MHIRDT,MHTKCD))+(MTGNO/3)  ');
       SQL.Add(' else ');
       SQL.Add(' (case when (MTGNO > 3) and (MTGNO % 3 = 1) then (RANK() OVER(ORDER BY MHIRDT,MHTKCD))+(MTGNO/3)  ');
       SQL.Add(' else ');
-      SQL.Add(' (RANK() OVER(ORDER BY MHIRDT,MHTKCD)) end)end)end) AS NewMTNO, ');
+      SQL.Add(' (RANK() OVER(ORDER BY MHIRDT,MHTKCD)) end)end)end) AS OldMTNO, ');
       SQL.Add('  ');
       SQL.Add(' (case when (MTGNO % 3 = 1) then 1  ');
       SQL.Add(' else ');
@@ -298,7 +305,7 @@ begin
       SQL.Add(' from MTMFLP AS MM ');
       SQL.Add(' LEFT JOIN MTHFLP AS MH ');
       SQL.Add(' ON MM.MTNO = MH.MHNO) AS T ');
-      SQL.Add(' WHERE MHTKCD=003  ');
+      SQL.Add(' WHERE 1=1  ');
       SQL.Add('  ');
       SQL.Add('  ');
       SQL.Add('  ');
@@ -319,13 +326,17 @@ begin
 //        ParamByName('NAME').AsWideString :='%' +EdtNAME.Text+ '%'; // 部分一致の入力名を'NAME'へ代入する
 ////        andFlg:=true;                             // 入力時フラグオン
 //      end;
+      if EdtTKCD.Text<>'' then                      // 担当者名入力時の処理
+      begin
+        SQL.Add(' AND T.MHTKCD = :TKCD ');         //
+        ParamByName('TKCD').AsString := EdtTKCD.Text;
+      end;
+
 
 //      SQL.Add(' ORDER BY MHIRDT,MHTKCD ');                 // 昇順
 
       Open();                                       // SQL文実行
 //    end;
-
-    DataModule2.CDS_IH005MS.Open();                   // CDSを開く
 
 
 //      if DataModule2.CDS_IH004.Eof and DataModule2.CDS_IH004.Bof then
@@ -334,6 +345,8 @@ begin
         DataModule2.CDS_IH005MS.Active := False;
         raise Exception.Create('対象データが存在しません');
       end;
+
+      DataModule2.CDS_IH005MS.Open();                   // CDSを開く
 
     end; // DataModule2.FDQryIH005MSここまで
 

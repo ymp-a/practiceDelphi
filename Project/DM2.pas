@@ -110,14 +110,13 @@ type
     DataSrcIH005MS: TDataSource;
     frxDBDatasetIH005MS: TfrxDBDataset;
     FDQryIH005MS: TFDQuery;
-    CDS_IH005NewMTNO: TLargeintField;
-    CDS_IH005MHNO: TIntegerField;
-    CDS_IH005MHIRDT: TDateField;
-    CDS_IH005MHTKNM: TStringField;
     DataSetProIH005MS: TDataSetProvider;
     CDS_IH005MS: TClientDataSet;
+    CDS_IH005MHIRDT: TDateField;
+    CDS_IH005MHNO: TIntegerField;
+    CDS_IH005MHTKNM: TStringField;
     CDS_IH005MSNewMTNO: TLargeintField;
-    CDS_IH005MSNewMTNO_1: TLargeintField;
+    CDS_IH005MSOldMTNO: TLargeintField;
     CDS_IH005MSNewGNO: TIntegerField;
     CDS_IH005MSMHNO: TIntegerField;
     CDS_IH005MSMHIRDT: TDateField;
@@ -138,6 +137,7 @@ type
     CDS_IH005MSMTKIN: TIntegerField;
     CDS_IH005MSMTBIKO: TStringField;
     CDS_IH005MSMTJTCD: TStringField;
+    CDS_IH005NewMTNO: TLargeintField;
   //’S“–ŽÒm
   type dTNM = Record
     Exists :Boolean;
