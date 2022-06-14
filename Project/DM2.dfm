@@ -445,7 +445,7 @@ object DataModule2: TDataModule2
       ''
       ''
       'WHERE 1=1'
-      'and T.MHTKCD=002'
+      'and T.MHTKCD=004'
       'GROUP BY T.OldMTNO,T.MHIRDT,T.MHNO,T.MHTKNM')
     Left = 56
     Top = 408
@@ -456,6 +456,7 @@ object DataModule2: TDataModule2
     Top = 408
   end
   object CDS_IH005: TClientDataSet
+    Active = True
     Aggregates = <>
     Params = <>
     ProviderName = 'DataSetProIH005'
@@ -463,16 +464,20 @@ object DataModule2: TDataModule2
     Top = 408
     object CDS_IH005MHIRDT: TDateField
       FieldName = 'MHIRDT'
+      Origin = 'MHIRDT'
     end
     object CDS_IH005MHNO: TIntegerField
       FieldName = 'MHNO'
+      Origin = 'MHNO'
     end
     object CDS_IH005MHTKNM: TStringField
       FieldName = 'MHTKNM'
+      Origin = 'MHTKNM'
       Size = 100
     end
     object CDS_IH005NewMTNO: TLargeintField
       FieldName = 'NewMTNO'
+      Origin = 'NewMTNO'
       ReadOnly = True
     end
   end
@@ -568,7 +573,7 @@ object DataModule2: TDataModule2
       ''
       ''
       'WHERE 1=1'
-      'and T.MHTKCD='#39'002'#39)
+      'and T.MHTKCD='#39'004'#39)
     Left = 56
     Top = 488
   end
@@ -578,6 +583,7 @@ object DataModule2: TDataModule2
     Top = 488
   end
   object CDS_IH005MS: TClientDataSet
+    Active = True
     Aggregates = <>
     Params = <>
     ProviderName = 'DataSetProIH005MS'
@@ -585,84 +591,108 @@ object DataModule2: TDataModule2
     Top = 488
     object CDS_IH005MSNewMTNO: TLargeintField
       FieldName = 'NewMTNO'
+      Origin = 'NewMTNO'
       ReadOnly = True
     end
     object CDS_IH005MSOldMTNO: TLargeintField
       FieldName = 'OldMTNO'
+      Origin = 'OldMTNO'
       ReadOnly = True
     end
     object CDS_IH005MSNewGNO: TIntegerField
       FieldName = 'NewGNO'
+      Origin = 'NewGNO'
       ReadOnly = True
       Required = True
     end
     object CDS_IH005MSMHNO: TIntegerField
       FieldName = 'MHNO'
+      Origin = 'MHNO'
     end
     object CDS_IH005MSMHIRDT: TDateField
       FieldName = 'MHIRDT'
+      Origin = 'MHIRDT'
     end
     object CDS_IH005MSMHKGDT: TDateField
       FieldName = 'MHKGDT'
+      Origin = 'MHKGDT'
     end
     object CDS_IH005MSMHTKCD: TStringField
       FieldName = 'MHTKCD'
+      Origin = 'MHTKCD'
       Size = 5
     end
     object CDS_IH005MSMHTKNM: TStringField
       FieldName = 'MHTKNM'
+      Origin = 'MHTKNM'
       Size = 100
     end
     object CDS_IH005MSMHGSRO: TIntegerField
       FieldName = 'MHGSRO'
+      Origin = 'MHGSRO'
     end
     object CDS_IH005MSMHGKIN: TIntegerField
       FieldName = 'MHGKIN'
+      Origin = 'MHGKIN'
     end
     object CDS_IH005MSMHTNCD: TIntegerField
       FieldName = 'MHTNCD'
+      Origin = 'MHTNCD'
     end
     object CDS_IH005MSMHBIKO: TStringField
       FieldName = 'MHBIKO'
+      Origin = 'MHBIKO'
       Size = 100
     end
     object CDS_IH005MSMHJTCD: TStringField
       FieldName = 'MHJTCD'
+      Origin = 'MHJTCD'
       Size = 1
     end
     object CDS_IH005MSMTNO: TIntegerField
       FieldName = 'MTNO'
+      Origin = 'MTNO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
     object CDS_IH005MSMTGNO: TIntegerField
       FieldName = 'MTGNO'
+      Origin = 'MTGNO'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
     object CDS_IH005MSMTSHCD: TStringField
       FieldName = 'MTSHCD'
+      Origin = 'MTSHCD'
       Size = 7
     end
     object CDS_IH005MSMTSHNM: TStringField
       FieldName = 'MTSHNM'
+      Origin = 'MTSHNM'
       Size = 100
     end
     object CDS_IH005MSMTTNKA: TBCDField
       FieldName = 'MTTNKA'
+      Origin = 'MTTNKA'
       Precision = 10
       Size = 2
     end
     object CDS_IH005MSMTSRYO: TIntegerField
       FieldName = 'MTSRYO'
+      Origin = 'MTSRYO'
     end
     object CDS_IH005MSMTKIN: TIntegerField
       FieldName = 'MTKIN'
+      Origin = 'MTKIN'
     end
     object CDS_IH005MSMTBIKO: TStringField
       FieldName = 'MTBIKO'
+      Origin = 'MTBIKO'
       Size = 100
     end
     object CDS_IH005MSMTJTCD: TStringField
       FieldName = 'MTJTCD'
+      Origin = 'MTJTCD'
       Size = 1
     end
   end
