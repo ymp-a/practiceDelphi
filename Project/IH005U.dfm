@@ -2120,13 +2120,13 @@ inherited IH005: TIH005
         object Memo7: TfrxMemoView
           Left = 7.559060000000000000
           Top = 41.574830000000020000
-          Width = 317.480314960630000000
+          Width = 317.480314960000000000
           Height = 18.897650000000000000
           DataSet = DataModule2.frxDBDatasetIH005
           DataSetName = 'frxDBDatasetIH005'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -16
           Font.Name = 'Arial'
           Font.Style = []
           Memo.UTF8W = (
@@ -2135,16 +2135,16 @@ inherited IH005: TIH005
           VAlign = vaBottom
         end
         object Memo1: TfrxMemoView
-          Left = 7.559055118110240000
+          Left = 7.559055120000000000
           Top = 3.779530000000022000
-          Width = 317.480314960630000000
+          Width = 317.480314960000000000
           Height = 18.897650000000000000
           DataField = 'MTSHNM'
           DataSet = DataModule2.frxDBDatasetIH005MS
           DataSetName = 'frxDBDatasetIH005MS'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -16
           Font.Name = 'Arial'
           Font.Style = []
           Memo.UTF8W = (
@@ -2153,9 +2153,9 @@ inherited IH005: TIH005
           VAlign = vaBottom
         end
         object Memo148: TfrxMemoView
-          Left = 328.818897637795000000
+          Left = 328.818897640000000000
           Top = 22.677180000000020000
-          Width = 86.929133858267700000
+          Width = 86.929133860000000000
           Height = 18.897650000000000000
           DataSet = DataModule2.frxDBDatasetIH005MS
           DataSetName = 'frxDBDatasetIH005MS'
@@ -2163,7 +2163,7 @@ inherited IH005: TIH005
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -16
           Font.Name = 'Arial'
           Font.Style = []
           HAlign = haRight
@@ -2181,7 +2181,7 @@ inherited IH005: TIH005
           DataSetName = 'frxDBDatasetIH005'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -16
           Font.Name = 'Arial'
           Font.Style = []
           HAlign = haRight
@@ -2199,7 +2199,7 @@ inherited IH005: TIH005
           DataSetName = 'frxDBDatasetIH005'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -16
           Font.Name = 'Arial'
           Font.Style = []
           HAlign = haRight
@@ -2217,7 +2217,7 @@ inherited IH005: TIH005
           DataSetName = 'frxDBDatasetIH005'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -16
           Font.Name = 'Arial'
           Font.Style = []
           HAlign = haCenter
@@ -5876,7 +5876,7 @@ inherited IH005: TIH005
         object Memo212: TfrxMemoView
           Left = 457.322705280000000000
           Top = 449.763991889999900000
-          Width = 215.433061100000000000
+          Width = 268.346481100000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
           DataSetName = 'frxDBDatasetIH005'
@@ -5887,7 +5887,7 @@ inherited IH005: TIH005
           Font.Style = []
           HAlign = haCenter
           Memo.UTF8W = (
-            #20633#12288#12288#32771#12288#12288#65295#12288#12288#26029#12288#12288#35009#12288#12288#20181#12288#12288#27096)
+            #26029#12288#12288#35009#12288#12288#20181#12288#12288#27096#12288#12288#65295#12288#12288#24471#12288#12288#24847#12288#12288#20808#12288#12288#20633#12288#12288#32771)
           ParentFont = False
           VAlign = vaCenter
         end
@@ -6059,7 +6059,7 @@ inherited IH005: TIH005
         end
         object Line61: TfrxLineView
           Top = 464.882099689999900000
-          Width = 729.448818897638000000
+          Width = 729.448818900000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
@@ -6824,13 +6824,13 @@ inherited IH005: TIH005
         Width = 899.528140000000000000
         object Memo33: TfrxMemoView
           Left = 7.559060000000000000
-          Width = 143.622140000000000000
+          Width = 166.299320000000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
           DataSetName = 'frxDBDatasetIH005'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -16
           Font.Name = 'Arial'
           Font.Style = []
           Memo.UTF8W = (
@@ -6853,7 +6853,7 @@ inherited IH005: TIH005
           DataSetName = 'frxDBDatasetIH005'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -16
           Font.Name = 'Arial'
           Font.Style = []
           Memo.UTF8W = (
@@ -6870,7 +6870,7 @@ inherited IH005: TIH005
           DataSetName = 'frxDBDatasetIH005'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -16
           Font.Name = 'Arial'
           Font.Style = []
           Memo.UTF8W = (
@@ -6887,7 +6887,7 @@ inherited IH005: TIH005
           DataSetName = 'frxDBDatasetIH005'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -13
+          Font.Height = -16
           Font.Name = 'Arial'
           Font.Style = []
           Memo.UTF8W = (
