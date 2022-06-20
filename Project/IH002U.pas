@@ -84,6 +84,7 @@ begin
 
     if Active then  rn:=RecNo;          // CDSあるときアクティブレコード番号（カレント行）をrnへ格納する
 
+                                         // メッセージキー違反ですと言われる
 
     SaveCursor := Screen.Cursor;        // 現マウスポインタを退避
     Screen.Cursor := crHourGlass;       // 砂時計に変更

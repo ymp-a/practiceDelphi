@@ -1799,14 +1799,13 @@ inherited IH005: TIH005
       '  '
       'procedure MasterData1OnBeforePrint(Sender: TfrxComponent);'
       'begin    '
-      '  PageLine := <line> mod PageMaxRow; //'#12371#12398#12467#12540#12489#12399#22266#23450#25968#12398#34892#12395#24517#35201#12391#12377
-      '            '
+      
+        '  PageLine := <line> mod PageMaxRow; //'#12371#12398#12467#12540#12489#12399#22266#23450#25968#12398#34892#12395#24517#35201#12391#12377'         ' +
+        '         '
       '  child1.visible := False; //'#21021#26399#21270'  '
-      '  child2.visible := False; //'#21021#26399#21270'             '
-      '      '
+      '  child2.visible := False; //'#21021#26399#21270'            '
       'end;'
       '  '
-      ''
       '//1,3,4'#38917#30446#29992' '#12501#12483#12479#12540#12452#12505#12531#12488'                        '
       'procedure Footer1OnBeforePrint(Sender: TfrxComponent);'
       'var'
@@ -1819,12 +1818,10 @@ inherited IH005: TIH005
       '  begin'
       '    i := i + 1;'
       '    Engine.ShowBand(Child1);//'#31354#30333#12398#12501#12457#12540#12512#12434#21360#21047#12377#12427'              '
-      '  end;'
+      '  end;        '
+      '  child1.visible := False;//'#21021#26399#21270'                               '
+      'end;'
       '  '
-      '  child1.visible := False;//'#21021#26399#21270
-      '                         '
-      'end;  '
-      '    '
       '//2'#38917#30446#23554#29992' '#12501#12483#12479#12540#12452#12505#12531#12488'    '
       'procedure Footer2OnBeforePrint(Sender: TfrxComponent);'
       'var'
@@ -1837,10 +1834,8 @@ inherited IH005: TIH005
       '  begin'
       '    i := i + 1;'
       '    Engine.ShowBand(Child2);//'#31354#30333#12398#12501#12457#12540#12512#12434#21360#21047#12377#12427'              '
-      '  end;'
-      '  '
-      '  child2.visible := False;//'#21021#26399#21270
-      '                         '
+      '  end;        '
+      '  child2.visible := False;//'#21021#26399#21270'                               '
       'end;'
       ''
       'begin'
@@ -1897,7 +1892,7 @@ inherited IH005: TIH005
         DataSet = DataModule2.frxDBDatasetIH005MS
         DataSetName = 'frxDBDatasetIH005MS'
         Filter = '<frxDBDatasetIH005MS."NewMTNO">=<frxDBDatasetIH005."NewMTNO">'
-        RowCount = 3
+        RowCount = 0
         object frxDBDatasetIH005MSMTSHNM: TfrxMemoView
           Left = 7.559060000000000000
           Width = 317.480314960000000000
@@ -2116,7 +2111,7 @@ inherited IH005: TIH005
         DataSet = DataModule2.frxDBDatasetIH005MS
         DataSetName = 'frxDBDatasetIH005MS'
         Filter = '<frxDBDatasetIH005MS."NewMTNO">=<frxDBDatasetIH005."NewMTNO">'
-        RowCount = 3
+        RowCount = 0
         object Memo7: TfrxMemoView
           Left = 7.559060000000000000
           Top = 41.574830000000020000
@@ -2276,7 +2271,7 @@ inherited IH005: TIH005
       end
       object Header2: TfrxHeader
         FillType = ftBrush
-        Height = 219.212598425197000000
+        Height = 219.212598430000000000
         Top = 359.055350000000000000
         Width = 899.528140000000000000
       end
@@ -2295,7 +2290,7 @@ inherited IH005: TIH005
       end
       object DetailData3: TfrxDetailData
         FillType = ftBrush
-        Height = 41.574803149606300000
+        Height = 41.574803150000000000
         Top = 975.118740000000000000
         Width = 899.528140000000000000
         OnAfterPrint = 'MasterData1OnAfterPrint'
@@ -2303,7 +2298,7 @@ inherited IH005: TIH005
         DataSet = DataModule2.frxDBDatasetIH005MS
         DataSetName = 'frxDBDatasetIH005MS'
         Filter = '<frxDBDatasetIH005."NewMTNO">=<frxDBDatasetIH005MS."NewMTNO">'
-        RowCount = 3
+        RowCount = 0
         object Memo11: TfrxMemoView
           Left = 7.559060000000000000
           Width = 317.480314960000000000
@@ -2527,7 +2522,7 @@ inherited IH005: TIH005
         DataSet = DataModule2.frxDBDatasetIH005MS
         DataSetName = 'frxDBDatasetIH005MS'
         Filter = '<frxDBDatasetIH005."NewMTNO">=<frxDBDatasetIH005MS."NewMTNO">'
-        RowCount = 3
+        RowCount = 0
         object Memo88: TfrxMemoView
           Left = 7.559060000000000000
           Width = 317.480314960000000000
@@ -3991,7 +3986,7 @@ inherited IH005: TIH005
           Frame.Typ = [ftLeft]
         end
         object Shape9: TfrxShapeView
-          Left = 366.614173228346000000
+          Left = 366.614173230000000000
           Width = 185.196850390000000000
           Height = 34.015748030000000000
           Curve = 2
@@ -6818,7 +6813,7 @@ inherited IH005: TIH005
       end
       object Child1: TfrxChild
         FillType = ftBrush
-        Height = 41.574803149606300000
+        Height = 41.574803150000000000
         Top = 294.803340000000000000
         Visible = False
         Width = 899.528140000000000000
@@ -6894,63 +6889,6 @@ inherited IH005: TIH005
             #35443#32048#12487#12540#12479'002'#23376#12496#12531#12489'Row3')
           ParentFont = False
           VAlign = vaBottom
-        end
-      end
-    end
-  end
-  object frxReport5: TfrxReport
-    Version = '5.6.9'
-    DotMatrixReport = False
-    IniFile = '\Software\Fast Reports'
-    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
-    PreviewOptions.Zoom = 1.000000000000000000
-    PrintOptions.Printer = #27161#28310
-    PrintOptions.PrintOnSheet = 0
-    ReportOptions.CreateDate = 44726.469317986100000000
-    ReportOptions.LastChange = 44726.469317986100000000
-    ScriptLanguage = 'PascalScript'
-    ScriptText.Strings = (
-      'begin'
-      ''
-      'end.')
-    Left = 417
-    Top = 138
-    Datasets = <
-      item
-        DataSet = DataModule2.frxDBDatasetIH005
-        DataSetName = 'frxDBDatasetIH005'
-      end
-      item
-        DataSet = DataModule2.frxDBDatasetIH005MS
-        DataSetName = 'frxDBDatasetIH005MS'
-      end>
-    Variables = <>
-    Style = <>
-    object Data: TfrxDataPage
-      Height = 1000.000000000000000000
-      Width = 1000.000000000000000000
-    end
-    object Page1: TfrxReportPage
-      PaperWidth = 250.000000000000000000
-      PaperHeight = 354.000000000000000000
-      PaperSize = 12
-      LeftMargin = 10.000000000000000000
-      RightMargin = 10.000000000000000000
-      TopMargin = 10.000000000000000000
-      BottomMargin = 10.000000000000000000
-      LargeDesignHeight = True
-      object PageHeader1: TfrxPageHeader
-        FillType = ftBrush
-        Height = 22.677180000000000000
-        Top = 18.897650000000000000
-        Width = 869.291900000000000000
-        object Memo1: TfrxMemoView
-          Left = 18.897650000000000000
-          Top = 3.779530000000001000
-          Width = 94.488250000000000000
-          Height = 18.897650000000000000
-          Memo.UTF8W = (
-            #12354#12354#12354)
         end
       end
     end

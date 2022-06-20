@@ -159,7 +159,12 @@ begin
   // 追加モード時は見積依頼日に入力日をセット
   if (Mode='Add') then
     DataModule4.CDS_IH001_MTH.FieldByName('MHIRDT').AsString :=DateToStr(Date);
-end;
+  // コピーモード時は合計数量・金額を反映しておきたい
+  if PageTopFrm1.EdtMode.Text = 'コピー' then    ;
+    DBCtrlGrid1Exit(self);
+
+
+    end;
 
 {===============================================================================
 画面終了後に設定するイベント
@@ -174,8 +179,13 @@ begin
   begin
     CDS_IH001_MTH.Close;
     CDS_IH001_MTM.Close;
+    ClientDataSetMTHFLP.Close;
+    ClientDataSetMTMFLP.Close;
     IH001_MTH.Close;
     IH001_MTM.Close;
+    FDQryMTHFLP.Close;
+    FDQryMTMFLP.Close;
+
   end;
 
 end;
@@ -352,11 +362,36 @@ begin
     qry.SQL.Add('order by mtno,mtgno');
     qry.SQL.Add('');
 
+  if Mode='Cpy' then // Cpy時は追加ModeのようにMTNO=0にする
+    qry.ParamByName('no').AsInteger:=0
+  else
     qry.ParamByName('no').AsInteger:=pNo;
+
     qry.Open();
 
   finally
 
+  end;
+
+  if Mode='Cpy' then // Cpy用にもう一つ展開しておく
+  begin
+    try
+      DataModule4.FDQryMTMFLP.Close;
+      DataModule4.FDQryMTMFLP.SQL.Clear;
+      DataModule4.FDQryMTMFLP.Params.Clear;
+
+      DataModule4.FDQryMTMFLP.SQL.Add('select * from mtmflp');
+      DataModule4.FDQryMTMFLP.SQL.Add(' where mtno=:no ');
+      DataModule4.FDQryMTMFLP.SQL.Add('');
+      DataModule4.FDQryMTMFLP.SQL.Add('order by mtno,mtgno');
+      DataModule4.FDQryMTMFLP.SQL.Add('');
+
+      DataModule4.FDQryMTMFLP.ParamByName('no').AsInteger:=pNo;
+      DataModule4.FDQryMTMFLP.Open();
+
+    finally
+
+    end;
   end;
 
 end;
@@ -546,7 +581,8 @@ ClientDataSetのイベントに設定するイベント
 ===============================================================================}
 procedure TIH001.BeforeScroll(DataSet: TDataSet);
 begin
-  if PageTopFrm1.EdtMode.Text <> '追加' then  // Add時除外理由->スタックオーバーフロー回避のため
+  // AddとCpy時の除外理由→スタックオーバーフロー回避のため
+  if (PageTopFrm1.EdtMode.Text <> '追加') and (PageTopFrm1.EdtMode.Text <> 'コピー') then
   begin
   Dataset.Edit;
 
@@ -714,14 +750,17 @@ end;
  戻値:
 *******************************************************************************}
 procedure TIH001.InzCpyMode;
+Var
+  I:Integer;
 begin
   inherited;
   pNo:=DataModule4.CDS_IH002.FieldByName('mhno').Asinteger;
-  DataModule4.CDS_IH001_MTH.Open;       // CDS_IH001_MTH展開 コピー用
-  DataModule4.ClientDataSetMTHFLP.Open; // CDSMTHFLP展開     コピー用
 
-  DataModule4.CDS_IH001_MTH.Insert; // 挿入モードだとCDS_IH001_MTHヘッダー値が初期化されるので
-
+  dspHeader;                            // ヘッダーQryオープン
+  DataModule4.CDS_IH001_MTH.Open;       // コピー用を保存する編集画面
+  DataModule4.ClientDataSetMTHFLP.Open; // コピペする元データ
+  DataModule4.CDS_IH001_MTH.Insert;
+  // 挿入モードだとCDS_IH001_MTHヘッダー値が初期化されるので
   // ヘッダーフィールドにClientDataSetMTHFLP値を格納する
   DataModule4.CDS_IH001_MTH.FieldByName('MHIRDT').AsString:=DataModule4.ClientDataSetMTHFLP.FieldByName('MHIRDT').AsString;
   DataModule4.CDS_IH001_MTH.FieldByName('MHKGDT').AsString:=DataModule4.ClientDataSetMTHFLP.FieldByName('MHKGDT').AsString;
@@ -731,6 +770,33 @@ begin
   DataModule4.CDS_IH001_MTH.FieldByName('MHBIKO').AsString:=DataModule4.ClientDataSetMTHFLP.FieldByName('MHBIKO').AsString;
 
   DataModule4.ClientDataSetMTHFLP.Close; // CDSMTHFLPをとじる
+
+
+  dspDetail;                             // 明細Qryオープン
+  DataModule4.CDS_IH001_MTM.Open;        // コピー用の保存する編集画面
+  DataModule4.ClientDataSetMTMFLP.Open;  // コピペする元データ
+
+  DataModule4.ClientDataSetMTMFLP.First; // 最初のレコードに移動
+
+  // 明細ファイルにClientDataSetMTMFLPの値を格納する
+  for I := 0 to DataModule4.ClientDataSetMTMFLP.RecordCount-1 do // cds2全レコードの'D'チェック
+  begin
+    Button3Click(self); // 行をAppend
+    DataModule4.CDS_IH001_MTM.Edit;
+    DataModule4.CDS_IH001_MTM.FieldByName('MTNO').AsInteger:=0;
+    DataModule4.CDS_IH001_MTM.FieldByName('MTGNO').AsInteger:=DataModule4.ClientDataSetMTMFLP.FieldByName('MTGNO').AsInteger;
+    DataModule4.CDS_IH001_MTM.FieldByName('MTSHCD').AsString:=DataModule4.ClientDataSetMTMFLP.FieldByName('MTSHCD').AsString;
+    DataModule4.CDS_IH001_MTM.FieldByName('MTSHNM').AsString:=DataModule4.ClientDataSetMTMFLP.FieldByName('MTSHNM').AsString;
+    DataModule4.CDS_IH001_MTM.FieldByName('MTTNKA').AsBCD:=DataModule4.ClientDataSetMTMFLP.FieldByName('MTTNKA').AsBCD;
+    DataModule4.CDS_IH001_MTM.FieldByName('MTSRYO').AsInteger:=DataModule4.ClientDataSetMTMFLP.FieldByName('MTSRYO').AsInteger;
+    DataModule4.CDS_IH001_MTM.FieldByName('MTKIN').AsInteger:=DataModule4.ClientDataSetMTMFLP.FieldByName('MTKIN').AsInteger;
+    DataModule4.CDS_IH001_MTM.FieldByName('MTBIKO').AsString:=DataModule4.ClientDataSetMTMFLP.FieldByName('MTBIKO').AsString;
+
+    DataModule4.CDS_IH001_MTM.Next;
+    DataModule4.ClientDataSetMTMFLP.Next;
+  end;
+
+  DataModule4.ClientDataSetMTMFLP.Close; // CDSMTMFLPをとじる
 
 end;
 
@@ -815,8 +881,8 @@ var
 begin
   inherited;
   con:= UtilYbs.dmUtilYbs.FDConnection1;
-  cds1 := DataModule4.CDS_IH001_MTH;
-  cds2 := DataModule4.CDS_IH001_MTM;
+  cds1 := DataModule4.CDS_IH001_MTH; // 見積ヘッダー
+  cds2 := DataModule4.CDS_IH001_MTM; // 見積明細
 
   hset;                   // ヘッダー項目セット
   mset;                   // 明細項目セット

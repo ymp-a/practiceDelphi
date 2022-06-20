@@ -27,7 +27,6 @@ type
     frxReport2: TfrxReport;
     frxReport3: TfrxReport;
     frxReport4: TfrxReport;
-    frxReport5: TfrxReport;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure BtnPrtClick(Sender: TObject);
     procedure BtnPrvClick(Sender: TObject);
