@@ -262,132 +262,6 @@ object DataModule4: TDataModule4
       'left join tnmmsp on tntncd = mhtncd')
     Left = 32
     Top = 200
-    object IntegerField1: TIntegerField
-      FieldName = 'MHNO'
-      Origin = 'MHNO'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
-      Required = True
-    end
-    object DateField1: TDateField
-      FieldName = 'MHIRDT'
-      Origin = 'MHIRDT'
-    end
-    object DateField2: TDateField
-      FieldName = 'MHKGDT'
-      Origin = 'MHKGDT'
-    end
-    object StringField1: TStringField
-      FieldName = 'MHTKCD'
-      Origin = 'MHTKCD'
-      Size = 5
-    end
-    object StringField2: TStringField
-      FieldName = 'MHTKNM'
-      Origin = 'MHTKNM'
-      Size = 100
-    end
-    object IntegerField2: TIntegerField
-      FieldName = 'MHGSRO'
-      Origin = 'MHGSRO'
-      DisplayFormat = '###,###,###'
-    end
-    object IntegerField3: TIntegerField
-      FieldName = 'MHGKIN'
-      Origin = 'MHGKIN'
-      DisplayFormat = '###,###,###'
-    end
-    object IntegerField4: TIntegerField
-      FieldName = 'MHTNCD'
-      Origin = 'MHTNCD'
-      Required = True
-    end
-    object StringField3: TStringField
-      FieldName = 'MHBIKO'
-      Origin = 'MHBIKO'
-      Size = 100
-    end
-    object StringField4: TStringField
-      FieldName = 'MHJTCD'
-      Origin = 'MHJTCD'
-      Size = 1
-    end
-    object FDQryF0004TNTNCD: TIntegerField
-      FieldName = 'TNTNCD'
-      Origin = 'TNTNCD'
-    end
-    object FDQryF0004TNBKCD: TIntegerField
-      FieldName = 'TNBKCD'
-      Origin = 'TNBKCD'
-    end
-    object FDQryF0004TNPASS: TVarBytesField
-      FieldName = 'TNPASS'
-      Origin = 'TNPASS'
-      Size = 2000
-    end
-    object FDQryF0004TNNAME: TStringField
-      FieldName = 'TNNAME'
-      Origin = 'TNNAME'
-      Size = 16
-    end
-    object FDQryF0004TNKGKB: TStringField
-      FieldName = 'TNKGKB'
-      Origin = 'TNKGKB'
-      Size = 1
-    end
-    object FDQryF0004TNSTKB: TStringField
-      FieldName = 'TNSTKB'
-      Origin = 'TNSTKB'
-      Size = 4
-    end
-    object FDQryF0004TNPWLA: TDateField
-      FieldName = 'TNPWLA'
-      Origin = 'TNPWLA'
-    end
-    object FDQryF0004TNCRDT: TDateField
-      FieldName = 'TNCRDT'
-      Origin = 'TNCRDT'
-    end
-    object FDQryF0004TNCRTM: TTimeField
-      FieldName = 'TNCRTM'
-      Origin = 'TNCRTM'
-    end
-    object FDQryF0004TNCRPG: TStringField
-      FieldName = 'TNCRPG'
-      Origin = 'TNCRPG'
-    end
-    object FDQryF0004TNCRWS: TStringField
-      FieldName = 'TNCRWS'
-      Origin = 'TNCRWS'
-    end
-    object FDQryF0004TNCRUS: TStringField
-      FieldName = 'TNCRUS'
-      Origin = 'TNCRUS'
-    end
-    object FDQryF0004TNUPDT: TDateField
-      FieldName = 'TNUPDT'
-      Origin = 'TNUPDT'
-    end
-    object FDQryF0004TNUPTM: TTimeField
-      FieldName = 'TNUPTM'
-      Origin = 'TNUPTM'
-    end
-    object FDQryF0004TNUPPG: TStringField
-      FieldName = 'TNUPPG'
-      Origin = 'TNUPPG'
-    end
-    object FDQryF0004TNUPWS: TStringField
-      FieldName = 'TNUPWS'
-      Origin = 'TNUPWS'
-    end
-    object FDQryF0004TNUPUS: TStringField
-      FieldName = 'TNUPUS'
-      Origin = 'TNUPUS'
-    end
-    object FDQryF0004TNJTCD: TStringField
-      FieldName = 'TNJTCD'
-      Origin = 'TNJTCD'
-      Size = 1
-    end
   end
   object DataSrcF0004: TDataSource
     AutoEdit = False
@@ -599,49 +473,49 @@ object DataModule4: TDataModule4
       'FROM MTHFLP')
     Left = 32
     Top = 296
-    object IntegerField9: TIntegerField
+    object IH001_MTHMHNO: TIntegerField
       FieldName = 'MHNO'
       Origin = 'MHNO'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
-    object DateField5: TDateField
+    object IH001_MTHMHIRDT: TDateField
       FieldName = 'MHIRDT'
       Origin = 'MHIRDT'
     end
-    object DateField6: TDateField
+    object IH001_MTHMHKGDT: TDateField
       FieldName = 'MHKGDT'
       Origin = 'MHKGDT'
     end
-    object StringField9: TStringField
+    object IH001_MTHMHTKCD: TStringField
       FieldName = 'MHTKCD'
       Origin = 'MHTKCD'
       Size = 5
     end
-    object StringField10: TStringField
+    object IH001_MTHMHTKNM: TStringField
       FieldName = 'MHTKNM'
       Origin = 'MHTKNM'
       Size = 100
     end
-    object IntegerField10: TIntegerField
+    object IH001_MTHMHGSRO: TIntegerField
       FieldName = 'MHGSRO'
       Origin = 'MHGSRO'
     end
-    object IntegerField11: TIntegerField
+    object IH001_MTHMHGKIN: TIntegerField
       FieldName = 'MHGKIN'
       Origin = 'MHGKIN'
     end
-    object IntegerField12: TIntegerField
+    object IH001_MTHMHTNCD: TIntegerField
       FieldName = 'MHTNCD'
       Origin = 'MHTNCD'
       Required = True
     end
-    object StringField11: TStringField
+    object IH001_MTHMHBIKO: TStringField
       FieldName = 'MHBIKO'
       Origin = 'MHBIKO'
       Size = 100
     end
-    object StringField12: TStringField
+    object IH001_MTHMHJTCD: TStringField
       FieldName = 'MHJTCD'
       Origin = 'MHJTCD'
       Size = 1
@@ -654,48 +528,48 @@ object DataModule4: TDataModule4
       'FROM MTMFLP')
     Left = 32
     Top = 376
-    object IntegerField13: TIntegerField
+    object IH001_MTMMTNO: TIntegerField
       FieldName = 'MTNO'
       Origin = 'MTNO'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
-    object IntegerField14: TIntegerField
+    object IH001_MTMMTGNO: TIntegerField
       FieldName = 'MTGNO'
       Origin = 'MTGNO'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
-    object StringField13: TStringField
+    object IH001_MTMMTSHCD: TStringField
       FieldName = 'MTSHCD'
       Origin = 'MTSHCD'
       Size = 7
     end
-    object StringField14: TStringField
+    object IH001_MTMMTSHNM: TStringField
       FieldName = 'MTSHNM'
       Origin = 'MTSHNM'
       Size = 100
     end
-    object BCDField1: TBCDField
+    object IH001_MTMMTTNKA: TBCDField
       FieldName = 'MTTNKA'
       Origin = 'MTTNKA'
       Precision = 10
       Size = 2
     end
-    object IntegerField15: TIntegerField
+    object IH001_MTMMTSRYO: TIntegerField
       FieldName = 'MTSRYO'
       Origin = 'MTSRYO'
     end
-    object IntegerField16: TIntegerField
+    object IH001_MTMMTKIN: TIntegerField
       FieldName = 'MTKIN'
       Origin = 'MTKIN'
     end
-    object StringField15: TStringField
+    object IH001_MTMMTBIKO: TStringField
       FieldName = 'MTBIKO'
       Origin = 'MTBIKO'
       Size = 100
     end
-    object StringField16: TStringField
+    object IH001_MTMMTJTCD: TStringField
       FieldName = 'MTJTCD'
       Origin = 'MTJTCD'
       Size = 1
@@ -800,7 +674,6 @@ object DataModule4: TDataModule4
     object AggregateField2: TAggregateField
       FieldName = 'sumKIN'
       Visible = True
-      Active = True
       DisplayName = ''
       DisplayFormat = '###,###,##0'
       Expression = 'SUM(MTKIN - mKIN)'
@@ -819,128 +692,126 @@ object DataModule4: TDataModule4
       'left join tnmmsp on tntncd = mhtncd')
     Left = 32
     Top = 448
-    object IntegerField21: TIntegerField
+    object FDQryIH002MHNO: TIntegerField
       FieldName = 'MHNO'
       Origin = 'MHNO'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
-    object DateField7: TDateField
+    object FDQryIH002MHIRDT: TDateField
       FieldName = 'MHIRDT'
       Origin = 'MHIRDT'
     end
-    object DateField8: TDateField
+    object FDQryIH002MHKGDT: TDateField
       FieldName = 'MHKGDT'
       Origin = 'MHKGDT'
     end
-    object StringField21: TStringField
+    object FDQryIH002MHTKCD: TStringField
       FieldName = 'MHTKCD'
       Origin = 'MHTKCD'
       Size = 5
     end
-    object StringField22: TStringField
+    object FDQryIH002MHTKNM: TStringField
       FieldName = 'MHTKNM'
       Origin = 'MHTKNM'
       Size = 100
     end
-    object IntegerField22: TIntegerField
+    object FDQryIH002MHGSRO: TIntegerField
       FieldName = 'MHGSRO'
       Origin = 'MHGSRO'
-      DisplayFormat = '###,###,###'
     end
-    object IntegerField23: TIntegerField
+    object FDQryIH002MHGKIN: TIntegerField
       FieldName = 'MHGKIN'
       Origin = 'MHGKIN'
-      DisplayFormat = '###,###,###'
     end
-    object IntegerField24: TIntegerField
+    object FDQryIH002MHTNCD: TIntegerField
       FieldName = 'MHTNCD'
       Origin = 'MHTNCD'
       Required = True
     end
-    object StringField23: TStringField
+    object FDQryIH002MHBIKO: TStringField
       FieldName = 'MHBIKO'
       Origin = 'MHBIKO'
       Size = 100
     end
-    object StringField24: TStringField
+    object FDQryIH002MHJTCD: TStringField
       FieldName = 'MHJTCD'
       Origin = 'MHJTCD'
       Size = 1
     end
-    object IntegerField25: TIntegerField
+    object FDQryIH002TNTNCD: TIntegerField
       FieldName = 'TNTNCD'
       Origin = 'TNTNCD'
     end
-    object IntegerField26: TIntegerField
+    object FDQryIH002TNBKCD: TIntegerField
       FieldName = 'TNBKCD'
       Origin = 'TNBKCD'
     end
-    object VarBytesField1: TVarBytesField
+    object FDQryIH002TNPASS: TVarBytesField
       FieldName = 'TNPASS'
       Origin = 'TNPASS'
       Size = 2000
     end
-    object StringField25: TStringField
+    object FDQryIH002TNNAME: TStringField
       FieldName = 'TNNAME'
       Origin = 'TNNAME'
       Size = 16
     end
-    object StringField26: TStringField
+    object FDQryIH002TNKGKB: TStringField
       FieldName = 'TNKGKB'
       Origin = 'TNKGKB'
       Size = 1
     end
-    object StringField27: TStringField
+    object FDQryIH002TNSTKB: TStringField
       FieldName = 'TNSTKB'
       Origin = 'TNSTKB'
       Size = 4
     end
-    object DateField9: TDateField
+    object FDQryIH002TNPWLA: TDateField
       FieldName = 'TNPWLA'
       Origin = 'TNPWLA'
     end
-    object DateField10: TDateField
+    object FDQryIH002TNCRDT: TDateField
       FieldName = 'TNCRDT'
       Origin = 'TNCRDT'
     end
-    object TimeField1: TTimeField
+    object FDQryIH002TNCRTM: TTimeField
       FieldName = 'TNCRTM'
       Origin = 'TNCRTM'
     end
-    object StringField28: TStringField
+    object FDQryIH002TNCRPG: TStringField
       FieldName = 'TNCRPG'
       Origin = 'TNCRPG'
     end
-    object StringField29: TStringField
+    object FDQryIH002TNCRWS: TStringField
       FieldName = 'TNCRWS'
       Origin = 'TNCRWS'
     end
-    object StringField30: TStringField
+    object FDQryIH002TNCRUS: TStringField
       FieldName = 'TNCRUS'
       Origin = 'TNCRUS'
     end
-    object DateField11: TDateField
+    object FDQryIH002TNUPDT: TDateField
       FieldName = 'TNUPDT'
       Origin = 'TNUPDT'
     end
-    object TimeField2: TTimeField
+    object FDQryIH002TNUPTM: TTimeField
       FieldName = 'TNUPTM'
       Origin = 'TNUPTM'
     end
-    object StringField31: TStringField
+    object FDQryIH002TNUPPG: TStringField
       FieldName = 'TNUPPG'
       Origin = 'TNUPPG'
     end
-    object StringField32: TStringField
+    object FDQryIH002TNUPWS: TStringField
       FieldName = 'TNUPWS'
       Origin = 'TNUPWS'
     end
-    object StringField33: TStringField
+    object FDQryIH002TNUPUS: TStringField
       FieldName = 'TNUPUS'
       Origin = 'TNUPUS'
     end
-    object StringField34: TStringField
+    object FDQryIH002TNJTCD: TStringField
       FieldName = 'TNJTCD'
       Origin = 'TNJTCD'
       Size = 1
