@@ -133,7 +133,7 @@ inherited IH005: TIH005
     end
   end
   object frxReport0: TfrxReport
-    Version = '5.6.9'
+    Version = '5.6.10'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -196,8 +196,8 @@ inherited IH005: TIH005
       Width = 1000.000000000000000000
     end
     object Page2: TfrxReportPage
-      PaperWidth = 250.000000000000000000
-      PaperHeight = 354.000000000000000000
+      PaperWidth = 257.000000000000000000
+      PaperHeight = 364.000000000000000000
       PaperSize = 12
       LeftMargin = 10.000000000000000000
       RightMargin = 10.000000000000000000
@@ -232,8 +232,8 @@ inherited IH005: TIH005
       end
     end
     object Page3: TfrxReportPage
-      PaperWidth = 250.000000000000000000
-      PaperHeight = 354.000000000000000000
+      PaperWidth = 257.000000000000000000
+      PaperHeight = 364.000000000000000000
       PaperSize = 12
       LeftMargin = 10.000000000000000000
       RightMargin = 10.000000000000000000
@@ -382,7 +382,7 @@ inherited IH005: TIH005
     end
   end
   object frxReport1: TfrxReport
-    Version = '5.6.9'
+    Version = '5.6.10'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -987,7 +987,7 @@ inherited IH005: TIH005
     end
   end
   object frxReport2: TfrxReport
-    Version = '5.6.9'
+    Version = '5.6.10'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -1050,8 +1050,8 @@ inherited IH005: TIH005
       Width = 1000.000000000000000000
     end
     object Page1: TfrxReportPage
-      PaperWidth = 250.000000000000000000
-      PaperHeight = 354.000000000000000000
+      PaperWidth = 257.000000000000000000
+      PaperHeight = 364.000000000000000000
       PaperSize = 12
       LeftMargin = 10.000000000000000000
       RightMargin = 10.000000000000000000
@@ -1201,7 +1201,7 @@ inherited IH005: TIH005
     end
   end
   object frxReport3: TfrxReport
-    Version = '5.6.9'
+    Version = '5.6.10'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -1286,8 +1286,8 @@ inherited IH005: TIH005
       Width = 1000.000000000000000000
     end
     object Page1: TfrxReportPage
-      PaperWidth = 250.000000000000000000
-      PaperHeight = 354.000000000000000000
+      PaperWidth = 257.000000000000000000
+      PaperHeight = 364.000000000000000000
       PaperSize = 12
       LeftMargin = 10.000000000000000000
       RightMargin = 10.000000000000000000
@@ -1784,7 +1784,7 @@ inherited IH005: TIH005
     end
   end
   object frxReport4: TfrxReport
-    Version = '5.6.9'
+    Version = '5.6.10'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -1861,8 +1861,8 @@ inherited IH005: TIH005
       Width = 1000.000000000000000000
     end
     object Page1: TfrxReportPage
-      PaperWidth = 250.000000000000000000
-      PaperHeight = 354.000000000000000000
+      PaperWidth = 257.000000000000000000
+      PaperHeight = 364.000000000000000000
       PaperSize = 12
       LeftMargin = 7.000000000000000000
       RightMargin = 5.000000000000000000
@@ -1873,7 +1873,7 @@ inherited IH005: TIH005
       object MasterData1: TfrxMasterData
         FillType = ftBrush
         Top = 41.574830000000000000
-        Width = 899.528140000000000000
+        Width = 925.984850000000000000
         DataSet = DataModule2.frxDBDatasetIH005
         DataSetName = 'frxDBDatasetIH005'
         RowCount = 0
@@ -1888,7 +1888,7 @@ inherited IH005: TIH005
         Height = 41.574803150000000000
         ParentFont = False
         Top = 207.874150000000000000
-        Width = 899.528140000000000000
+        Width = 925.984850000000000000
         OnBeforePrint = 'MasterData1OnBeforePrint'
         Child = frxReport4.Child1
         DataSet = DataModule2.frxDBDatasetIH005MS
@@ -1913,7 +1913,7 @@ inherited IH005: TIH005
         end
         object frxDBDatasetIH005MSMTKIN: TfrxMemoView
           Left = 555.590551180000000000
-          Top = 20.787401569999990000
+          Top = 20.787401570000000000
           Width = 75.590551181102400000
           Height = 20.787401570000000000
           DataField = 'MTKIN'
@@ -1934,7 +1934,7 @@ inherited IH005: TIH005
         end
         object frxDBDatasetIH005MSMTTNKA: TfrxMemoView
           Left = 464.881889763780000000
-          Top = 20.787401569999990000
+          Top = 20.787401570000000000
           Width = 86.929133858267700000
           Height = 20.787401570000000000
           DataField = 'MTTNKA'
@@ -1955,7 +1955,7 @@ inherited IH005: TIH005
         end
         object frxDBDatasetIH005MSMTSRYO: TfrxMemoView
           Left = 328.818897640000000000
-          Top = 20.787401569999990000
+          Top = 20.787401570000000000
           Width = 86.929133860000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005MS
@@ -1975,7 +1975,7 @@ inherited IH005: TIH005
         end
         object Memo75: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 20.787401569999990000
+          Top = 20.787401570000000000
           Width = 113.385900000000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -1993,7 +1993,7 @@ inherited IH005: TIH005
         end
         object Memo76: TfrxMemoView
           Left = 211.653680000000000000
-          Top = 20.787401569999990000
+          Top = 20.787401570000000000
           Width = 113.385900000000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2011,7 +2011,7 @@ inherited IH005: TIH005
         end
         object Memo77: TfrxMemoView
           Left = 415.748031496063000000
-          Top = 20.787401569999990000
+          Top = 20.787401570000000000
           Width = 30.236220472440900000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2028,7 +2028,7 @@ inherited IH005: TIH005
         end
         object Memo78: TfrxMemoView
           Left = 634.960629920000000000
-          Top = 20.787401569999990000
+          Top = 20.787401570000000000
           Width = 52.913390710000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2046,7 +2046,7 @@ inherited IH005: TIH005
         end
         object Memo80: TfrxMemoView
           Left = 691.653545750000000000
-          Top = 20.787401569999990000
+          Top = 20.787401570000000000
           Width = 215.433210000000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2063,7 +2063,7 @@ inherited IH005: TIH005
         end
         object Memo177: TfrxMemoView
           Left = 449.763779527559000000
-          Top = 20.787401569999990000
+          Top = 20.787401570000000000
           Width = 15.118120000000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2099,7 +2099,7 @@ inherited IH005: TIH005
       object GroupHeader1: TfrxGroupHeader
         FillType = ftBrush
         Top = 18.897650000000000000
-        Width = 899.528140000000000000
+        Width = 925.984850000000000000
         Condition = 'frxDBDatasetIH005."NewMTNO"'
         StartNewPage = True
       end
@@ -2107,7 +2107,7 @@ inherited IH005: TIH005
         FillType = ftBrush
         Height = 60.094488190000000000
         Top = 600.945270000000000000
-        Width = 899.528140000000000000
+        Width = 925.984850000000000000
         OnBeforePrint = 'MasterData1OnBeforePrint'
         Child = frxReport4.Child2
         DataSet = DataModule2.frxDBDatasetIH005MS
@@ -2116,7 +2116,7 @@ inherited IH005: TIH005
         RowCount = 0
         object Memo7: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 41.574830000000020000
+          Top = 41.574830000000000000
           Width = 317.480314960000000000
           Height = 18.897650000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2133,7 +2133,7 @@ inherited IH005: TIH005
         end
         object Memo1: TfrxMemoView
           Left = 7.559055120000000000
-          Top = 3.779530000000022000
+          Top = 3.779530000000020000
           Width = 317.480314960000000000
           Height = 18.897650000000000000
           DataField = 'MTSHNM'
@@ -2151,7 +2151,7 @@ inherited IH005: TIH005
         end
         object Memo148: TfrxMemoView
           Left = 328.818897640000000000
-          Top = 22.677180000000020000
+          Top = 22.677180000000000000
           Width = 86.929133860000000000
           Height = 18.897650000000000000
           DataSet = DataModule2.frxDBDatasetIH005MS
@@ -2171,7 +2171,7 @@ inherited IH005: TIH005
         end
         object Memo149: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 22.677180000000020000
+          Top = 22.677180000000000000
           Width = 113.385900000000000000
           Height = 18.897650000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2189,7 +2189,7 @@ inherited IH005: TIH005
         end
         object Memo150: TfrxMemoView
           Left = 211.653680000000000000
-          Top = 22.677180000000020000
+          Top = 22.677180000000000000
           Width = 113.385900000000000000
           Height = 18.897650000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2207,7 +2207,7 @@ inherited IH005: TIH005
         end
         object Memo151: TfrxMemoView
           Left = 415.748300000000000000
-          Top = 22.677180000000020000
+          Top = 22.677180000000000000
           Width = 30.236220470000000000
           Height = 18.897650000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2225,7 +2225,7 @@ inherited IH005: TIH005
         end
         object Memo153: TfrxMemoView
           Left = 457.323130000000000000
-          Top = 3.779530000000022000
+          Top = 3.779530000000020000
           Width = 275.905690000000000000
           Height = 18.897650000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2242,7 +2242,7 @@ inherited IH005: TIH005
         end
         object Memo154: TfrxMemoView
           Left = 457.323130000000000000
-          Top = 22.677180000000020000
+          Top = 22.677180000000000000
           Width = 275.905690000000000000
           Height = 18.897650000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2262,12 +2262,12 @@ inherited IH005: TIH005
         FillType = ftBrush
         Height = 120.944881890000000000
         Top = 64.252010000000000000
-        Width = 899.528140000000000000
+        Width = 925.984850000000000000
       end
       object Footer1: TfrxFooter
         FillType = ftBrush
         Top = 272.126160000000000000
-        Width = 899.528140000000000000
+        Width = 925.984850000000000000
         OnBeforePrint = 'Footer1OnBeforePrint'
         Child = frxReport4.Child1
       end
@@ -2275,12 +2275,12 @@ inherited IH005: TIH005
         FillType = ftBrush
         Height = 219.212598430000000000
         Top = 359.055350000000000000
-        Width = 899.528140000000000000
+        Width = 925.984850000000000000
       end
       object Footer2: TfrxFooter
         FillType = ftBrush
         Top = 684.094930000000000000
-        Width = 899.528140000000000000
+        Width = 925.984850000000000000
         OnBeforePrint = 'Footer2OnBeforePrint'
         Child = frxReport4.Child2
       end
@@ -2288,13 +2288,13 @@ inherited IH005: TIH005
         FillType = ftBrush
         Height = 163.653543307087000000
         Top = 789.921770000000000000
-        Width = 899.528140000000000000
+        Width = 925.984850000000000000
       end
       object DetailData3: TfrxDetailData
         FillType = ftBrush
         Height = 41.574803150000000000
         Top = 975.118740000000000000
-        Width = 899.528140000000000000
+        Width = 925.984850000000000000
         OnAfterPrint = 'MasterData1OnAfterPrint'
         OnBeforePrint = 'MasterData1OnBeforePrint'
         DataSet = DataModule2.frxDBDatasetIH005MS
@@ -2319,7 +2319,7 @@ inherited IH005: TIH005
         end
         object Memo12: TfrxMemoView
           Left = 555.590551180000000000
-          Top = 20.787401570000040000
+          Top = 20.787401570000000000
           Width = 75.590551180000000000
           Height = 20.787401570000000000
           DataField = 'MTKIN'
@@ -2340,7 +2340,7 @@ inherited IH005: TIH005
         end
         object Memo13: TfrxMemoView
           Left = 464.881889760000000000
-          Top = 20.787401570000040000
+          Top = 20.787401570000000000
           Width = 86.929133860000000000
           Height = 20.787401570000000000
           DataField = 'MTTNKA'
@@ -2361,7 +2361,7 @@ inherited IH005: TIH005
         end
         object Memo21: TfrxMemoView
           Left = 328.818897640000000000
-          Top = 20.787401570000040000
+          Top = 20.787401570000000000
           Width = 86.929133860000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005MS
@@ -2381,7 +2381,7 @@ inherited IH005: TIH005
         end
         object Memo81: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 20.787401570000040000
+          Top = 20.787401570000000000
           Width = 113.385900000000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2399,7 +2399,7 @@ inherited IH005: TIH005
         end
         object Memo82: TfrxMemoView
           Left = 211.653680000000000000
-          Top = 20.787401570000040000
+          Top = 20.787401570000000000
           Width = 113.385900000000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2417,7 +2417,7 @@ inherited IH005: TIH005
         end
         object Memo83: TfrxMemoView
           Left = 415.748031500000000000
-          Top = 20.787401570000040000
+          Top = 20.787401570000000000
           Width = 30.236220470000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2434,7 +2434,7 @@ inherited IH005: TIH005
         end
         object Memo84: TfrxMemoView
           Left = 634.960629920000000000
-          Top = 20.787401570000040000
+          Top = 20.787401570000000000
           Width = 52.913390710000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2452,7 +2452,7 @@ inherited IH005: TIH005
         end
         object Memo85: TfrxMemoView
           Left = 691.653545750000000000
-          Top = 20.787401570000040000
+          Top = 20.787401570000000000
           Width = 215.433210000000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2469,7 +2469,7 @@ inherited IH005: TIH005
         end
         object Memo86: TfrxMemoView
           Left = 449.763779530000000000
-          Top = 20.787401570000040000
+          Top = 20.787401570000000000
           Width = 15.118120000000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2505,20 +2505,20 @@ inherited IH005: TIH005
       object Footer3: TfrxFooter
         FillType = ftBrush
         Top = 1039.370750000000000000
-        Width = 899.528140000000000000
+        Width = 925.984850000000000000
         OnBeforePrint = 'Footer1OnBeforePrint'
       end
       object Header4: TfrxHeader
         FillType = ftBrush
         Height = 219.212598425197000000
         Top = 1062.047930000000000000
-        Width = 899.528140000000000000
+        Width = 925.984850000000000000
       end
       object DetailData4: TfrxDetailData
         FillType = ftBrush
         Height = 41.574803150000000000
         Top = 1303.937850000000000000
-        Width = 899.528140000000000000
+        Width = 925.984850000000000000
         OnAfterPrint = 'MasterData1OnAfterPrint'
         OnBeforePrint = 'MasterData1OnBeforePrint'
         DataSet = DataModule2.frxDBDatasetIH005MS
@@ -2543,7 +2543,7 @@ inherited IH005: TIH005
         end
         object Memo89: TfrxMemoView
           Left = 332.598427640000000000
-          Top = 20.787401569999930000
+          Top = 20.787401569999900000
           Width = 86.929133860000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005MS
@@ -2563,7 +2563,7 @@ inherited IH005: TIH005
         end
         object Memo90: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 20.787401569999930000
+          Top = 20.787401569999900000
           Width = 113.385900000000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2581,7 +2581,7 @@ inherited IH005: TIH005
         end
         object Memo91: TfrxMemoView
           Left = 211.653680000000000000
-          Top = 20.787401569999930000
+          Top = 20.787401569999900000
           Width = 113.385900000000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2599,7 +2599,7 @@ inherited IH005: TIH005
         end
         object Memo92: TfrxMemoView
           Left = 419.527561500000000000
-          Top = 20.787401569999930000
+          Top = 20.787401569999900000
           Width = 30.236220470000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2616,7 +2616,7 @@ inherited IH005: TIH005
         end
         object Memo130: TfrxMemoView
           Left = 453.543602440000000000
-          Top = 20.787401569999930000
+          Top = 20.787401569999900000
           Width = 215.433210000000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2651,14 +2651,14 @@ inherited IH005: TIH005
       object Footer4: TfrxFooter
         FillType = ftBrush
         Top = 1368.189860000000000000
-        Width = 899.528140000000000000
+        Width = 925.984850000000000000
         OnBeforePrint = 'Footer1OnBeforePrint'
       end
       object Overlay1: TfrxOverlay
         FillType = ftBrush
         Height = 1322.834645670000000000
         Top = 1390.867040000000000000
-        Width = 899.528140000000000000
+        Width = 925.984850000000000000
         object Shape21: TfrxShapeView
           Left = 684.094930000000000000
           Top = 1137.638530000000000000
@@ -2683,21 +2683,21 @@ inherited IH005: TIH005
         end
         object Shape7: TfrxShapeView
           Left = 457.323130000000000000
-          Top = 60.472479999999910000
+          Top = 60.472479999999900000
           Width = 272.126160000000000000
           Height = 39.685036930000000000
           Curve = 2
           Shape = skRoundRectangle
         end
         object Shape6: TfrxShapeView
-          Top = 60.472479999999910000
+          Top = 60.472479999999900000
           Width = 453.543600000000000000
           Height = 39.685039370000000000
           Curve = 2
           Shape = skRoundRectangle
         end
         object Shape5: TfrxShapeView
-          Top = 15.118120000000090000
+          Top = 15.118120000000100000
           Width = 343.937230000000000000
           Height = 39.685039370078700000
           Curve = 2
@@ -2705,7 +2705,7 @@ inherited IH005: TIH005
         end
         object Memo16: TfrxMemoView
           Left = 457.323130000000000000
-          Top = 79.370142199999920000
+          Top = 79.370142199999900000
           Width = 98.267780000000000000
           Height = 18.897650000000000000
           DataField = 'MHIRDT'
@@ -2833,7 +2833,7 @@ inherited IH005: TIH005
           VAlign = vaCenter
         end
         object Line2: TfrxLineView
-          Top = 661.417322830000100000
+          Top = 661.417322830000000000
           Width = 925.984251970000000000
           Color = clBlack
           Frame.Style = fsDot
@@ -2841,7 +2841,7 @@ inherited IH005: TIH005
         end
         object Memo28: TfrxMemoView
           Left = 366.614173228346000000
-          Top = 687.874015748031100000
+          Top = 687.874015748031000000
           Width = 185.196850393701000000
           Height = 34.015748030000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2859,7 +2859,7 @@ inherited IH005: TIH005
         end
         object Line3: TfrxLineView
           Top = 1005.354330710000000000
-          Width = 925.984251968503900000
+          Width = 925.984251968504000000
           Color = clBlack
           Frame.Style = fsDot
           Frame.Typ = [ftTop]
@@ -2909,7 +2909,7 @@ inherited IH005: TIH005
         end
         object Shape3: TfrxShapeView
           Left = 366.614173228346000000
-          Top = 687.874015748031100000
+          Top = 687.874015748031000000
           Width = 185.196850390000000000
           Height = 34.015770000000000000
           Curve = 2
@@ -2924,7 +2924,7 @@ inherited IH005: TIH005
           Shape = skRoundRectangle
         end
         object Memo36: TfrxMemoView
-          Top = 15.118120000000090000
+          Top = 15.118120000000100000
           Width = 343.937230000000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2942,7 +2942,7 @@ inherited IH005: TIH005
         end
         object Memo38: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 79.370142199999920000
+          Top = 79.370142199999900000
           Width = 336.378170000000000000
           Height = 18.897650000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2958,7 +2958,7 @@ inherited IH005: TIH005
           VAlign = vaBottom
         end
         object Memo40: TfrxMemoView
-          Top = 60.472479999999910000
+          Top = 60.472479999999900000
           Width = 347.716760000000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2976,7 +2976,7 @@ inherited IH005: TIH005
         end
         object Memo41: TfrxMemoView
           Left = 347.716760000000000000
-          Top = 60.472479999999910000
+          Top = 60.472479999999900000
           Width = 105.826840000000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -2994,7 +2994,7 @@ inherited IH005: TIH005
         end
         object Memo42: TfrxMemoView
           Left = 347.716760000000000000
-          Top = 79.370130000000010000
+          Top = 79.370130000000000000
           Width = 105.826840000000000000
           Height = 18.897650000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -3012,7 +3012,7 @@ inherited IH005: TIH005
         end
         object Memo43: TfrxMemoView
           Left = 461.102660000000000000
-          Top = 60.472479999999910000
+          Top = 60.472479999999900000
           Width = 86.929190000000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -3030,7 +3030,7 @@ inherited IH005: TIH005
         end
         object Memo44: TfrxMemoView
           Left = 559.370440000000000000
-          Top = 60.472479999999910000
+          Top = 60.472479999999900000
           Width = 79.370130000000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -3048,7 +3048,7 @@ inherited IH005: TIH005
         end
         object Memo45: TfrxMemoView
           Left = 559.370440000000000000
-          Top = 79.370130000000010000
+          Top = 79.370130000000000000
           Width = 79.370130000000000000
           Height = 18.897650000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -3066,7 +3066,7 @@ inherited IH005: TIH005
         end
         object Memo46: TfrxMemoView
           Left = 646.299630000000000000
-          Top = 60.472479999999910000
+          Top = 60.472479999999900000
           Width = 79.370130000000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -3084,7 +3084,7 @@ inherited IH005: TIH005
         end
         object Memo47: TfrxMemoView
           Left = 646.299630000000000000
-          Top = 79.370130000000010000
+          Top = 79.370130000000000000
           Width = 79.370130000000000000
           Height = 18.897650000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -3117,7 +3117,7 @@ inherited IH005: TIH005
         end
         object Memo49: TfrxMemoView
           Left = 737.008350000000000000
-          Top = 60.472479999999910000
+          Top = 60.472479999999900000
           Width = 170.078850000000000000
           Height = 49.133890000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -3633,7 +3633,7 @@ inherited IH005: TIH005
         end
         object Memo155: TfrxMemoView
           Left = 79.370130000000000000
-          Top = 245.669450000000100000
+          Top = 245.669450000000000000
           Width = 75.590551180000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -3669,7 +3669,7 @@ inherited IH005: TIH005
         end
         object Memo157: TfrxMemoView
           Left = 162.519790000000000000
-          Top = 245.669450000000100000
+          Top = 245.669450000000000000
           Width = 86.929133860000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -3707,7 +3707,7 @@ inherited IH005: TIH005
         end
         object Memo159: TfrxMemoView
           Left = 257.008040000000000000
-          Top = 245.669450000000100000
+          Top = 245.669450000000000000
           Width = 75.590551180000000000
           Height = 41.574803150000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -3725,7 +3725,7 @@ inherited IH005: TIH005
         end
         object Memo160: TfrxMemoView
           Left = 340.157700000000000000
-          Top = 245.669450000000100000
+          Top = 245.669450000000000000
           Width = 86.929133860000000000
           Height = 41.574803150000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -3745,7 +3745,7 @@ inherited IH005: TIH005
         end
         object Memo27: TfrxMemoView
           Left = 434.645950000000000000
-          Top = 245.669450000000100000
+          Top = 245.669450000000000000
           Width = 75.590551180000000000
           Height = 41.574803150000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -3763,7 +3763,7 @@ inherited IH005: TIH005
         end
         object Memo161: TfrxMemoView
           Left = 514.016080000000000000
-          Top = 245.669450000000100000
+          Top = 245.669450000000000000
           Width = 75.590551180000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -3799,7 +3799,7 @@ inherited IH005: TIH005
         end
         object Memo163: TfrxMemoView
           Left = 593.386210000000000000
-          Top = 245.669450000000100000
+          Top = 245.669450000000000000
           Width = 86.929133860000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -3837,7 +3837,7 @@ inherited IH005: TIH005
         end
         object Memo3: TfrxMemoView
           Left = 684.094930000000000000
-          Top = 245.669450000000100000
+          Top = 245.669450000000000000
           Width = 71.811021180000000000
           Height = 41.574803150000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -3871,7 +3871,7 @@ inherited IH005: TIH005
           VAlign = vaBottom
         end
         object Line4: TfrxLineView
-          Top = 120.944869689999900000
+          Top = 120.944869690000000000
           Width = 910.866141730000000000
           Color = clBlack
           Frame.Typ = [ftTop]
@@ -3884,34 +3884,34 @@ inherited IH005: TIH005
           Frame.Typ = [ftLeft]
         end
         object Line6: TfrxLineView
-          Top = 30.236218029999920000
+          Top = 30.236218029999900000
           Width = 343.937034720000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Line7: TfrxLineView
-          Top = 75.590543860000030000
+          Top = 75.590543860000000000
           Width = 453.543331500000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Line8: TfrxLineView
           Left = 347.716760000000000000
-          Top = 60.472479999999910000
+          Top = 60.472479999999900000
           Height = 39.685039370000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line9: TfrxLineView
           Left = 555.590910000000000000
-          Top = 60.472479999999910000
+          Top = 60.472479999999900000
           Height = 39.685039370000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line10: TfrxLineView
           Left = 642.520100000000000000
-          Top = 60.472479999999910000
+          Top = 60.472479999999900000
           Height = 39.685039370000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
@@ -3924,7 +3924,7 @@ inherited IH005: TIH005
         end
         object Line12: TfrxLineView
           Left = 457.323130000000000000
-          Top = 75.590543860000030000
+          Top = 75.590543860000000000
           Width = 272.125964720000000000
           Color = clBlack
           Frame.Typ = [ftTop]
@@ -3936,7 +3936,7 @@ inherited IH005: TIH005
           Frame.Typ = [ftTop]
         end
         object Line14: TfrxLineView
-          Top = 245.669279129999900000
+          Top = 245.669279130000000000
           Width = 910.866141730000000000
           Color = clBlack
           Frame.Typ = [ftTop]
@@ -3996,7 +3996,7 @@ inherited IH005: TIH005
         end
         object Memo180: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 34.015769999999970000
+          Top = 34.015770000000000000
           Width = 336.378170000000000000
           Height = 18.897650000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -4013,7 +4013,7 @@ inherited IH005: TIH005
         end
         object Memo17: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 166.299320000000100000
+          Top = 166.299320000000000000
           Width = 317.480324720000000000
           Height = 18.897650000000000000
           Visible = False
@@ -4069,7 +4069,7 @@ inherited IH005: TIH005
         end
         object Memo182: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 207.874150000000100000
+          Top = 207.874150000000000000
           Width = 317.480324720000000000
           Height = 18.897650000000000000
           Visible = False
@@ -4125,62 +4125,62 @@ inherited IH005: TIH005
         end
         object Line21: TfrxLineView
           Left = 156.850393700000000000
-          Top = 245.669450000000100000
+          Top = 245.669450000000000000
           Height = 41.574830000000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line22: TfrxLineView
           Left = 512.126155120000000000
-          Top = 245.669450000000100000
+          Top = 245.669450000000000000
           Height = 41.574830000000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line27: TfrxLineView
           Left = 755.906000000000000000
-          Top = 245.669450000000100000
+          Top = 245.669450000000000000
           Height = 41.574830000000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line28: TfrxLineView
           Left = 77.480314960000000000
-          Top = 245.669450000000100000
+          Top = 245.669450000000000000
           Height = 41.574830000000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line23: TfrxLineView
           Left = 591.496062990000000000
-          Top = 245.669450000000100000
+          Top = 245.669450000000000000
           Height = 41.574830000000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line24: TfrxLineView
           Left = 430.866420000000000000
-          Top = 245.669450000000100000
+          Top = 245.669450000000000000
           Height = 41.574830000000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line25: TfrxLineView
           Left = 336.378170000000000000
-          Top = 245.669450000000100000
+          Top = 245.669450000000000000
           Height = 41.574830000000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line26: TfrxLineView
           Left = 253.228510000000000000
-          Top = 245.669450000000100000
+          Top = 245.669450000000000000
           Height = 41.574830000000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Shape1: TfrxShapeView
-          Top = 793.701300000000100000
+          Top = 793.701300000000000000
           Width = 910.866730000000000000
           Height = 181.417320390000000000
           Curve = 2
@@ -4188,21 +4188,21 @@ inherited IH005: TIH005
         end
         object Shape10: TfrxShapeView
           Left = 457.323130000000000000
-          Top = 748.346939999999900000
+          Top = 748.346940000000000000
           Width = 272.126160000000000000
           Height = 39.685036930000000000
           Curve = 2
           Shape = skRoundRectangle
         end
         object Shape11: TfrxShapeView
-          Top = 748.346939999999900000
+          Top = 748.346940000000000000
           Width = 453.543600000000000000
           Height = 39.685039370000000000
           Curve = 2
           Shape = skRoundRectangle
         end
         object Shape12: TfrxShapeView
-          Top = 702.992580000000100000
+          Top = 702.992580000000000000
           Width = 343.937230000000000000
           Height = 39.685039370000000000
           Curve = 2
@@ -4210,7 +4210,7 @@ inherited IH005: TIH005
         end
         object Memo6: TfrxMemoView
           Left = 457.323130000000000000
-          Top = 767.244602199999900000
+          Top = 767.244602200000000000
           Width = 98.267780000000000000
           Height = 18.897650000000000000
           DataField = 'MHIRDT'
@@ -4303,7 +4303,7 @@ inherited IH005: TIH005
           Frame.Typ = [ftTop]
         end
         object Memo107: TfrxMemoView
-          Top = 702.992580000000100000
+          Top = 702.992580000000000000
           Width = 343.937230000000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -4321,7 +4321,7 @@ inherited IH005: TIH005
         end
         object Memo108: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 767.244602199999900000
+          Top = 767.244602200000000000
           Width = 336.378170000000000000
           Height = 18.897650000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -4337,7 +4337,7 @@ inherited IH005: TIH005
           VAlign = vaBottom
         end
         object Memo109: TfrxMemoView
-          Top = 748.346939999999900000
+          Top = 748.346940000000000000
           Width = 347.716760000000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -4355,7 +4355,7 @@ inherited IH005: TIH005
         end
         object Memo110: TfrxMemoView
           Left = 347.716760000000000000
-          Top = 748.346939999999900000
+          Top = 748.346940000000000000
           Width = 105.826840000000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -4373,7 +4373,7 @@ inherited IH005: TIH005
         end
         object Memo111: TfrxMemoView
           Left = 347.716760000000000000
-          Top = 767.244589999999700000
+          Top = 767.244590000000000000
           Width = 105.826840000000000000
           Height = 18.897650000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -4391,7 +4391,7 @@ inherited IH005: TIH005
         end
         object Memo112: TfrxMemoView
           Left = 461.102660000000000000
-          Top = 748.346939999999900000
+          Top = 748.346940000000000000
           Width = 86.929190000000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -4409,7 +4409,7 @@ inherited IH005: TIH005
         end
         object Memo113: TfrxMemoView
           Left = 559.370440000000000000
-          Top = 748.346939999999900000
+          Top = 748.346940000000000000
           Width = 79.370130000000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -4427,7 +4427,7 @@ inherited IH005: TIH005
         end
         object Memo114: TfrxMemoView
           Left = 559.370440000000000000
-          Top = 767.244589999999700000
+          Top = 767.244590000000000000
           Width = 79.370130000000000000
           Height = 18.897650000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -4445,7 +4445,7 @@ inherited IH005: TIH005
         end
         object Memo115: TfrxMemoView
           Left = 646.299630000000000000
-          Top = 748.346939999999900000
+          Top = 748.346940000000000000
           Width = 79.370130000000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -4463,7 +4463,7 @@ inherited IH005: TIH005
         end
         object Memo116: TfrxMemoView
           Left = 646.299630000000000000
-          Top = 767.244589999999700000
+          Top = 767.244590000000000000
           Width = 79.370130000000000000
           Height = 18.897650000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -4497,7 +4497,7 @@ inherited IH005: TIH005
         end
         object Memo118: TfrxMemoView
           Left = 737.008350000000000000
-          Top = 748.346939999999900000
+          Top = 748.346940000000000000
           Width = 170.078850000000000000
           Height = 49.133890000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -4942,7 +4942,7 @@ inherited IH005: TIH005
         end
         object Memo188: TfrxMemoView
           Left = 79.370130000000000000
-          Top = 933.543909999999900000
+          Top = 933.543910000000000000
           Width = 75.590551180000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -4978,7 +4978,7 @@ inherited IH005: TIH005
         end
         object Memo190: TfrxMemoView
           Left = 162.519790000000000000
-          Top = 933.543909999999900000
+          Top = 933.543910000000000000
           Width = 86.929133860000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -5016,7 +5016,7 @@ inherited IH005: TIH005
         end
         object Memo192: TfrxMemoView
           Left = 257.008040000000000000
-          Top = 933.543909999999900000
+          Top = 933.543910000000000000
           Width = 75.590551180000000000
           Height = 41.574803150000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -5034,7 +5034,7 @@ inherited IH005: TIH005
         end
         object Memo193: TfrxMemoView
           Left = 340.157700000000000000
-          Top = 933.543909999999900000
+          Top = 933.543910000000000000
           Width = 86.929133860000000000
           Height = 41.574803150000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -5054,7 +5054,7 @@ inherited IH005: TIH005
         end
         object Memo194: TfrxMemoView
           Left = 434.645950000000000000
-          Top = 933.543909999999900000
+          Top = 933.543910000000000000
           Width = 75.590551180000000000
           Height = 41.574803150000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -5072,7 +5072,7 @@ inherited IH005: TIH005
         end
         object Memo195: TfrxMemoView
           Left = 514.016080000000000000
-          Top = 933.543909999999900000
+          Top = 933.543910000000000000
           Width = 75.590551180000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -5108,7 +5108,7 @@ inherited IH005: TIH005
         end
         object Memo197: TfrxMemoView
           Left = 593.386210000000000000
-          Top = 933.543909999999900000
+          Top = 933.543910000000000000
           Width = 86.929133860000000000
           Height = 20.787401570000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -5146,7 +5146,7 @@ inherited IH005: TIH005
         end
         object Memo199: TfrxMemoView
           Left = 684.094930000000000000
-          Top = 933.543909999999900000
+          Top = 933.543910000000000000
           Width = 71.811021180000000000
           Height = 41.574803150000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -5163,60 +5163,60 @@ inherited IH005: TIH005
           VAlign = vaCenter
         end
         object Line30: TfrxLineView
-          Top = 808.819329689999900000
+          Top = 808.819329690000000000
           Width = 910.866141730000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Line31: TfrxLineView
           Left = 326.929116770000000000
-          Top = 793.701300000000100000
+          Top = 793.701300000000000000
           Height = 139.842610000000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line32: TfrxLineView
-          Top = 718.110678030000100000
+          Top = 718.110678030000000000
           Width = 343.937034720000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Line33: TfrxLineView
-          Top = 763.465003859999700000
+          Top = 763.465003860000000000
           Width = 453.543331500000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Line34: TfrxLineView
           Left = 347.716760000000000000
-          Top = 748.346939999999900000
+          Top = 748.346940000000000000
           Height = 39.685039370000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line35: TfrxLineView
           Left = 555.590910000000000000
-          Top = 748.346939999999900000
+          Top = 748.346940000000000000
           Height = 39.685039370000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line36: TfrxLineView
           Left = 642.520100000000000000
-          Top = 748.346939999999900000
+          Top = 748.346940000000000000
           Height = 39.685039370000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line37: TfrxLineView
-          Top = 850.394132830000300000
+          Top = 850.394132830000000000
           Width = 910.866141730000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Line38: TfrxLineView
           Left = 457.323130000000000000
-          Top = 763.465003859999700000
+          Top = 763.465003860000000000
           Width = 272.125964720000000000
           Color = clBlack
           Frame.Typ = [ftTop]
@@ -5228,42 +5228,42 @@ inherited IH005: TIH005
           Frame.Typ = [ftTop]
         end
         object Line40: TfrxLineView
-          Top = 933.543739130000100000
+          Top = 933.543739130000000000
           Width = 910.866141730000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Line41: TfrxLineView
           Left = 447.874003540000000000
-          Top = 793.701300000000100000
+          Top = 793.701300000000000000
           Height = 139.842519690000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line42: TfrxLineView
           Left = 553.700780080000000000
-          Top = 793.701300000000100000
+          Top = 793.701300000000000000
           Height = 139.842519690000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line43: TfrxLineView
           Left = 633.070861260000000000
-          Top = 793.701300000000100000
+          Top = 793.701300000000000000
           Height = 139.842519690000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line44: TfrxLineView
           Left = 689.763779530000000000
-          Top = 793.701300000000100000
+          Top = 793.701300000000000000
           Height = 181.417440000000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line45: TfrxLineView
           Left = 415.748019290000000000
-          Top = 793.701300000000100000
+          Top = 793.701300000000000000
           Height = 139.842610000000000000
           Color = clBlack
           Frame.ShadowWidth = 1.000000000000000000
@@ -5272,7 +5272,7 @@ inherited IH005: TIH005
         end
         object Line46: TfrxLineView
           Left = 464.881877560000000000
-          Top = 793.701300000000100000
+          Top = 793.701300000000000000
           Height = 139.842519690000000000
           Color = clBlack
           Frame.ShadowWidth = 1.000000000000000000
@@ -5298,7 +5298,7 @@ inherited IH005: TIH005
         end
         object Memo201: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 854.173780000000100000
+          Top = 854.173780000000000000
           Width = 317.480324720000000000
           Height = 18.897650000000000000
           Visible = False
@@ -5354,7 +5354,7 @@ inherited IH005: TIH005
         end
         object Memo204: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 895.748610000000100000
+          Top = 895.748610000000000000
           Width = 317.480324720000000000
           Height = 18.897650000000000000
           Visible = False
@@ -5410,77 +5410,77 @@ inherited IH005: TIH005
         end
         object Line47: TfrxLineView
           Left = 156.850393700000000000
-          Top = 933.543909999999900000
+          Top = 933.543910000000000000
           Height = 41.574830000000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line48: TfrxLineView
           Left = 512.126155120000000000
-          Top = 933.543909999999900000
+          Top = 933.543910000000000000
           Height = 41.574830000000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line49: TfrxLineView
           Left = 755.906000000000000000
-          Top = 933.543909999999900000
+          Top = 933.543910000000000000
           Height = 41.574830000000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line50: TfrxLineView
           Left = 77.480314960000000000
-          Top = 933.543909999999900000
+          Top = 933.543910000000000000
           Height = 41.574830000000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line51: TfrxLineView
           Left = 591.496062990000000000
-          Top = 933.543909999999900000
+          Top = 933.543910000000000000
           Height = 41.574830000000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line52: TfrxLineView
           Left = 430.866420000000000000
-          Top = 933.543909999999900000
+          Top = 933.543910000000000000
           Height = 41.574830000000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line53: TfrxLineView
           Left = 336.378170000000000000
-          Top = 933.543909999999900000
+          Top = 933.543910000000000000
           Height = 41.574830000000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line54: TfrxLineView
           Left = 253.228510000000000000
-          Top = 933.543909999999900000
+          Top = 933.543910000000000000
           Height = 41.574830000000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Shape13: TfrxShapeView
           Left = 457.323130000000000000
-          Top = 404.409709999999900000
+          Top = 404.409710000000000000
           Width = 272.126160000000000000
           Height = 39.685036930000000000
           Curve = 2
           Shape = skRoundRectangle
         end
         object Shape14: TfrxShapeView
-          Top = 404.409709999999900000
+          Top = 404.409710000000000000
           Width = 453.543600000000000000
           Height = 39.685039370000000000
           Curve = 2
           Shape = skRoundRectangle
         end
         object Shape15: TfrxShapeView
-          Top = 359.055350000000100000
+          Top = 359.055350000000000000
           Width = 343.937230000000000000
           Height = 39.685039370000000000
           Curve = 2
@@ -5488,7 +5488,7 @@ inherited IH005: TIH005
         end
         object Memo5: TfrxMemoView
           Left = 457.323130000000000000
-          Top = 423.307372199999900000
+          Top = 423.307372200000000000
           Width = 98.267780000000000000
           Height = 18.897650000000000000
           DataField = 'MHIRDT'
@@ -5522,7 +5522,7 @@ inherited IH005: TIH005
           ParentFont = False
         end
         object Memo31: TfrxMemoView
-          Top = 359.055350000000100000
+          Top = 359.055350000000000000
           Width = 343.937230000000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -5540,7 +5540,7 @@ inherited IH005: TIH005
         end
         object Memo32: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 423.307372199999900000
+          Top = 423.307372200000000000
           Width = 336.378170000000000000
           Height = 18.897650000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -5556,7 +5556,7 @@ inherited IH005: TIH005
           VAlign = vaBottom
         end
         object Memo97: TfrxMemoView
-          Top = 404.409709999999900000
+          Top = 404.409710000000000000
           Width = 347.716760000000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -5574,7 +5574,7 @@ inherited IH005: TIH005
         end
         object Memo98: TfrxMemoView
           Left = 347.716760000000000000
-          Top = 404.409709999999900000
+          Top = 404.409710000000000000
           Width = 105.826840000000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -5610,7 +5610,7 @@ inherited IH005: TIH005
         end
         object Memo100: TfrxMemoView
           Left = 461.102660000000000000
-          Top = 404.409709999999900000
+          Top = 404.409710000000000000
           Width = 86.929190000000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -5628,7 +5628,7 @@ inherited IH005: TIH005
         end
         object Memo101: TfrxMemoView
           Left = 559.370440000000000000
-          Top = 404.409709999999900000
+          Top = 404.409710000000000000
           Width = 79.370130000000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -5664,7 +5664,7 @@ inherited IH005: TIH005
         end
         object Memo103: TfrxMemoView
           Left = 646.299630000000000000
-          Top = 404.409709999999900000
+          Top = 404.409710000000000000
           Width = 79.370130000000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -5716,7 +5716,7 @@ inherited IH005: TIH005
         end
         object Memo106: TfrxMemoView
           Left = 737.008350000000000000
-          Top = 404.409709999999900000
+          Top = 404.409710000000000000
           Width = 170.078850000000000000
           Height = 49.133890000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -5734,7 +5734,7 @@ inherited IH005: TIH005
           ParentFont = False
         end
         object Line55: TfrxLineView
-          Top = 374.173448029999900000
+          Top = 374.173448030000000000
           Width = 343.937034720000000000
           Color = clBlack
           Frame.Typ = [ftTop]
@@ -5747,21 +5747,21 @@ inherited IH005: TIH005
         end
         object Line57: TfrxLineView
           Left = 347.716760000000000000
-          Top = 404.409709999999900000
+          Top = 404.409710000000000000
           Height = 39.685039370000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line58: TfrxLineView
           Left = 555.590910000000000000
-          Top = 404.409709999999900000
+          Top = 404.409710000000000000
           Height = 39.685039370000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line59: TfrxLineView
           Left = 642.520100000000000000
-          Top = 404.409709999999900000
+          Top = 404.409710000000000000
           Height = 39.685039370000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
@@ -5791,7 +5791,7 @@ inherited IH005: TIH005
           VAlign = vaBottom
         end
         object Shape16: TfrxShapeView
-          Top = 449.764069999999900000
+          Top = 449.764070000000000000
           Width = 729.449290000000000000
           Height = 195.401574800000000000
           Curve = 2
@@ -5799,7 +5799,7 @@ inherited IH005: TIH005
         end
         object Memo146: TfrxMemoView
           Left = 737.008350000000000000
-          Top = 404.409709999999900000
+          Top = 404.409710000000000000
           Width = 170.078850000000000000
           Height = 49.133890000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -5818,7 +5818,7 @@ inherited IH005: TIH005
         end
         object Memo147: TfrxMemoView
           Left = 3.779530000000000000
-          Top = 449.763991889999900000
+          Top = 449.763991890000000000
           Width = 321.259854720000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -5836,7 +5836,7 @@ inherited IH005: TIH005
         end
         object Memo152: TfrxMemoView
           Left = 328.818912280000000000
-          Top = 449.763991889999900000
+          Top = 449.763991890000000000
           Width = 79.370130000000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -5854,7 +5854,7 @@ inherited IH005: TIH005
         end
         object Memo207: TfrxMemoView
           Left = 415.748053460000000000
-          Top = 449.763991889999900000
+          Top = 449.763991890000000000
           Width = 30.236240000000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -5872,7 +5872,7 @@ inherited IH005: TIH005
         end
         object Memo212: TfrxMemoView
           Left = 457.322705280000000000
-          Top = 449.763991889999900000
+          Top = 449.763991890000000000
           Width = 268.346481100000000000
           Height = 15.118120000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -5890,7 +5890,7 @@ inherited IH005: TIH005
         end
         object Memo213: TfrxMemoView
           Left = 328.818912280000000000
-          Top = 468.661720000000100000
+          Top = 468.661720000000000000
           Width = 86.929190000000000000
           Height = 18.897650000000000000
           Visible = False
@@ -5909,7 +5909,7 @@ inherited IH005: TIH005
         end
         object Memo214: TfrxMemoView
           Left = 415.748053460000000000
-          Top = 468.661720000000100000
+          Top = 468.661720000000000000
           Width = 30.236240000000000000
           Height = 18.897650000000000000
           Visible = False
@@ -5927,7 +5927,7 @@ inherited IH005: TIH005
         end
         object Memo219: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 468.661720000000100000
+          Top = 468.661720000000000000
           Width = 317.480324720000000000
           Height = 18.897650000000000000
           Visible = False
@@ -5945,7 +5945,7 @@ inherited IH005: TIH005
         end
         object Memo220: TfrxMemoView
           Left = 457.322683310000000000
-          Top = 468.661720000000100000
+          Top = 468.661720000000000000
           Width = 215.433070870000000000
           Height = 18.897650000000000000
           Visible = False
@@ -5963,7 +5963,7 @@ inherited IH005: TIH005
         end
         object Memo221: TfrxMemoView
           Left = 457.322683310000000000
-          Top = 487.559369999999900000
+          Top = 487.559370000000000000
           Width = 215.433070870000000000
           Height = 18.897650000000000000
           Visible = False
@@ -5981,7 +5981,7 @@ inherited IH005: TIH005
         end
         object Memo222: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 487.559369999999900000
+          Top = 487.559370000000000000
           Width = 113.385900000000000000
           Height = 18.897650000000000000
           Visible = False
@@ -6000,7 +6000,7 @@ inherited IH005: TIH005
         end
         object Memo223: TfrxMemoView
           Left = 211.653680000000000000
-          Top = 487.559369999999900000
+          Top = 487.559370000000000000
           Width = 113.385900000000000000
           Height = 18.897650000000000000
           Visible = False
@@ -6019,7 +6019,7 @@ inherited IH005: TIH005
         end
         object Memo224: TfrxMemoView
           Left = 328.818912280000000000
-          Top = 487.559369999999900000
+          Top = 487.559370000000000000
           Width = 86.929190000000000000
           Height = 18.897650000000000000
           Visible = False
@@ -6038,7 +6038,7 @@ inherited IH005: TIH005
         end
         object Memo225: TfrxMemoView
           Left = 415.748053460000000000
-          Top = 487.559369999999900000
+          Top = 487.559370000000000000
           Width = 30.236240000000000000
           Height = 18.897650000000000000
           Visible = False
@@ -6055,40 +6055,40 @@ inherited IH005: TIH005
           VAlign = vaBottom
         end
         object Line61: TfrxLineView
-          Top = 464.882099689999900000
+          Top = 464.882099690000000000
           Width = 729.448818900000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Line62: TfrxLineView
           Left = 326.929116770000000000
-          Top = 449.764069999999900000
+          Top = 449.764070000000000000
           Height = 56.692950000000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line63: TfrxLineView
-          Top = 524.976377949999900000
+          Top = 524.976377950000000000
           Width = 729.448818897638000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Line64: TfrxLineView
-          Top = 585.070866139999900000
+          Top = 585.070866140000000000
           Width = 729.448818897638000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Line66: TfrxLineView
           Left = 453.543307090000000000
-          Top = 449.764069999999900000
+          Top = 449.764070000000000000
           Height = 195.779527559055000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line70: TfrxLineView
           Left = 415.748019290000000000
-          Top = 449.764069999999900000
+          Top = 449.764070000000000000
           Height = 56.692950000000000000
           Color = clBlack
           Frame.ShadowWidth = 1.000000000000000000
@@ -6097,7 +6097,7 @@ inherited IH005: TIH005
         end
         object Memo242: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 506.457020000000100000
+          Top = 506.457020000000000000
           Width = 317.480324720000000000
           Height = 18.897650000000000000
           Visible = False
@@ -6183,7 +6183,7 @@ inherited IH005: TIH005
         end
         object Line75: TfrxLineView
           Left = 689.763779527559000000
-          Top = 873.071310389999700000
+          Top = 873.071310390000000000
           Width = 221.102362200000000000
           Color = clBlack
           Frame.Style = fsDot
@@ -6198,7 +6198,7 @@ inherited IH005: TIH005
           Frame.Typ = [ftTop]
         end
         object Line67: TfrxLineView
-          Top = 506.457020000000100000
+          Top = 506.457020000000000000
           Width = 729.448818897638000000
           Color = clBlack
           Frame.Style = fsDot
@@ -6206,7 +6206,7 @@ inherited IH005: TIH005
         end
         object Memo169: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 529.134199999999900000
+          Top = 529.134200000000000000
           Width = 317.480324720000000000
           Height = 18.897650000000000000
           Visible = False
@@ -6224,7 +6224,7 @@ inherited IH005: TIH005
         end
         object Memo170: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 548.031850000000100000
+          Top = 548.031850000000000000
           Width = 113.385900000000000000
           Height = 18.897650000000000000
           Visible = False
@@ -6243,7 +6243,7 @@ inherited IH005: TIH005
         end
         object Memo208: TfrxMemoView
           Left = 207.874150000000000000
-          Top = 548.031850000000100000
+          Top = 548.031850000000000000
           Width = 113.385900000000000000
           Height = 18.897650000000000000
           Visible = False
@@ -6262,7 +6262,7 @@ inherited IH005: TIH005
         end
         object Memo209: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 566.929499999999900000
+          Top = 566.929500000000000000
           Width = 317.480324720000000000
           Height = 18.897650000000000000
           Visible = False
@@ -6279,7 +6279,7 @@ inherited IH005: TIH005
           VAlign = vaBottom
         end
         object Line68: TfrxLineView
-          Top = 566.929499999999900000
+          Top = 566.929500000000000000
           Width = 729.448818897638000000
           Color = clBlack
           Frame.Style = fsDot
@@ -6287,7 +6287,7 @@ inherited IH005: TIH005
         end
         object Memo210: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 589.606680000000100000
+          Top = 589.606680000000000000
           Width = 317.480324720000000000
           Height = 18.897650000000000000
           Visible = False
@@ -6343,7 +6343,7 @@ inherited IH005: TIH005
         end
         object Memo216: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 627.401980000000100000
+          Top = 627.401980000000000000
           Width = 317.480324720000000000
           Height = 18.897650000000000000
           Visible = False
@@ -6360,7 +6360,7 @@ inherited IH005: TIH005
           VAlign = vaBottom
         end
         object Line71: TfrxLineView
-          Top = 627.401980000000100000
+          Top = 627.401980000000000000
           Width = 729.448818897638000000
           Color = clBlack
           Frame.Style = fsDot
@@ -6368,21 +6368,21 @@ inherited IH005: TIH005
         end
         object Line77: TfrxLineView
           Left = 325.039580000000000000
-          Top = 524.976377949999900000
+          Top = 524.976377950000000000
           Height = 41.952755910000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line78: TfrxLineView
           Left = 325.039580000000000000
-          Top = 585.070866141732100000
+          Top = 585.070866141732000000
           Height = 41.952755910000000000
           Color = clBlack
           Frame.Typ = [ftLeft]
         end
         object Line79: TfrxLineView
           Left = 415.748300000000000000
-          Top = 524.976377949999900000
+          Top = 524.976377950000000000
           Height = 41.952755910000000000
           Color = clBlack
           Frame.ShadowWidth = 1.000000000000000000
@@ -6391,7 +6391,7 @@ inherited IH005: TIH005
         end
         object Line80: TfrxLineView
           Left = 415.748300000000000000
-          Top = 585.070866141732100000
+          Top = 585.070866141732000000
           Height = 41.952755910000000000
           Color = clBlack
           Frame.ShadowWidth = 1.000000000000000000
@@ -6818,7 +6818,7 @@ inherited IH005: TIH005
         Height = 41.574803150000000000
         Top = 294.803340000000000000
         Visible = False
-        Width = 899.528140000000000000
+        Width = 925.984850000000000000
         object Memo33: TfrxMemoView
           Left = 7.559060000000000000
           Width = 166.299320000000000000
@@ -6840,10 +6840,10 @@ inherited IH005: TIH005
         FillType = ftBrush
         Height = 60.094488190000000000
         Top = 706.772110000000000000
-        Width = 899.528140000000000000
+        Width = 925.984850000000000000
         object Memo37: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 3.779530000000022000
+          Top = 3.779530000000020000
           Width = 219.212740000000000000
           Height = 18.897650000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -6860,7 +6860,7 @@ inherited IH005: TIH005
         end
         object Memo34: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 22.677180000000020000
+          Top = 22.677180000000000000
           Width = 219.212740000000000000
           Height = 18.897650000000000000
           DataSet = DataModule2.frxDBDatasetIH005
@@ -6877,7 +6877,7 @@ inherited IH005: TIH005
         end
         object Memo35: TfrxMemoView
           Left = 7.559060000000000000
-          Top = 41.574830000000020000
+          Top = 41.574830000000000000
           Width = 219.212740000000000000
           Height = 18.897650000000000000
           DataSet = DataModule2.frxDBDatasetIH005
