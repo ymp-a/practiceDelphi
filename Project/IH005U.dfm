@@ -99,6 +99,7 @@ inherited IH005: TIH005
           MaxLength = 10
           TabOrder = 5
           Text = ''
+          OnDblClick = EdtDateDblClick
           EndOfMonth = False
         end
         object EdtTRDTFR: TMaskEditDate
@@ -111,6 +112,7 @@ inherited IH005: TIH005
           MaxLength = 10
           TabOrder = 6
           Text = ''
+          OnDblClick = EdtDateDblClick
           EndOfMonth = False
         end
         object EdtMHNO: TNumberEdit

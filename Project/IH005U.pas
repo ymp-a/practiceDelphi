@@ -185,12 +185,12 @@ function TIH005.LogicalChecOk: Boolean;
 *******************************************************************************}
 {*論理チェック*}
 begin
-{  Result := True;
+  Result := True;
   EdtTRDTFR.Color:=clWindow;
   EdtTRDTTO.Color:=clWindow;
 
-  ChkBlankPAS(EdtTRDTFR,'開始取引日');
-  ChkBlankPAS(EdtTRDTTO,'終了取引日');
+//  ChkBlankPAS(EdtTRDTFR,'開始日');
+//  ChkBlankPAS(EdtTRDTTO,'終了日');
 
   if (EdtTRDTTO.Text < EdtTRDTFR.Text) then
   begin
@@ -200,7 +200,7 @@ begin
     Result := False;
     Exit;
   end;
-  }
+
 end;
 
 procedure TIH005.DataSetSQL;
@@ -231,7 +231,7 @@ begin
       SQL.Add(' else ');
       SQL.Add(' (case when (MTGNO > 3) and (MTGNO % 3 = 1) then (RANK() OVER(ORDER BY MHIRDT,MHTKCD))+(MTGNO/3)  ');
       SQL.Add(' else ');
-      SQL.Add('   (RANK() OVER(ORDER BY MHIRDT,MHTKCD)) end)end)end) AS OldMTNO, ');
+      SQL.Add('   (RANK() OVER(ORDER BY MHIRDT,MHTKCD,MHNO)) end)end)end) AS OldMTNO, ');
       SQL.Add('  ');
       SQL.Add(' (case when (MTGNO % 3 = 1) then 1  ');
       SQL.Add(' else ');
@@ -248,10 +248,47 @@ begin
       SQL.Add('  ');
       SQL.Add(' WHERE 1=1 ');
 
-      if EdtTKCD.Text<>'' then                      // 担当者名入力時の処理
+      //入力日
+      if RdGDTKB.ItemIndex=0 then
+      begin
+        if EdtTRDTFR.Text <> '' then
+        begin
+          SQL.Add(' AND MHIRDT >= :TRDTFR ');
+          ParamByName('TRDTFR').AsString := EdtTRDTFR.EditText;
+        end;
+        if EdtTRDTTO.Text <> '' then
+        begin
+          SQL.Add(' AND MHIRDT <= :TRDTTO ');
+          ParamByName('TRDTTO').AsString := EdtTRDTTO.EditText;
+        end;
+      end
+      else
+      //依頼日
+      begin
+        if EdtTRDTFR.Text <> '' then
+        begin
+          SQL.Add(' AND MHKGDT >= :TRDTFR ');
+          ParamByName('TRDTFR').AsString := EdtTRDTFR.EditText;
+        end;
+        if EdtTRDTTO.Text <> '' then
+        begin
+          SQL.Add(' AND MHKGDT <= :TRDTTO ');
+          ParamByName('TRDTTO').AsString := EdtTRDTTO.EditText;
+        end;
+      end;
+
+      // 得意先
+      if EdtTKCD.Text<>'' then
       begin
         SQL.Add(' AND T.MHTKCD= :TKCD ');
         ParamByName('TKCD').AsString := EdtTKCD.Text;
+      end;
+
+      // 見積№
+      if EdtMHNO.Text<>'0' then
+      begin
+        SQL.Add(' AND T.MHNO= :MHNO ');
+        ParamByName('MHNO').AsString := EdtMHNO.Text;
       end;
 
       SQL.Add(' GROUP BY T.OldMTNO,T.MHIRDT,T.MHNO,T.MHTKNM ');
@@ -289,7 +326,7 @@ begin
       SQL.Add(' else ');
       SQL.Add(' (case when (MTGNO > 3) and (MTGNO % 3 = 1) then (RANK() OVER(ORDER BY MHIRDT,MHTKCD))+(MTGNO/3)  ');
       SQL.Add(' else ');
-      SQL.Add(' (RANK() OVER(ORDER BY MHIRDT,MHTKCD)) end)end)end) AS OldMTNO, ');
+      SQL.Add(' (RANK() OVER(ORDER BY MHIRDT,MHTKCD,MHNO)) end)end)end) AS OldMTNO, ');
       SQL.Add('  ');
       SQL.Add(' (case when (MTGNO % 3 = 1) then 1  ');
       SQL.Add(' else ');
@@ -327,10 +364,48 @@ begin
 //        ParamByName('NAME').AsWideString :='%' +EdtNAME.Text+ '%'; // 部分一致の入力名を'NAME'へ代入する
 ////        andFlg:=true;                             // 入力時フラグオン
 //      end;
-      if EdtTKCD.Text<>'' then                      // 担当者名入力時の処理
+
+      //入力日
+      if RdGDTKB.ItemIndex=0 then
+      begin
+        if EdtTRDTFR.Text <> '' then
+        begin
+          SQL.Add(' AND MHIRDT >= :TRDTFR ');
+          ParamByName('TRDTFR').AsString := EdtTRDTFR.EditText;
+        end;
+        if EdtTRDTTO.Text <> '' then
+        begin
+          SQL.Add(' AND MHIRDT <= :TRDTTO ');
+          ParamByName('TRDTTO').AsString := EdtTRDTTO.EditText;
+        end;
+      end
+      else
+      //依頼日
+      begin
+        if EdtTRDTFR.Text <> '' then
+        begin
+          SQL.Add(' AND MHKGDT >= :TRDTFR ');
+          ParamByName('TRDTFR').AsString := EdtTRDTFR.EditText;
+        end;
+        if EdtTRDTTO.Text <> '' then
+        begin
+          SQL.Add(' AND MHKGDT <= :TRDTTO ');
+          ParamByName('TRDTTO').AsString := EdtTRDTTO.EditText;
+        end;
+      end;
+
+      // 得意先
+      if EdtTKCD.Text<>'' then
       begin
         SQL.Add(' AND T.MHTKCD = :TKCD ');         //
         ParamByName('TKCD').AsString := EdtTKCD.Text;
+      end;
+
+      // 見積№
+      if EdtMHNO.Text<>'0' then
+      begin
+        SQL.Add(' AND T.MHNO= :MHNO ');
+        ParamByName('MHNO').AsString := EdtMHNO.Text;
       end;
 
 
