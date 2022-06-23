@@ -674,6 +674,7 @@ object DataModule4: TDataModule4
     object AggregateField2: TAggregateField
       FieldName = 'sumKIN'
       Visible = True
+      Active = True
       DisplayName = ''
       DisplayFormat = '###,###,##0'
       Expression = 'SUM(MTKIN - mKIN)'

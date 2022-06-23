@@ -247,6 +247,7 @@ begin
       SQL.Add(' ON MM.MTNO = MH.MHNO) AS T ');
       SQL.Add('  ');
       SQL.Add(' WHERE 1=1 ');
+      SQL.Add(' AND T.MTJTCD<>''D'' ');
 
       //“ü—Í“ú
       if RdGDTKB.ItemIndex=0 then
@@ -344,7 +345,7 @@ begin
       SQL.Add(' LEFT JOIN MTHFLP AS MH ');
       SQL.Add(' ON MM.MTNO = MH.MHNO) AS T ');
       SQL.Add(' WHERE 1=1  ');
-      SQL.Add('  ');
+      SQL.Add(' AND T.MTJTCD<>''D'' ');
       SQL.Add('  ');
       SQL.Add('  ');
       SQL.Add('  ');
