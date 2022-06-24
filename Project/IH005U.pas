@@ -189,8 +189,6 @@ begin
   EdtTRDTFR.Color:=clWindow;
   EdtTRDTTO.Color:=clWindow;
 
-//  ChkBlankPAS(EdtTRDTFR,'開始日');
-//  ChkBlankPAS(EdtTRDTTO,'終了日');
 
   if (EdtTRDTTO.Text < EdtTRDTFR.Text) then
   begin
@@ -298,7 +296,7 @@ begin
       Open();                                       // SQL文実行
 
 
-      if isEmpty then                               // データセットがなければ終了、上記も同義
+      if isEmpty then                               // データセットがなければ終了
       begin
         DataModule2.CDS_IH005.Active := False;
         raise Exception.Create('対象データが存在しません');
@@ -352,19 +350,7 @@ begin
       SQL.Add('  ');
       SQL.Add('  ');
       SQL.Add('  ');
-      //      if EdtTNCD.Text<>'' then                      // 担当者CD入力時の処理
-//      begin
-//        SQL.Add(' AND TNTNCD = :TNCD ');
-//        ParamByName('TNCD').AsString:=EdtTNCD.Text; // 入力した担当者CDを'TNCD'に代入する
-////        andFlg:=true;                             // 入力時フラグオン
-//      end;
-//
-//      if EdtNAME.Text<>'' then                      // 担当者名入力時の処理
-//      begin
-//        SQL.Add(' AND TNNAME LIKE :NAME ');         // TNNAME LIKEに%入力名%をSQLStringに反映する
-//        ParamByName('NAME').AsWideString :='%' +EdtNAME.Text+ '%'; // 部分一致の入力名を'NAME'へ代入する
-////        andFlg:=true;                             // 入力時フラグオン
-//      end;
+
 
       //入力日
       if RdGDTKB.ItemIndex=0 then
@@ -410,14 +396,10 @@ begin
       end;
 
 
-//      SQL.Add(' ORDER BY MHIRDT,MHTKCD ');                 // 昇順
-
       Open();                                       // SQL文実行
-//    end;
 
 
-//      if DataModule2.CDS_IH004.Eof and DataModule2.CDS_IH004.Bof then
-      if isEmpty then                               // データセットがなければ終了、上記も同義
+      if isEmpty then                               // データセットがなければ終了
       begin
         DataModule2.CDS_IH005MS.Active := False;
         raise Exception.Create('対象データが存在しません');

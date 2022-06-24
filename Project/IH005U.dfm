@@ -80,6 +80,7 @@ inherited IH005: TIH005
           Height = 17
           Caption = #21066#38500#12418#34920#31034
           TabOrder = 3
+          Visible = False
         end
         object CkbNotPrt: TCheckBox
           Left = 312
@@ -88,6 +89,7 @@ inherited IH005: TIH005
           Height = 17
           Caption = #26410#20986#21147#12398#12415
           TabOrder = 4
+          Visible = False
         end
         object EdtTRDTTO: TMaskEditDate
           Left = 199
@@ -2859,7 +2861,7 @@ inherited IH005: TIH005
         end
         object Line3: TfrxLineView
           Top = 1005.354330710000000000
-          Width = 925.984251968504000000
+          Width = 925.984251968503900000
           Color = clBlack
           Frame.Style = fsDot
           Frame.Typ = [ftTop]
