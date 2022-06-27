@@ -71,48 +71,48 @@ procedure TIH005.BtnPrtClick(Sender: TObject);
 *******************************************************************************}
 begin
   inherited;
-{  //妥当性検査
+  //妥当性検査
   if LogicalChecOk then
   begin
 
     //データ抽出
     DataSetSQL;
     //データチェック
-    if dmSUB703C.ClientDataSetF0703.RecordCount  =0  then
+    if DataModule2.CDS_IH005.RecordCount  =0  then
     begin
       MessageDlg('対象データがありません。',mtError,[mbOK],0);
       Exit;
     end;
 
     //出力先プリンタ設定
-    if dmUtils.GetPRTNAM(dmUtils.GetComputerNameS,Self.Name) <> '' then
-        frxReport1.PrintOptions.Printer := dmUtils.GetPRTNAM(dmUtils.GetComputerNameS,Self.Name);
+//    if dmUtils.GetPRTNAM(dmUtils.GetComputerNameS,Self.Name) <> '' then
+//        frxReport1.PrintOptions.Printer := dmUtils.GetPRTNAM(dmUtils.GetComputerNameS,Self.Name);
 
     //出力指示内容セット
-    PRTParmSET;
+//    PRTParmSET;
 
-    frxReport1.PrintOptions.ShowDialog := False;
-    frxReport1.PrepareReport();
-    frxReport1.print;
+    frxReport4.PrintOptions.ShowDialog := False;
+    frxReport4.PrepareReport();
+    frxReport4.print;
 
-    dmUtils.StartTransaction;
-
-    try
-      //チェックリスト区分更新
-      UPD_CKLSTKB(1);
-
-      dmUtils.Commit;
-    except
-      on e:Exception do
-      begin
-        dmUtils.Rollback;
-        MessageDlg(E.Message, mtError, [mbOK], 0);
-        Abort;
-      end;
-    end;
+//    dmUtils.StartTransaction;
+//
+//    try
+//      //チェックリスト区分更新
+//      UPD_CKLSTKB(1);
+//
+//      dmUtils.Commit;
+//    except
+//      on e:Exception do
+//      begin
+//        dmUtils.Rollback;
+//        MessageDlg(E.Message, mtError, [mbOK], 0);
+//        Abort;
+//      end;
+//    end;
 
   end;
- }
+
 end;
 
 procedure TIH005.BtnPrvClick(Sender: TObject);
@@ -140,8 +140,7 @@ begin
 //    if dmUtils.GetPRTNAM(dmUtils.GetComputerNameS,Self.Name) <> '' then
 //        frxReport1.PrintOptions.Printer := dmUtils.GetPRTNAM(dmUtils.GetComputerNameS,Self.Name);
 //
-  //事務所出力
-//  MMPrv;
+
 
 
 
