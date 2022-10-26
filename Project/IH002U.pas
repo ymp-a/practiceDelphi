@@ -29,9 +29,11 @@ type
     procedure Button4Click(Sender: TObject);      // 削除ボタン
     procedure Button7Click(Sender: TObject);      // コピーボタン
     procedure Button8Click(Sender: TObject);      // 表示ボタン
+    procedure Button9Click(Sender: TObject);      // 印刷ボタン
     procedure DBGrid1TitleClick(Column: TColumn); // Gridソート機能
     procedure EdtTNCDDblClick(Sender: TObject);   // TNCDマスタ検索
     procedure EdtTNCDExit(Sender: TObject);       // 担当者名自動挿入
+
   private
     { Private 宣言 }
   public
@@ -48,7 +50,7 @@ implementation
 
 {$R *.dfm}
 
-uses DM4, IH001U, IH004MSU, DM3;
+uses DM4, IH001U, IH004MSU, DM3, IH005U;
 
 {===============================================================================
 画面展開時に設定するイベント
@@ -215,6 +217,35 @@ procedure TIH002.Button8Click(Sender: TObject);
 begin
   inherited;
   ShwNextFrm('Dsp');
+end;
+
+procedure TIH002.Button9Click(Sender: TObject);
+var
+  frm : Tform;
+  SaveCursor: TCursor;   // 現在のマウスポインタ保持用
+begin
+  inherited;
+
+  with DBGrid1.DataSource.DataSet do
+  begin
+    if IsEmpty then Exit;
+
+    if FieldByName('MHJTCD').AsString = 'D' then
+    begin
+      MessageDlg('削除データは対象外です', mtError, [mbOK], 0);
+      Exit;
+    end;
+
+
+    SaveCursor := Screen.Cursor;        // 現マウスポインタを退避
+    Screen.Cursor := crHourGlass;       // 砂時計に変更
+    frm := TIH005.create(self);         // 印刷画面を代入
+    (frm as TIH005).EdtMHNO.Value:=FieldByName('MHNO').AsInteger; // Gred1の見積№を印刷画面へ渡す
+    Screen.Cursor := SaveCursor;        // 保存していたマウスポインタに戻す
+    frm.ShowModal;                      // 画面展開
+    frm.Release;                        // TIH005画面インスタンス開放
+
+  end;
 end;
 
 {*******************************************************************************

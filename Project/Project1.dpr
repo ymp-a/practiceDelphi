@@ -2,6 +2,7 @@ program Project1;
 
 uses
   Vcl.Forms,
+//  MidasLib,
   Unit1 in 'Unit1.pas' {Form1},
   PageTop in '..\CSD\Base\PageTop.pas' {PageTopFrm: TFrame},
   Clndr in '..\CSD\Base\Clndr.pas' {ClndrFrm},

@@ -445,7 +445,7 @@ object DataModule2: TDataModule2
       ''
       ''
       'WHERE 1=1'
-      'and T.MHTKCD=004'
+      'and T.MHTKCD in ('#39'002'#39','#39'003'#39','#39'004'#39')'
       'GROUP BY T.OldMTNO,T.MHIRDT,T.MHNO,T.MHTKNM')
     Left = 56
     Top = 408
@@ -573,7 +573,7 @@ object DataModule2: TDataModule2
       ''
       ''
       'WHERE 1=1'
-      'and T.MHTKCD='#39'004'#39)
+      'and T.MHTKCD in ('#39'002'#39','#39'003'#39','#39'004'#39')')
     Left = 56
     Top = 488
   end
